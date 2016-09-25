@@ -1,0 +1,85 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using LuaInterface;
+
+namespace Visual
+{
+    public class FormAPIForLua
+    {
+        INIManager ifs = new INIManager();
+        public void SetName(string n)
+        {
+            ifs.WritePrivateStringA("param", "name", n, @"..\userdata\temp.ini");
+        }
+        public void SetText(string n)
+        {
+            ifs.WritePrivateStringA("param", "text", n, @"..\userdata\temp.ini");
+            ifs.WritePrivateStringA("param", "string", Convert.ToString(0), @"..\userdata\temp.ini");
+        }
+        public void SetText(string n, string n2)
+        {
+            ifs.WritePrivateStringA("param", "text", n, @"..\userdata\temp.ini");
+            ifs.WritePrivateStringA("param", "text2", n2, @"..\userdata\temp.ini");
+            ifs.WritePrivateStringA("param", "string", Convert.ToString(2), @"..\userdata\temp.ini");
+        }
+        public void SetText(string n, string n2, string n3)
+        {
+            ifs.WritePrivateStringA("param", "text", n, @"..\userdata\temp.ini");
+            ifs.WritePrivateStringA("param", "text2", n2, @"..\userdata\temp.ini");
+            ifs.WritePrivateStringA("param", "text3", n3, @"..\userdata\temp.ini");
+            ifs.WritePrivateStringA("param", "string", Convert.ToString(3), @"..\userdata\temp.ini");
+        }
+        public void SetText(string n, string n2, string n3, string n4)
+        {
+            ifs.WritePrivateStringA("param", "text", n, @"..\userdata\temp.ini");
+            ifs.WritePrivateStringA("param", "text2", n2, @"..\userdata\temp.ini");
+            ifs.WritePrivateStringA("param", "text3", n3, @"..\userdata\temp.ini");
+            ifs.WritePrivateStringA("param", "text4", n4, @"..\userdata\temp.ini");
+            ifs.WritePrivateStringA("param", "string", Convert.ToString(4), @"..\userdata\temp.ini");
+        }
+        public void SetBackImage(string n)
+        {
+            ifs.WritePrivateStringA("param", "backImage", n, @"..\userdata\temp.ini");
+        }
+    }
+    public class LuaAPI
+    {
+        public string cfg, userdata, scripts, images;
+
+        private INIManager ifs;
+        public Lua lua = new Lua();
+
+        public LuaAPI()
+        {
+            ifs = new INIManager(@"..\\setting.ini");
+
+            cfg = ifs.GetPrivateString("global", "config");
+            userdata = ifs.GetPrivateString("global", "user");
+            scripts = ifs.GetPrivateString("global", "scripts");
+            images = ifs.GetPrivateString("global", "img");
+
+            lua["Form"] = new FormAPIForLua();
+            lua["IFS"]  = new INIManager();
+
+         //   lua.RegisterFunction("Name", this, typeof(LuaAPI).GetMethod("SetName"));
+         //   lua.RegisterFunction("Text", this, typeof(LuaAPI).GetMethod("SetText"));
+        }
+        public void LuaFunc(string file, string func)
+        {
+            try
+            {
+                lua.DoFile(file + ".lua");
+                LuaFunction function = lua[func] as LuaFunction;
+                function.Call();
+            }
+            catch (LuaException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+    }
+}
