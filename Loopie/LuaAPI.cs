@@ -18,20 +18,20 @@ namespace Visual
         public void SetText(string n)
         {
             ifs.WritePrivateStringA("param", "text", n, @"..\userdata\temp.ini");
-            ifs.WritePrivateStringA("param", "string", Convert.ToString(0), @"..\userdata\temp.ini");
+            ifs.WritePrivateStringA("param", "string", "0", @"..\userdata\temp.ini");
         }
         public void SetText(string n, string n2)
         {
             ifs.WritePrivateStringA("param", "text", n, @"..\userdata\temp.ini");
             ifs.WritePrivateStringA("param", "text2", n2, @"..\userdata\temp.ini");
-            ifs.WritePrivateStringA("param", "string", Convert.ToString(2), @"..\userdata\temp.ini");
+            ifs.WritePrivateStringA("param", "string", "2", @"..\userdata\temp.ini");
         }
         public void SetText(string n, string n2, string n3)
         {
             ifs.WritePrivateStringA("param", "text", n, @"..\userdata\temp.ini");
             ifs.WritePrivateStringA("param", "text2", n2, @"..\userdata\temp.ini");
             ifs.WritePrivateStringA("param", "text3", n3, @"..\userdata\temp.ini");
-            ifs.WritePrivateStringA("param", "string", Convert.ToString(3), @"..\userdata\temp.ini");
+            ifs.WritePrivateStringA("param", "string", "3", @"..\userdata\temp.ini");
         }
         public void SetText(string n, string n2, string n3, string n4)
         {
@@ -39,11 +39,34 @@ namespace Visual
             ifs.WritePrivateStringA("param", "text2", n2, @"..\userdata\temp.ini");
             ifs.WritePrivateStringA("param", "text3", n3, @"..\userdata\temp.ini");
             ifs.WritePrivateStringA("param", "text4", n4, @"..\userdata\temp.ini");
-            ifs.WritePrivateStringA("param", "string", Convert.ToString(4), @"..\userdata\temp.ini");
+            ifs.WritePrivateStringA("param", "string", "4", @"..\userdata\temp.ini");
+        }
+        //.
+        public void SetBackImage(string n, string n2)
+        {
+            ifs.WritePrivateStringA("param", "backImage", n, @"..\userdata\temp.ini");
+            ifs.WritePrivateStringA("param", "pic", "2", @"..\userdata\temp.ini");
+            ifs.WritePrivateStringA("param", "Image_1", n2, @"..\userdata\temp.ini");
+        }
+        public void SetBackImage(string n, string n2, string n3)
+        {
+            ifs.WritePrivateStringA("param", "backImage", n, @"..\userdata\temp.ini");
+            ifs.WritePrivateStringA("param", "pic", "3", @"..\userdata\temp.ini");
+            ifs.WritePrivateStringA("param", "Image_1", n2, @"..\userdata\temp.ini");
+            ifs.WritePrivateStringA("param", "Image_2", n3, @"..\userdata\temp.ini");
+        }
+        public void SetBackImage(string n, string n2, string n3, string n4)
+        {
+            ifs.WritePrivateStringA("param", "backImage", n, @"..\userdata\temp.ini");
+            ifs.WritePrivateStringA("param", "pic", "3", @"..\userdata\temp.ini");
+            ifs.WritePrivateStringA("param", "Image_1", n2, @"..\userdata\temp.ini");
+            ifs.WritePrivateStringA("param", "Image_2", n3, @"..\userdata\temp.ini");
+            ifs.WritePrivateStringA("param", "Image_", n4, @"..\userdata\temp.ini");
         }
         public void SetBackImage(string n)
         {
             ifs.WritePrivateStringA("param", "backImage", n, @"..\userdata\temp.ini");
+            ifs.WritePrivateStringA("param", "pic", "1", @"..\userdata\temp.ini");
         }
     }
     public class LuaAPI
