@@ -228,6 +228,7 @@
             this.ago.Size = new System.Drawing.Size(63, 22);
             this.ago.TabIndex = 14;
             this.ago.Text = "Назад";
+            this.ago.Visible = false;
             this.ago.Click += new System.EventHandler(this.ago_Click);
             // 
             // Form1
