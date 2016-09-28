@@ -62,10 +62,13 @@ namespace Visual
                 MessageBox.Show("Ошибка");
             }
         }
+        //Прокомментирую, а то уже забыл, что к чему...
         void NextScene(bool load)
         {
+            //Флажок для лоадера
             if(!load)
                 ++sect;
+            //Тут мы определяем секцию, костыльно и не интересно
             sect_string = Convert.ToString(sect);
             if (sect_next != 0)
                 if (sect_lb_old != sect_label)
@@ -74,7 +77,7 @@ namespace Visual
                     sect_string += sect_old;
                     sect_lb_old = sect_label;
                 }
-
+            //Подгружаем значения 
             pictureBox2.Image = (Image)new Bitmap(pictureBox2.Width, pictureBox2.Height);
             g = Graphics.FromImage(pictureBox2.Image);
             if (ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "type") == "LuaScript")
@@ -88,12 +91,13 @@ namespace Visual
             }
             heroname = ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "name");
             ActorText = ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "text");
-            int old_y = 35;
+            int old_y = 35; //Для отступов строк
 
             g.DrawString(heroname, new Font("Comic Sans ms", 10), new SolidBrush(Color.Black), new Point(10, 9));
             g.DrawString(ActorText, new Font("Arial", 10, FontStyle.Bold), new SolidBrush(Color.White), new Point(10, old_y));
-            int str = Convert.ToInt32(ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "string"));
+            int str = Convert.ToInt32(ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "string")); // Вспомогательная переменная
 
+            //Считаем строки
             old_y -= 14;
             if (str > 1)
                 for (int i = 0; str >= i; i++)
@@ -102,6 +106,21 @@ namespace Visual
                     g.DrawString(ActorText, new Font("Arial", 10, FontStyle.Bold), new SolidBrush(Color.White), new Point(10, old_y));
                     old_y += 14;
                 }
+            //Попробуем сделать многоуровневую отрисовку
+            str = Convert.ToInt32(ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "pic"));
+            if (str > 2)
+            {
+                System.Windows.Forms.PictureBox pictureBox3 = pictureBox1;
+                pictureBox1.Image                   = new Bitmap(lua.images + ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "Image_1"));
+                pictureBox3.BackgroundImage         = new Bitmap(lua.images + ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "Image_2"));
+                if (str == 4) 
+                    pictureBox3.Image               = new Bitmap(lua.images + ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "Image_3"));
+                
+            }
+            else if (str == 2)
+            {
+                pictureBox1.Image = new Bitmap(lua.images + ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "Image_1"));
+            }
             pictureBox1.BackgroundImage = new Bitmap(lua.images + ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "backImage"));
         }
         private void Label_Helper(bool q)
