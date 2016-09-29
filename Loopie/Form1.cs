@@ -16,9 +16,10 @@ namespace Visual
         private INIManager ifs;
         private int sect, sect_next, sect_label, sect_lb_old;
         string heroname, ActorText, sect_old, sect_string;
-        bool trygame = false;
+        bool trygame, snd = false;
         LuaAPI lua = new LuaAPI();
         Graphics g;
+        System.Windows.Media.MediaPlayer player = new System.Windows.Media.MediaPlayer();
 
         public Form1()
         {
@@ -44,6 +45,7 @@ namespace Visual
             ifs = new INIManager();
 
             pictureBox2.BackgroundImage = new Bitmap(lua.images + ifs.GetPrivateString(@"../setting.ini", "interface", "TextImg"));
+            ifs.WritePrivateStringA("param", "snd_old", "0", @"..\userdata\temp.ini");
         }
         //Load: Game
         private void label4_Click(object sender, EventArgs e)
@@ -89,13 +91,21 @@ namespace Visual
                 label3.Text = ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "q3");
                 Label_Helper(true);
             }
-            heroname = ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "name");
-            ActorText = ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "text");
-            int old_y = 35; //Для отступов строк
-
+            heroname    = ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "name");
+            ActorText   = ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "text");
+            int old_y   = 35; //Для отступов строк
+            
+            //Music
+            if (!snd || ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "snd_old") != ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "snd"))
+            {
+                player.Open(new Uri(lua.snd + ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "snd"), UriKind.Relative));
+                player.Play();
+                snd = true;
+            }
+            //Отрисовка акторнейма и первой строки 
             g.DrawString(heroname, new Font("Comic Sans ms", 10), new SolidBrush(Color.Black), new Point(10, 9));
             g.DrawString(ActorText, new Font("Arial", 10, FontStyle.Bold), new SolidBrush(Color.White), new Point(10, old_y));
-            int str = Convert.ToInt32(ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "string")); // Вспомогательная переменная
+            int str = Convert.ToInt32(ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "string")); 
 
             //Считаем строки
             old_y -= 14;

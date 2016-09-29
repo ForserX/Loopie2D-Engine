@@ -2,6 +2,7 @@ function start()
   Form:SetName("Нет имени")
   Form:SetText("В общем", "пацаны", "n всё снова пашет.")
   Form:SetBackImage("test.jpg", "JmbOLrpdZcs.jpg")
+  Form:SetSound("MyMusic.mp3")
 end
 
 function start_2()

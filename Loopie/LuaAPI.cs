@@ -68,10 +68,17 @@ namespace Visual
             ifs.WritePrivateStringA("param", "backImage", n, @"..\userdata\temp.ini");
             ifs.WritePrivateStringA("param", "pic", "1", @"..\userdata\temp.ini");
         }
+        public void SetSound(string n)
+        {
+            if (ifs.GetPrivateString(@"..\userdata\temp.ini", "param", "snd_old") == "0")
+                ifs.WritePrivateStringA("param", "snd_old", ifs.GetPrivateString(@"..\userdata\temp.ini", "param", "snd"), @"..\userdata\temp.ini");
+            
+            ifs.WritePrivateStringA("param", "snd", n, @"..\userdata\temp.ini");
+        }
     }
     public class LuaAPI
     {
-        public string cfg, userdata, scripts, images;
+        public string cfg, userdata, scripts, images, snd;
 
         private INIManager ifs;
         public Lua lua = new Lua();
@@ -80,10 +87,11 @@ namespace Visual
         {
             ifs = new INIManager(@"..\\setting.ini");
 
-            cfg = ifs.GetPrivateString("global", "config");
+            cfg      = ifs.GetPrivateString("global", "config");
             userdata = ifs.GetPrivateString("global", "user");
-            scripts = ifs.GetPrivateString("global", "scripts");
-            images = ifs.GetPrivateString("global", "img");
+            scripts  = ifs.GetPrivateString("global", "scripts");
+            images   = ifs.GetPrivateString("global", "img");
+            snd      = ifs.GetPrivateString("global", "snd");
 
             lua["Form"] = new FormAPIForLua();
             lua["IFS"]  = new INIManager();
