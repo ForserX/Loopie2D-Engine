@@ -154,6 +154,7 @@ namespace Visual
                     label1.Location = new System.Drawing.Point((panel1.Width - label1.Width) / 2, label1.Location.Y);
                     label2.Location = new System.Drawing.Point((panel1.Width - label2.Width) / 2, label2.Location.Y);
                     label3.Location = new System.Drawing.Point((panel1.Width - label3.Width) / 2, label3.Location.Y);
+                    panel1.Height = 104;
                 
                 label1.Visible = true;
                 label2.Visible = true;
@@ -263,6 +264,15 @@ namespace Visual
         }
         private void SaveGame_Click(object sender, EventArgs e)
         {
+            panel1.Width = 170;
+            label5.Visible = true;
+            textBox1.Visible = true;
+            panel1.Location = new System.Drawing.Point((this.Width - panel1.Width) / 2, panel1.Location.Y);
+            panel1.Height = 85;
+            panel1.Visible = true;
+            СancelButton.Visible = true;
+            SaveButton.Visible = true;
+
             ifs.WritePrivateStringA("param", "sect", sect_string, lua.userdata + "temp.ini");
             ifs.WritePrivateStringA("param", "sect", Convert.ToString(sect), lua.userdata + "temp.ini");
         }

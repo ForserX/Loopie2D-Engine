@@ -42,7 +42,11 @@
             this.SaveGame = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.ago = new System.Windows.Forms.Label();
+            this.SaveButton = new System.Windows.Forms.Label();
+            this.СancelButton = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.panel1.SuspendLayout();
@@ -208,6 +212,10 @@
             // 
             this.panel1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel1.BackgroundImage")));
             this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panel1.Controls.Add(this.СancelButton);
+            this.panel1.Controls.Add(this.SaveButton);
+            this.panel1.Controls.Add(this.textBox1);
+            this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.label2);
@@ -216,6 +224,25 @@
             this.panel1.Size = new System.Drawing.Size(199, 104);
             this.panel1.TabIndex = 13;
             this.panel1.Visible = false;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(29, 35);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(116, 20);
+            this.textBox1.TabIndex = 7;
+            this.textBox1.Visible = false;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.BackColor = System.Drawing.Color.Transparent;
+            this.label5.Location = new System.Drawing.Point(35, 10);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(100, 13);
+            this.label5.TabIndex = 6;
+            this.label5.Text = "Введите название";
+            this.label5.Visible = false;
             // 
             // ago
             // 
@@ -230,6 +257,28 @@
             this.ago.Text = "Назад";
             this.ago.Visible = false;
             this.ago.Click += new System.EventHandler(this.ago_Click);
+            // 
+            // SaveButton
+            // 
+            this.SaveButton.AutoSize = true;
+            this.SaveButton.BackColor = System.Drawing.Color.Transparent;
+            this.SaveButton.Location = new System.Drawing.Point(13, 65);
+            this.SaveButton.Name = "SaveButton";
+            this.SaveButton.Size = new System.Drawing.Size(60, 13);
+            this.SaveButton.TabIndex = 8;
+            this.SaveButton.Text = "Сохранить";
+            this.SaveButton.Visible = false;
+            // 
+            // СancelButton
+            // 
+            this.СancelButton.AutoSize = true;
+            this.СancelButton.BackColor = System.Drawing.Color.Transparent;
+            this.СancelButton.Location = new System.Drawing.Point(103, 65);
+            this.СancelButton.Name = "СancelButton";
+            this.СancelButton.Size = new System.Drawing.Size(57, 13);
+            this.СancelButton.TabIndex = 9;
+            this.СancelButton.Text = "Отменить";
+            this.СancelButton.Visible = false;
             // 
             // Form1
             // 
@@ -282,6 +331,10 @@
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label ago;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label SaveButton;
+        private System.Windows.Forms.Label СancelButton;
     }
 }
 
