@@ -42,11 +42,11 @@
             this.SaveGame = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.СancelButton = new System.Windows.Forms.Label();
+            this.SaveButton = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.ago = new System.Windows.Forms.Label();
-            this.SaveButton = new System.Windows.Forms.Label();
-            this.СancelButton = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.panel1.SuspendLayout();
@@ -225,6 +225,30 @@
             this.panel1.TabIndex = 13;
             this.panel1.Visible = false;
             // 
+            // СancelButton
+            // 
+            this.СancelButton.AutoSize = true;
+            this.СancelButton.BackColor = System.Drawing.Color.Transparent;
+            this.СancelButton.Location = new System.Drawing.Point(103, 65);
+            this.СancelButton.Name = "СancelButton";
+            this.СancelButton.Size = new System.Drawing.Size(57, 13);
+            this.СancelButton.TabIndex = 9;
+            this.СancelButton.Text = "Отменить";
+            this.СancelButton.Visible = false;
+            this.СancelButton.Click += new System.EventHandler(this.СancelButton_Click);
+            // 
+            // SaveButton
+            // 
+            this.SaveButton.AutoSize = true;
+            this.SaveButton.BackColor = System.Drawing.Color.Transparent;
+            this.SaveButton.Location = new System.Drawing.Point(13, 65);
+            this.SaveButton.Name = "SaveButton";
+            this.SaveButton.Size = new System.Drawing.Size(60, 13);
+            this.SaveButton.TabIndex = 8;
+            this.SaveButton.Text = "Сохранить";
+            this.SaveButton.Visible = false;
+            this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
+            // 
             // textBox1
             // 
             this.textBox1.Location = new System.Drawing.Point(29, 35);
@@ -257,28 +281,6 @@
             this.ago.Text = "Назад";
             this.ago.Visible = false;
             this.ago.Click += new System.EventHandler(this.ago_Click);
-            // 
-            // SaveButton
-            // 
-            this.SaveButton.AutoSize = true;
-            this.SaveButton.BackColor = System.Drawing.Color.Transparent;
-            this.SaveButton.Location = new System.Drawing.Point(13, 65);
-            this.SaveButton.Name = "SaveButton";
-            this.SaveButton.Size = new System.Drawing.Size(60, 13);
-            this.SaveButton.TabIndex = 8;
-            this.SaveButton.Text = "Сохранить";
-            this.SaveButton.Visible = false;
-            // 
-            // СancelButton
-            // 
-            this.СancelButton.AutoSize = true;
-            this.СancelButton.BackColor = System.Drawing.Color.Transparent;
-            this.СancelButton.Location = new System.Drawing.Point(103, 65);
-            this.СancelButton.Name = "СancelButton";
-            this.СancelButton.Size = new System.Drawing.Size(57, 13);
-            this.СancelButton.TabIndex = 9;
-            this.СancelButton.Text = "Отменить";
-            this.СancelButton.Visible = false;
             // 
             // Form1
             // 
@@ -317,7 +319,7 @@
 
         #endregion
 
-        private System.Windows.Forms.PictureBox pictureBox1;
+        public System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;

@@ -15,21 +15,25 @@ namespace Visual
 
         private INIManager ifs;
         private int sect, sect_next, sect_label, sect_lb_old;
-        string heroname, ActorText, sect_old, sect_string;
+        string heroname, ActorText, sect_old, sect_string; 
         bool trygame, snd = false;
         LuaAPI lua = new LuaAPI();
         Graphics g;
         System.Windows.Media.MediaPlayer player = new System.Windows.Media.MediaPlayer();
+        System.Windows.Forms.PictureBox pictureBox3;
+        System.Windows.Forms.PictureBox pictureBox4;
 
         public Form1()
         {
-            //pictureBox1.Image = new Bitmap(@"../data/images/logo2.gif");
-
             InitializeComponent();
 
             this.KeyDown += new KeyEventHandler(_KeyDown);
+            pictureBox3 = pictureBox1;
+            pictureBox4 = pictureBox3;
             pictureBox1.MouseDown += new MouseEventHandler(_MouseDown);
+            pictureBox3.MouseDown += new MouseEventHandler(_MouseDown);
             pictureBox2.MouseDown += new MouseEventHandler(_MouseDown);
+            pictureBox4.MouseDown -= new MouseEventHandler(_MouseDown);
 
             panel1.BackColor = Color.Transparent;
             panel1.Parent = pictureBox1;
@@ -47,28 +51,11 @@ namespace Visual
             pictureBox2.BackgroundImage = new Bitmap(lua.images + ifs.GetPrivateString(@"../setting.ini", "interface", "TextImg"));
             ifs.WritePrivateStringA("param", "snd_old", "0", @"..\userdata\temp.ini");
         }
-        //Load: Game
-        private void label4_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                sect = Convert.ToInt32(ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "sect"));
-                sect_string = ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "sect_string");
-                heroname = ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "name");
-                ActorText = ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "text");
-                MenuUpdate(false);
-                NextScene(true);
-            }
-            catch (FormatException ex)
-            {
-                MessageBox.Show("Ошибка");
-            }
-        }
         //Прокомментирую, а то уже забыл, что к чему...
         void NextScene(bool load)
         {
             //Флажок для лоадера
-            if(!load)
+            if (!load)
                 ++sect;
             //Тут мы определяем секцию, костыльно и не интересно
             sect_string = Convert.ToString(sect);
@@ -91,10 +78,10 @@ namespace Visual
                 label3.Text = ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "q3");
                 Label_Helper(true);
             }
-            heroname    = ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "name");
-            ActorText   = ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "text");
-            int old_y   = 35; //Для отступов строк
-            
+            heroname = ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "name");
+            ActorText = ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "text");
+            int old_y = 35; //Для отступов строк
+
             //Music
             if (!snd || ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "snd_old") != ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "snd"))
             {
@@ -105,7 +92,7 @@ namespace Visual
             //Отрисовка акторнейма и первой строки 
             g.DrawString(heroname, new Font("Comic Sans ms", 10), new SolidBrush(Color.Black), new Point(10, 9));
             g.DrawString(ActorText, new Font("Arial", 10, FontStyle.Bold), new SolidBrush(Color.White), new Point(10, old_y));
-            int str = Convert.ToInt32(ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "string")); 
+            int str = Convert.ToInt32(ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "string"));
 
             //Считаем строки
             old_y -= 14;
@@ -116,92 +103,29 @@ namespace Visual
                     g.DrawString(ActorText, new Font("Arial", 10, FontStyle.Bold), new SolidBrush(Color.White), new Point(10, old_y));
                     old_y += 14;
                 }
-            //Попробуем сделать многоуровневую отрисовку
-            pictureBox1.BackgroundImage = new Bitmap(lua.images + ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "backImage"));
-            str = Convert.ToInt32(ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "pic"));
-            System.Windows.Forms.PictureBox pictureBox3 = pictureBox1;
-            if (str > 2)
-            {
-                pictureBox1.Image = new Bitmap(lua.images + ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "Image_1"));
-                pictureBox3.BackgroundImage = new Bitmap(lua.images + ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "Image_2"));
-                if (str == 4)
-                    pictureBox3.Image = new Bitmap(lua.images + ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "Image_3"));
-                
-            }
-            else
-            {
-                if (str == 2)
-                    pictureBox1.Image       = new Bitmap(lua.images + ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "Image_1"));
-                else
-                    pictureBox1.Image       = pictureBox1.BackgroundImage;
-                pictureBox3.BackgroundImage = pictureBox1.BackgroundImage;
-                pictureBox3.Image           = pictureBox1.Image;
-            }
+            DrawHelper();
         }
-        private void Label_Helper(bool q)
+        //Load: Game
+        private void label4_Click(object sender, EventArgs e)
         {
-            if (q)
+            try
             {
-                panel1.Location = new System.Drawing.Point((this.Width - panel1.Width)   / 2, panel1.Location.Y);
-                if (label1.Width >= panel1.Width)
-                    panel1.Width = label1.Width + 10;
-                else if (label2.Width >= panel1.Width)
-                    panel1.Width = label2.Width + 10;
-                else if (label3.Width >= panel1.Width)
-                    panel1.Width = label3.Width + 10;
-
-
-                    label1.Location = new System.Drawing.Point((panel1.Width - label1.Width) / 2, label1.Location.Y);
-                    label2.Location = new System.Drawing.Point((panel1.Width - label2.Width) / 2, label2.Location.Y);
-                    label3.Location = new System.Drawing.Point((panel1.Width - label3.Width) / 2, label3.Location.Y);
-                    panel1.Height = 104;
-                
-                label1.Visible = true;
-                label2.Visible = true;
-                label3.Visible = true;
-                panel1.Visible = true;
-
-                sect_label += 1;
+                sect = Convert.ToInt32(ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "sect"));
+                sect_string = ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "sect_string");
+                heroname = ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "name");
+                ActorText = ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "text");
+                MenuUpdate(false);
+                NextScene(true);
             }
-            else
+            catch (FormatException ex)
             {
-
-                label1.Visible = false;
-                label2.Visible = false;
-                label3.Visible = false;
-                panel1.Visible = false;
-            }
-        }
-        void MenuUpdate(bool q)
-        {
-            if (!q)
-            {
-                NewGame.Visible     = false;
-                Options.Visible     = false;
-                _exit.Visible       = false;
-                Next.Visible        = false;
-                label4.Visible      = false;
-                SaveGame.Visible    = false;
-                trygame             = true;
-                pictureBox2.Visible = true;
-            }
-            else
-            {
-                NewGame.Visible     = true;
-                Options.Visible     = true;
-                label4.Visible      = true;
-                _exit.Visible       = true;
-                SaveGame.Visible    = true;
-                Next.Visible        = true;
-                trygame             = false;
-                pictureBox2.Visible = false;
-                pictureBox1.BackgroundImage = new Bitmap(lua.images + "logo.gif");
+                MessageBox.Show("Ошибка");
             }
         }
         private void Next_Click(object sender, EventArgs e)
         {
-            pictureBox1.BackgroundImage = new Bitmap(lua.images + ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "backImage"));
             MenuUpdate(false);
+            DrawHelper();
         }
         private void _exit_Click(object sender, EventArgs e)
         {
@@ -264,17 +188,7 @@ namespace Visual
         }
         private void SaveGame_Click(object sender, EventArgs e)
         {
-            panel1.Width = 170;
-            label5.Visible = true;
-            textBox1.Visible = true;
-            panel1.Location = new System.Drawing.Point((this.Width - panel1.Width) / 2, panel1.Location.Y);
-            panel1.Height = 85;
-            panel1.Visible = true;
-            СancelButton.Visible = true;
-            SaveButton.Visible = true;
-
-            ifs.WritePrivateStringA("param", "sect", sect_string, lua.userdata + "temp.ini");
-            ifs.WritePrivateStringA("param", "sect", Convert.ToString(sect), lua.userdata + "temp.ini");
+            inputBox();
         }
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
