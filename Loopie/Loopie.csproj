@@ -60,9 +60,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="IFS.cs" />
-    <Compile Include="InputBox.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="LuaAPI.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

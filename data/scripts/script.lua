@@ -1,7 +1,7 @@
 function start()
-  Form:SetName("Нет имени")
-  Form:SetText("В общем", "пацаны", "n всё снова пашет.")
-  Form:SetBackImage("test.jpg", "JmbOLrpdZcs.jpg")
+  Form:SetName("ForserX", "red")
+  Form:SetText("Саня, жук ленивый, пора тестить")
+  Form:SetBackImage("test.jpg")
   Form:SetSound("MyMusic.mp3")
 end
 

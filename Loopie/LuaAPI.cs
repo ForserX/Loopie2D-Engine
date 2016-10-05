@@ -15,6 +15,11 @@ namespace Visual
         {
             ifs.WritePrivateStringA("param", "name", n, @"..\userdata\temp.ini");
         }
+        public void SetName(string n, string color)
+        {
+            ifs.WritePrivateStringA("param", "name", n, @"..\userdata\temp.ini");
+            ifs.WritePrivateStringA("param", "name_c", color, @"..\userdata\temp.ini");
+        }
         public void SetText(string n)
         {
             ifs.WritePrivateStringA("param", "text", n, @"..\userdata\temp.ini");
