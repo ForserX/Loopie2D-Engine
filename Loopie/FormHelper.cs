@@ -45,22 +45,25 @@ namespace Visual
             //Попробуем сделать многоуровневую отрисовку
             pictureBox1.BackgroundImage = new Bitmap(lua.images + ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "backImage"));
             int str = Convert.ToInt32(ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "pic"));
-            if (str > 2)
+            switch (str)
             {
-                pictureBox1.Image = new Bitmap(lua.images + ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "Image_1"));
-                pictureBox3.BackgroundImage = new Bitmap(lua.images + ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "Image_2"));
-                if (str == 4)
-                    pictureBox3.Image = new Bitmap(lua.images + ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "Image_3"));
-
-            }
-            else
-            {
-                if (str == 2)
-                    pictureBox1.Image = new Bitmap(lua.images + ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "Image_1"));
-                else
+                case 1:
                     pictureBox1.Image = pictureBox1.BackgroundImage;
-                pictureBox3.BackgroundImage = pictureBox1.BackgroundImage;
-                pictureBox3.Image = pictureBox1.Image;
+                    pictureBox3.BackgroundImage = pictureBox1.BackgroundImage;
+                    pictureBox3.Image = pictureBox1.Image;
+                    break;
+                case 2:
+                    pictureBox1.Image = new Bitmap(lua.images + ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "Image_1"));
+                    pictureBox3.BackgroundImage = pictureBox1.BackgroundImage;
+                    pictureBox3.Image = pictureBox1.Image;
+                    break;
+                case 3:
+                    pictureBox1.Image = new Bitmap(lua.images + ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "Image_1"));
+                    pictureBox3.BackgroundImage = new Bitmap(lua.images + ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "Image_2"));
+                break;
+                case 4:
+                    pictureBox3.Image = new Bitmap(lua.images + ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "Image_3"));
+                break;
             }
         }
         private void Label_Helper(bool q)

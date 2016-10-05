@@ -22,7 +22,7 @@ namespace Visual
         System.Windows.Media.MediaPlayer player = new System.Windows.Media.MediaPlayer();
         System.Windows.Forms.PictureBox pictureBox3;
         System.Windows.Forms.PictureBox pictureBox4;
-
+        Color color = new Color();
         public Form1()
         {
             InitializeComponent();
@@ -81,7 +81,23 @@ namespace Visual
             heroname = ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "name");
             ActorText = ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "text");
             int old_y = 35; //Для отступов строк
+            //Определяем цвет
+            string clr = ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "name_c");
 
+            switch(clr){
+                case "white":
+                    color = Color.White;
+                    break;
+                case "red":
+                    color = Color.Red;
+                    break;
+                case "blue":
+                    color = Color.Blue;
+                    break;
+                default: 
+                    color = Color.Black;
+                    break;
+            }
             //Music
             if (!snd || ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "snd_old") != ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "snd"))
             {
@@ -90,7 +106,7 @@ namespace Visual
                 snd = true;
             }
             //Отрисовка акторнейма и первой строки 
-            g.DrawString(heroname, new Font("Comic Sans ms", 10), new SolidBrush(Color.Black), new Point(10, 9));
+            g.DrawString(heroname, new Font("Comic Sans ms", 10), new SolidBrush(color), new Point(10, 9));
             g.DrawString(ActorText, new Font("Arial", 10, FontStyle.Bold), new SolidBrush(Color.White), new Point(10, old_y));
             int str = Convert.ToInt32(ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "string"));
 
@@ -119,7 +135,7 @@ namespace Visual
             }
             catch (FormatException ex)
             {
-                MessageBox.Show("Ошибка");
+                MessageBox.Show(ex.Message);
             }
         }
         private void Next_Click(object sender, EventArgs e)
