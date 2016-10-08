@@ -24,8 +24,49 @@ namespace Visual
         }
         private void SaveButton_Click(object sender, EventArgs e)
         {
+            /*
             FileInfo fn = new FileInfo(lua.userdata + "temp.ini");
             fn.MoveTo(lua.userdata + textBox1.Text + ".ini");
+            */
+            
+            if (textBox1.Text != "")
+            {
+                string iniDirectory = lua.userdata;
+                MessageBox.Show(iniDirectory, "CurrentDirectory", MessageBoxButtons.OK);
+
+                try
+                {
+                    string[] iniList = Directory.GetFiles(iniDirectory, "*.ini");
+                    
+
+                    string tempName = "temp.ini";
+                    string newName = textBox1.Text + ".ini";
+                   
+                        try
+                        {
+                            // Will not overwrite if the destination file already exists.
+                            File.Copy(Path.Combine(iniDirectory, tempName), Path.Combine(iniDirectory, newName));
+                        }
+
+                        // Catch exception if the file was already copied.
+                        catch (IOException copyError)
+                        {
+                            MessageBox.Show(copyError.Message, "56" , MessageBoxButtons.OK);
+                        }
+                    
+                }
+                catch (IOException cError)
+                {
+                    MessageBox.Show(cError.Message, "62", MessageBoxButtons.OK);
+                }
+                MessageBox.Show("NoErrors", "64", MessageBoxButtons.OK);
+            }
+            else
+            {
+                MessageBox.Show("Error", "LOL", MessageBoxButtons.OK);
+            }
+            
+
             HideInputBox();
         }
         private void СancelButton_Click(object sender, EventArgs e)
