@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace Visual
 {
@@ -178,6 +179,7 @@ namespace Visual
                         else
                             pictureBox2.Visible = true;
         }
+    
         private void label1_Click(object sender, EventArgs e)
         {
             sect_next = 1;
@@ -201,9 +203,10 @@ namespace Visual
             sect = 0;
             MenuUpdate(false);
             NextScene(false);
+
         }
         private void SaveGame_Click(object sender, EventArgs e)
-        {
+        {            
             inputBox();
         }
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)

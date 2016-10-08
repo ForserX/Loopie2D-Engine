@@ -241,7 +241,7 @@
             // 
             this.SaveButton.AutoSize = true;
             this.SaveButton.BackColor = System.Drawing.Color.Transparent;
-            this.SaveButton.Location = new System.Drawing.Point(13, 65);
+            this.SaveButton.Location = new System.Drawing.Point(14, 65);
             this.SaveButton.Name = "SaveButton";
             this.SaveButton.Size = new System.Drawing.Size(60, 13);
             this.SaveButton.TabIndex = 8;
@@ -251,7 +251,7 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(29, 35);
+            this.textBox1.Location = new System.Drawing.Point(38, 38);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(116, 20);
             this.textBox1.TabIndex = 7;
