@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loopie", "Loopie\Loopie.csproj", "{EFAC8BDF-45D4-4B53-9FA1-313FDC1D2D76}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loopie_temp", "C:\Users\Alex\Documents\Visual Studio 2015\Projects\Loopie_temp\Loopie_temp\Loopie_temp.csproj", "{1F558C87-F926-4DD3-AA17-7544009E9BA1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +15,6 @@ Global
 		{EFAC8BDF-45D4-4B53-9FA1-313FDC1D2D76}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EFAC8BDF-45D4-4B53-9FA1-313FDC1D2D76}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EFAC8BDF-45D4-4B53-9FA1-313FDC1D2D76}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1F558C87-F926-4DD3-AA17-7544009E9BA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1F558C87-F926-4DD3-AA17-7544009E9BA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1F558C87-F926-4DD3-AA17-7544009E9BA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1F558C87-F926-4DD3-AA17-7544009E9BA1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
