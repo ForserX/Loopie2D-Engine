@@ -103,6 +103,7 @@ namespace Visual
             if (!snd || ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "snd_old") != ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "snd"))
             {
                 player.Open(new Uri(lua.snd + ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "snd"), UriKind.Relative));
+                ifs.WritePrivateStringA("param", "snd_old", ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "snd"), @"..\userdata\temp.ini");
                 player.Play();
                 snd = true;
             }
