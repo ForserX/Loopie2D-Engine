@@ -13,7 +13,6 @@ namespace Visual
 {
     public partial class Form1 : Form
     {
-
         private INIManager ifs;
         private int sect, sect_next, sect_label, sect_lb_old;
         string heroname, ActorText, sect_old, sect_string; 
@@ -26,15 +25,20 @@ namespace Visual
         Color color = new Color();
         public Form1()
         {
+
             InitializeComponent();
 
             this.KeyDown += new KeyEventHandler(_KeyDown);
+
             pictureBox3 = pictureBox1;
             pictureBox4 = pictureBox3;
             pictureBox1.MouseDown += new MouseEventHandler(_MouseDown);
             pictureBox3.MouseDown += new MouseEventHandler(_MouseDown);
             pictureBox2.MouseDown += new MouseEventHandler(_MouseDown);
             pictureBox4.MouseDown -= new MouseEventHandler(_MouseDown);
+            checkBox1.Parent = pictureBox4;
+            checkBox1.BackColor = Color.Transparent;
+            checkBox1.CheckedChanged += new EventHandler(Fullscreen);
 
             panel1.BackColor = Color.Transparent;
             panel1.Parent = pictureBox1;
@@ -43,6 +47,8 @@ namespace Visual
             label1.Parent = panel1;
             label2.Parent = panel1;
             label3.Parent = panel1;
+            label6.Parent = pictureBox4;
+            label7.Parent = pictureBox4;
 
             pictureBox2.Image = (Image)new Bitmap(pictureBox2.Width, pictureBox2.Height);
             //Пока определим тут
@@ -58,6 +64,7 @@ namespace Visual
             //Флажок для лоадера
             if (!load)
                 ++sect;
+
             //Тут мы определяем секцию, костыльно и не интересно
             sect_string = Convert.ToString(sect);
             if (sect_next != 0)
@@ -67,6 +74,10 @@ namespace Visual
                     sect_string += sect_old;
                     sect_lb_old = sect_label;
                 }
+            ifs.WritePrivateStringA("param", "sect", sect.ToString(), lua.userdata + "temp.ini");
+            ifs.WritePrivateStringA("param", "sect_string", sect_string, lua.userdata + "temp.ini");
+            ifs.WritePrivateStringA("param", "sect_old", sect_old, lua.userdata + "temp.ini");
+            
             //Подгружаем значения 
             pictureBox2.Image = (Image)new Bitmap(pictureBox2.Width, pictureBox2.Height);
             g = Graphics.FromImage(pictureBox2.Image);
@@ -81,11 +92,12 @@ namespace Visual
             }
             heroname = ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "name");
             ActorText = ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "text");
-            int old_y = 35; //Для отступов строк
-            //Определяем цвет
-            string clr = ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "name_c");
 
-            switch(clr){
+            //Для отступов строк
+            int old_y = 35; 
+
+            //Определяем цвет
+            switch(ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "name_c")){
                 case "white":
                     color = Color.White;
                     break;
@@ -124,21 +136,20 @@ namespace Visual
             DrawHelper();
         }
         //Load: Game
+        void Fullscreen(object sender, EventArgs e)
+        {
+            if (checkBox1.Checked)
+                TopMost = true;
+            else
+                TopMost = false;
+        }
         private void label4_Click(object sender, EventArgs e)
         {
-            try
-            {
-                sect = Convert.ToInt32(ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "sect"));
-                sect_string = ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "sect_string");
-                heroname = ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "name");
-                ActorText = ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "text");
-                MenuUpdate(false);
-                NextScene(true);
-            }
-            catch (FormatException ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            LoadList.Visible = true;
+            LoadList.Items.Clear();
+            foreach(string file_name in Directory.GetFiles(lua.userdata))
+                if(file_name != lua.userdata + "temp.ini")
+                    LoadList.Items.Add(file_name.Substring(14));
         }
         private void Next_Click(object sender, EventArgs e)
         {
@@ -152,10 +163,12 @@ namespace Visual
         }
         private void Options_Click(object sender, EventArgs e)
         {
-            comboBox1.Visible = true;
-            MenuUpdate(false);
+            comboBox1.Visible   = true;
+            MenuUpdate          (false);
+            trygame             = false;
             pictureBox2.Visible = false;
-            ago.Visible = true;
+            ago.Visible         = true;
+            checkBox1.Visible   = true;
         }
         void _KeyDown(object sender, KeyEventArgs e)
         {
@@ -231,12 +244,37 @@ namespace Visual
                 pictureBox2.BackgroundImage = new Bitmap(lua.images + ifs.GetPrivateString(@"../setting.ini", "interface", "TextImg_big"));
             }
         }
+
+        private void LoadList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            MessageBox.Show(lua.userdata + LoadList.SelectedItem.ToString());
+            sect = Convert.ToInt32(ifs.GetPrivateString (lua.userdata + LoadList.SelectedItem.ToString(), "param", "sect"));
+            sect_old =    ifs.GetPrivateString          (lua.userdata + LoadList.SelectedItem.ToString(), "param", "sect_old");
+            sect_string = ifs.GetPrivateString          (lua.userdata + LoadList.SelectedItem.ToString(), "param", "sect_string");
+            heroname = ifs.GetPrivateString             (lua.userdata + LoadList.SelectedItem.ToString(), "param", "name");
+            ActorText = ifs.GetPrivateString            (lua.userdata + LoadList.SelectedItem.ToString(), "param", "text");
+
+            LoadList.Visible = false;
+            MenuUpdate(false);
+            NextScene(true);
+        }
         private void ago_Click(object sender, EventArgs e)
         {
             ago.Visible = false;
             comboBox1.Visible = false;
             MenuUpdate(true);
-
+            checkBox1.Visible = false;
         }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+            this._exit_Click(sender, e);
+        }
+
+        private void label7_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
+
     }
 }
