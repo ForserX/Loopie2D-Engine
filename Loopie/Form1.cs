@@ -15,7 +15,8 @@ namespace Visual
     {
         private INIManager ifs;
         private int sect, sect_next, sect_label, sect_lb_old;
-        string heroname, ActorText, sect_old, sect_string; 
+        string heroname, ActorText_str = "" , sect_old, sect_string; 
+        string [] ActorText;
         bool trygame, snd = false;
         LuaAPI lua = new LuaAPI();
         Graphics g;
@@ -91,10 +92,13 @@ namespace Visual
                 Label_Helper(true);
             }
             heroname = ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "name");
-            ActorText = ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "text");
+            ActorText = ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "text").Split(' ');
 
             //Для отступов строк
-            int old_y = 35; 
+            int old_y = 35,
+                str = 0,
+                num = 0; 
+            
 
             //Определяем цвет
             switch(ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "name_c")){
@@ -121,18 +125,33 @@ namespace Visual
             }
             //Отрисовка акторнейма и первой строки 
             g.DrawString(heroname, new Font("Comic Sans ms", 10), new SolidBrush(color), new Point(10, 9));
-            g.DrawString(ActorText, new Font("Arial", 10, FontStyle.Bold), new SolidBrush(Color.White), new Point(10, old_y));
-            int str = Convert.ToInt32(ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "string"));
 
             //Считаем строки
             old_y -= 14;
-            if (str > 1)
-                for (int i = 0; str >= i; i++)
+            for (int i = 0; i <= ActorText.Length; i++)
+            {
+                if (str < 110 & i != ActorText.Length)
                 {
-                    ActorText = ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "text" + Convert.ToString(i));
-                    g.DrawString(ActorText, new Font("Arial", 10, FontStyle.Bold), new SolidBrush(Color.White), new Point(10, old_y));
-                    old_y += 14;
+                    str += ActorText[i].Length;
+                    if (i != ActorText.Length -1)
+                        if(str + ActorText[i + 1].Length >= 110)
+                            str = 116;
                 }
+                else
+                {
+                    for (int j = num + 1; j <= i; j++)
+                        ActorText_str += ActorText[j - 1] + " ";
+
+                    if (i != ActorText.Length)
+                        str = ActorText[i].Length;
+
+                    old_y += 14;
+                    num = i;
+                    g.DrawString(ActorText_str, new Font("Arial", 10, FontStyle.Bold), new SolidBrush(Color.White), new Point(10, old_y));
+                    ActorText_str = "";
+                }
+            }
+            
             DrawHelper();
         }
         //Load: Game
@@ -251,8 +270,8 @@ namespace Visual
             sect = Convert.ToInt32(ifs.GetPrivateString (lua.userdata + LoadList.SelectedItem.ToString(), "param", "sect"));
             sect_old =    ifs.GetPrivateString          (lua.userdata + LoadList.SelectedItem.ToString(), "param", "sect_old");
             sect_string = ifs.GetPrivateString          (lua.userdata + LoadList.SelectedItem.ToString(), "param", "sect_string");
-            heroname = ifs.GetPrivateString             (lua.userdata + LoadList.SelectedItem.ToString(), "param", "name");
-            ActorText = ifs.GetPrivateString            (lua.userdata + LoadList.SelectedItem.ToString(), "param", "text");
+            //heroname = ifs.GetPrivateString             (lua.userdata + LoadList.SelectedItem.ToString(), "param", "name");
+            //ActorText = ifs.GetPrivateString            (lua.userdata + LoadList.SelectedItem.ToString(), "param", "text");
 
             LoadList.Visible = false;
             MenuUpdate(false);
