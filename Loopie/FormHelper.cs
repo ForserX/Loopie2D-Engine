@@ -132,11 +132,16 @@ namespace Visual
                 label4.Visible = true;
                 _exit.Visible = true;
                 SaveGame.Visible = true;
-                Next.Visible = true;
+
+                if (sect != 0)
+                    Next.Visible = true;
+
                 trygame = false;
                 pictureBox2.Visible = false;
                 pictureBox4.Image = new Bitmap(lua.images + "logo.gif");
             }
+
+            Focus();
         }
     }
 }
