@@ -14,7 +14,7 @@ namespace Visual
     public partial class Form1 : Form
     {
         private INIManager ifs;
-        private int sect, sect_next, sect_label, sect_lb_old;
+        private int sect, sect_next, sect_label, sect_lb_old, text_width = 115;
         string heroname, ActorText_str = "" , sect_old, sect_string; 
         string [] ActorText;
         bool trygame, snd = false;
@@ -123,19 +123,21 @@ namespace Visual
                 player.Play();
                 snd = true;
             }
-            //Отрисовка акторнейма и первой строки 
+            //Draw ActorName
             g.DrawString(heroname, new Font("Comic Sans ms", 10), new SolidBrush(color), new Point(10, 9));
 
             //Считаем строки
             old_y -= 14;
+
             for (int i = 0; i <= ActorText.Length; i++)
             {
-                if (str < 110 & i != ActorText.Length)
+
+                if (str < text_width & i != ActorText.Length)
                 {
                     str += ActorText[i].Length;
                     if (i != ActorText.Length -1)
-                        if(str + ActorText[i + 1].Length >= 110)
-                            str = 116;
+                        if (str + ActorText[i + 1].Length >= text_width)
+                            str = 1116;
                 }
                 else
                 {
@@ -249,19 +251,26 @@ namespace Visual
                 this.Width = 979;
                 this.Height = 525;
                 pictureBox2.BackgroundImage = new Bitmap(lua.images + ifs.GetPrivateString(@"../setting.ini", "interface", "TextImg"));
+                text_width = 115;
             } 
             else if (comboBox1.SelectedItem.ToString() == "1024x551")
             {
                 this.Width = 1024;
                 this.Height = 551;
+                text_width = 120;
                 pictureBox2.BackgroundImage = new Bitmap(lua.images + ifs.GetPrivateString(@"../setting.ini", "interface", "TextImg_mid"));
             }
             else if (comboBox1.SelectedItem.ToString() == "1375x730")
             {
                 this.Width = 1375;
                 this.Height = 730;
+                text_width = 200;
                 pictureBox2.BackgroundImage = new Bitmap(lua.images + ifs.GetPrivateString(@"../setting.ini", "interface", "TextImg_big"));
             }
+
+            pictureBox3 = pictureBox1;
+            pictureBox4 = pictureBox3;
+
         }
 
         private void LoadList_SelectedIndexChanged(object sender, EventArgs e)
