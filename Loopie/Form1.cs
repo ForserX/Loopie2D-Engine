@@ -58,6 +58,9 @@ namespace Visual
 
             pictureBox2.BackgroundImage = new Bitmap(lua.images + ifs.GetPrivateString(@"../setting.ini", "interface", "TextImg"));
             ifs.WritePrivateStringA("param", "snd_old", "0", @"..\userdata\temp.ini");
+
+            this.Width = SystemInformation.VirtualScreen.Size.Width;
+            this.Height = SystemInformation.VirtualScreen.Size.Height;
         }
         //Прокомментирую, а то уже забыл, что к чему...
         void NextScene(bool load)
@@ -160,9 +163,17 @@ namespace Visual
         void Fullscreen(object sender, EventArgs e)
         {
             if (checkBox1.Checked)
+            {
+                this.Height -= 40;
+                this.Width -= 40;
                 TopMost = true;
+            }
             else
+            {
+                this.Height += 40;
+                this.Width += 40;
                 TopMost = false;
+            }
         }
         private void label4_Click(object sender, EventArgs e)
         {
@@ -184,7 +195,6 @@ namespace Visual
         }
         private void Options_Click(object sender, EventArgs e)
         {
-            comboBox1.Visible   = true;
             MenuUpdate          (false);
             trygame             = false;
             pictureBox2.Visible = false;
@@ -244,34 +254,6 @@ namespace Visual
         {            
             inputBox();
         }
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (comboBox1.SelectedItem.ToString() == "979x525")
-            {
-                this.Width = 979;
-                this.Height = 525;
-                pictureBox2.BackgroundImage = new Bitmap(lua.images + ifs.GetPrivateString(@"../setting.ini", "interface", "TextImg"));
-                text_width = 115;
-            } 
-            else if (comboBox1.SelectedItem.ToString() == "1024x551")
-            {
-                this.Width = 1024;
-                this.Height = 551;
-                text_width = 120;
-                pictureBox2.BackgroundImage = new Bitmap(lua.images + ifs.GetPrivateString(@"../setting.ini", "interface", "TextImg_mid"));
-            }
-            else if (comboBox1.SelectedItem.ToString() == "1375x730")
-            {
-                this.Width = 1375;
-                this.Height = 730;
-                text_width = 200;
-                pictureBox2.BackgroundImage = new Bitmap(lua.images + ifs.GetPrivateString(@"../setting.ini", "interface", "TextImg_big"));
-            }
-
-            pictureBox3 = pictureBox1;
-            pictureBox4 = pictureBox3;
-
-        }
 
         private void LoadList_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -279,8 +261,6 @@ namespace Visual
             sect = Convert.ToInt32(ifs.GetPrivateString (lua.userdata + LoadList.SelectedItem.ToString(), "param", "sect"));
             sect_old =    ifs.GetPrivateString          (lua.userdata + LoadList.SelectedItem.ToString(), "param", "sect_old");
             sect_string = ifs.GetPrivateString          (lua.userdata + LoadList.SelectedItem.ToString(), "param", "sect_string");
-            //heroname = ifs.GetPrivateString             (lua.userdata + LoadList.SelectedItem.ToString(), "param", "name");
-            //ActorText = ifs.GetPrivateString            (lua.userdata + LoadList.SelectedItem.ToString(), "param", "text");
 
             LoadList.Visible = false;
             MenuUpdate(false);
@@ -289,7 +269,6 @@ namespace Visual
         private void ago_Click(object sender, EventArgs e)
         {
             ago.Visible = false;
-            comboBox1.Visible = false;
             MenuUpdate(true);
             checkBox1.Visible = false;
         }
