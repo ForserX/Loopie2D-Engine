@@ -59,22 +59,14 @@ namespace Visual
             int str = Convert.ToInt32(ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "pic"));
             switch (str)
             {
-                case 1:
-                    pictureBox1.Image = pictureBox1.BackgroundImage;
+                case 1: // Background only
+                    pictureBox1.Image = null;
                     pictureBox3.BackgroundImage = pictureBox1.BackgroundImage;
-                    pictureBox3.Image = pictureBox1.Image;
+                    pictureBox3.Image = null;
+                    pictureBox3.BackgroundImage = pictureBox1.BackgroundImage;
                     break;
                 case 2:
-                    pictureBox1.Image = new Bitmap(lua.images + ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "Image_1"));
-                    pictureBox3.BackgroundImage = pictureBox1.BackgroundImage;
-                    pictureBox3.Image = pictureBox1.Image;
-                    break;
-                case 3:
-                    pictureBox1.Image = new Bitmap(lua.images + ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "Image_1"));
-                    pictureBox3.BackgroundImage = new Bitmap(lua.images + ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "Image_2"));
-                break;
-                case 4:
-                    pictureBox3.Image = new Bitmap(lua.images + ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "Image_3"));
+                    pictureBox3.Image = new Bitmap(lua.images + ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "Image_1"));
                 break;
             }
         }

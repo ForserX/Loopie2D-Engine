@@ -47,7 +47,6 @@ namespace Visual
             this.Next = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.SaveGame = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.СancelButton = new System.Windows.Forms.Label();
             this.SaveButton = new System.Windows.Forms.Label();
@@ -204,21 +203,6 @@ namespace Visual
             this.SaveGame.Text = "Сохранить Игру";
             this.SaveGame.Click += new System.EventHandler(this.SaveGame_Click);
             // 
-            // comboBox1
-            // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "979x525",
-            "1024x551",
-            "1375x730"});
-            this.comboBox1.Location = new System.Drawing.Point(12, 12);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 12;
-            this.comboBox1.Visible = false;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
-            // 
             // panel1
             // 
             this.panel1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel1.BackgroundImage")));
@@ -322,11 +306,13 @@ namespace Visual
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(12, 40);
+            this.checkBox1.Checked = true;
+            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox1.Location = new System.Drawing.Point(10, 19);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(74, 17);
+            this.checkBox1.Size = new System.Drawing.Size(145, 17);
             this.checkBox1.TabIndex = 17;
-            this.checkBox1.Text = "Fullscreen";
+            this.checkBox1.Text = "Полноэкранный режим";
             this.checkBox1.UseVisualStyleBackColor = true;
             this.checkBox1.Visible = false;
             // 
@@ -356,7 +342,6 @@ namespace Visual
             this.Controls.Add(this.label6);
             this.Controls.Add(this.ago);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.SaveGame);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.Next);
@@ -393,7 +378,6 @@ namespace Visual
         private System.Windows.Forms.Label Next;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label SaveGame;
-        private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label ago;
         private System.Windows.Forms.Label label5;
