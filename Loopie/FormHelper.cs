@@ -25,20 +25,26 @@ namespace Visual
         private void SaveButton_Click(object sender, EventArgs e)
         {
             if (textBox1.Text != "")
-                try
-                {
-                    // Will not overwrite if the destination file already exists.
-                    File.Copy(Path.Combine(lua.userdata, "temp.ini"), Path.Combine(lua.userdata, textBox1.Text + ".ini"));
-                }
-                // Catch exception if the file was already copied.
-                catch (IOException copyError)
-                {
-                    MessageBox.Show(copyError.Message, "56", MessageBoxButtons.OK);
-                }
+            {
+                string path = lua.userdata + textBox1.Text + ".ini";
+                ifs.WritePrivateStringA("param", "sect",        Convert.ToString(sect),         path);
+                ifs.WritePrivateStringA("param", "sect_string", sect_string,                    path);
+                ifs.WritePrivateStringA("param", "name",        lua.GetName(),                  path);
+                ifs.WritePrivateStringA("param", "name_c",      lua.GetNameColor(),             path);
+                ifs.WritePrivateStringA("param", "text",        lua.GetText(),                  path);
+                ifs.WritePrivateStringA("param", "text_c",      lua.GetTextColor(),             path);
+                ifs.WritePrivateStringA("param", "backImage",   lua.GetImage(0),                path);
+                ifs.WritePrivateStringA("param", "sect_old",    sect_old,                       path);
+                ifs.WritePrivateStringA("param", "snd_old",     lua.GetSnd(),                   path);
+                ifs.WritePrivateStringA("param", "pic",         Convert.ToString(lua.GetImageNum()), path);
+                for (int i = 1; i < lua.GetImageNum(); i++)
+                    ifs.WritePrivateStringA("param", "Image_" + Convert.ToString(i), lua.GetImage(i), textBox1.Text+ ".ini");
+
+                HideInputBox();
+            }
             else
                 MessageBox.Show("Error", "Введите название!", MessageBoxButtons.OK);
        
-            HideInputBox();
         }
         private void СancelButton_Click(object sender, EventArgs e)
         {
@@ -52,12 +58,29 @@ namespace Visual
             СancelButton.Visible= false;
             SaveButton.Visible  = false;
         }
+        void SetColor(string obj)
+        {
+            switch (obj)
+            {
+                case "white":
+                    color_ = Color.White;
+                    break;
+                case "red":
+                    color_ = Color.Red;
+                    break;
+                case "blue":
+                    color_ = Color.Blue;
+                    break;
+                default:
+                    color_ = Color.Black;
+                    break;
+            }
+        }
         public void DrawHelper()
         {
             //Попробуем сделать многоуровневую отрисовку
-            pictureBox1.BackgroundImage = new Bitmap(lua.images + ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "backImage"));
-            int str = Convert.ToInt32(ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "pic"));
-            switch (str)
+            pictureBox1.BackgroundImage = new Bitmap(lua.images + lua.GetImage(0));
+            switch (lua.GetImageNum())
             {
                 case 1: // Background only
                     pictureBox1.Image = null;
@@ -130,7 +153,7 @@ namespace Visual
 
                 trygame = false;
                 pictureBox2.Visible = false;
-                pictureBox4.Image = new Bitmap(lua.images + "logo.gif");
+                pictureBox1.BackgroundImage = new Bitmap(lua.images + "logo.gif");
             }
 
             Focus();
