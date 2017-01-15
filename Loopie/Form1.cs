@@ -15,15 +15,14 @@ namespace Visual
     {
         private INIManager ifs;
         private int sect, sect_next, sect_label, sect_lb_old, text_width = 115;
-        string heroname, ActorText_str = "" , sect_old, sect_string; 
+        string heroname, ActorText_str = "", sect_old, sect_string, snd_old = "0";
         string [] ActorText;
         bool trygame, snd = false;
         LuaAPI lua = new LuaAPI();
         Graphics g;
         System.Windows.Media.MediaPlayer player = new System.Windows.Media.MediaPlayer();
-        System.Windows.Forms.PictureBox pictureBox3;
-        System.Windows.Forms.PictureBox pictureBox4;
-        Color color = new Color();
+        System.Windows.Forms.PictureBox pictureBox3, pictureBox4;
+        Color color_ = new Color();
         public Form1()
         {
 
@@ -31,8 +30,8 @@ namespace Visual
 
             this.KeyDown += new KeyEventHandler(_KeyDown);
 
-            pictureBox3 = pictureBox1;
-            pictureBox4 = pictureBox3;
+            pictureBox4 =  pictureBox3 = pictureBox1;
+
             pictureBox1.MouseDown += new MouseEventHandler(_MouseDown);
             pictureBox3.MouseDown += new MouseEventHandler(_MouseDown);
             pictureBox2.MouseDown += new MouseEventHandler(_MouseDown);
@@ -67,8 +66,10 @@ namespace Visual
         {
             //Флажок для лоадера
             if (!load)
+            {
+                snd_old = lua.GetSnd();
                 ++sect;
-
+            }
             //Тут мы определяем секцию, костыльно и не интересно
             sect_string = Convert.ToString(sect);
             if (sect_next != 0)
@@ -86,7 +87,7 @@ namespace Visual
             pictureBox2.Image = (Image)new Bitmap(pictureBox2.Width, pictureBox2.Height);
             g = Graphics.FromImage(pictureBox2.Image);
             if (ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "type") == "LuaScript")
-                lua.LuaFunc(lua.scripts + ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "name"), ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "func"));
+                lua.LuaFunc(ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "name"), ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "func"));
             else if (ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "type") == "Question")
             {
                 label1.Text = ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "q1");
@@ -94,47 +95,32 @@ namespace Visual
                 label3.Text = ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "q3");
                 Label_Helper(true);
             }
-            heroname = ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "name");
-            ActorText = ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "text").Split(' ');
+            heroname = lua.GetName();
+            ActorText = lua.GetText().Split(' ');
 
             //Для отступов строк
             int old_y = 35,
                 str = 0,
                 num = 0; 
             
-
             //Определяем цвет
-            switch(ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "name_c")){
-                case "white":
-                    color = Color.White;
-                    break;
-                case "red":
-                    color = Color.Red;
-                    break;
-                case "blue":
-                    color = Color.Blue;
-                    break;
-                default: 
-                    color = Color.Black;
-                    break;
-            }
+            SetColor(lua.GetNameColor());
+
             //Music
-            if (!snd || ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "snd_old") != ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "snd"))
+            if (!snd || lua.GetSnd() != snd_old)
             {
-                player.Open(new Uri(lua.snd + ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "snd"), UriKind.Relative));
-                ifs.WritePrivateStringA("param", "snd_old", ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "snd"), @"..\userdata\temp.ini");
+                player.Open(new Uri(lua.snd + lua.GetSnd(), UriKind.Relative));
                 player.Play();
                 snd = true;
             }
             //Draw ActorName
-            g.DrawString(heroname, new Font("Comic Sans ms", 10), new SolidBrush(color), new Point(10, 9));
+            g.DrawString(heroname, new Font("Comic Sans ms", 10), new SolidBrush(color_), new Point(10, 9));
 
             //Считаем строки
             old_y -= 14;
 
+            SetColor(lua.GetTextColor());
             for (int i = 0; i <= ActorText.Length; i++)
-            {
-
                 if (str < text_width & i != ActorText.Length)
                 {
                     str += ActorText[i].Length;
@@ -152,11 +138,9 @@ namespace Visual
 
                     old_y += 14;
                     num = i;
-                    g.DrawString(ActorText_str, new Font("Arial", 10, FontStyle.Bold), new SolidBrush(Color.White), new Point(10, old_y));
+                    g.DrawString(ActorText_str, new Font("Arial", 10, FontStyle.Bold), new SolidBrush(color_), new Point(10, old_y));
                     ActorText_str = "";
                 }
-            }
-            
             DrawHelper();
         }
         //Load: Game
@@ -257,10 +241,22 @@ namespace Visual
 
         private void LoadList_SelectedIndexChanged(object sender, EventArgs e)
         {
+            string path = lua.userdata + LoadList.SelectedItem.ToString();
             MessageBox.Show(lua.userdata + LoadList.SelectedItem.ToString());
-            sect = Convert.ToInt32(ifs.GetPrivateString (lua.userdata + LoadList.SelectedItem.ToString(), "param", "sect"));
-            sect_old =    ifs.GetPrivateString          (lua.userdata + LoadList.SelectedItem.ToString(), "param", "sect_old");
-            sect_string = ifs.GetPrivateString          (lua.userdata + LoadList.SelectedItem.ToString(), "param", "sect_string");
+
+            sect = Convert.ToInt32(ifs.GetPrivateString         (path, "param", "sect"));
+            sect_old =    ifs.GetPrivateString                  (path, "param", "sect_old");
+            sect_string = ifs.GetPrivateString                  (path, "param", "sect_string");
+            lua.lua["ActorName"] = ifs.GetPrivateString         (path, "param", "name");
+            lua.lua["Text"] = ifs.GetPrivateString              (path, "param", "text");
+            lua.lua.GetTable("Image")[0] = ifs.GetPrivateString (path, "param", "backImage");
+            snd_old =  ifs.GetPrivateString                     (path, "param", "snd_old");
+            lua.lua["ImageNum"] = ifs.GetPrivateString          (path, "param", "pic");
+            lua.lua.GetTable("Color")[1] = ifs.GetPrivateString (path, "param", "name_c");
+            lua.lua.GetTable("Color")[0] = ifs.GetPrivateString (path, "param", "text_c");
+            if (lua.GetImageNum() > 1)
+                for (int i = 1; i < lua.GetImageNum(); i++)
+                   ifs.GetPrivateString(path, "param", "Image_" + Convert.ToString(i));
 
             LoadList.Visible = false;
             MenuUpdate(false);
