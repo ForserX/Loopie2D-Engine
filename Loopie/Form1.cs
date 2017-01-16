@@ -23,7 +23,7 @@ namespace Visual
         System.Windows.Media.MediaPlayer player = new System.Windows.Media.MediaPlayer();
         System.Windows.Forms.PictureBox pictureBox3, pictureBox4;
         Color color_ = new Color();
-        Sound msound = new Sound("GEG.ogg"); // Added 16.01.2017 Lord Wolf
+        Sound msound = new Sound(); // Added 16.01.2017 Lord Wolf
         public Form1()
         {
 
@@ -63,6 +63,8 @@ namespace Visual
 
             this.Width = SystemInformation.VirtualScreen.Size.Width;
             this.Height = SystemInformation.VirtualScreen.Size.Height;
+            msound.SetSound("shadowofchernobyl.ogg");
+            msound.play();
         }
         //Прокомментирую, а то уже забыл, что к чему...
         void NextScene(bool load)
@@ -187,6 +189,7 @@ namespace Visual
             pictureBox2.Visible = false;
             ago.Visible         = true;
             checkBox1.Visible   = true;
+            msound.SetSound("GEG.ogg");
             msound.play();
         }
         void _KeyDown(object sender, KeyEventArgs e)
