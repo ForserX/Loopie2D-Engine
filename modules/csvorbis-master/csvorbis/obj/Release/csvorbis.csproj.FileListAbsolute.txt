@@ -1,0 +1,4 @@
+C:\Users\Павел\Desktop\loopie-2d\modules\csvorbis-master\csvorbis\bin\Release\csvorbis.dll
+C:\Users\Павел\Desktop\loopie-2d\modules\csvorbis-master\csvorbis\bin\Release\csogg.dll
+C:\Users\Павел\Desktop\loopie-2d\modules\csvorbis-master\csvorbis\obj\Release\csvorbis.csprojResolveAssemblyReference.cache
+C:\Users\Павел\Desktop\loopie-2d\modules\csvorbis-master\csvorbis\obj\Release\csvorbis.dll

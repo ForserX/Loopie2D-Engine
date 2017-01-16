@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-
+using SoundSystem;
 namespace Visual
 {
     public partial class Form1 : Form
@@ -23,6 +23,7 @@ namespace Visual
         System.Windows.Media.MediaPlayer player = new System.Windows.Media.MediaPlayer();
         System.Windows.Forms.PictureBox pictureBox3, pictureBox4;
         Color color_ = new Color();
+        Sound msound = new Sound("GEG.ogg"); // Added 16.01.2017 Lord Wolf
         public Form1()
         {
 
@@ -36,6 +37,7 @@ namespace Visual
             pictureBox3.MouseDown += new MouseEventHandler(_MouseDown);
             pictureBox2.MouseDown += new MouseEventHandler(_MouseDown);
             pictureBox4.MouseDown -= new MouseEventHandler(_MouseDown);
+
             checkBox1.Parent = pictureBox4;
             checkBox1.BackColor = Color.Transparent;
             checkBox1.CheckedChanged += new EventHandler(Fullscreen);
@@ -51,10 +53,11 @@ namespace Visual
             label7.Parent = pictureBox4;
 
             pictureBox2.Image = (Image)new Bitmap(pictureBox2.Width, pictureBox2.Height);
+
             //Пока определим тут
             g = Graphics.FromImage(pictureBox2.Image);
             ifs = new INIManager();
-
+            
             pictureBox2.BackgroundImage = new Bitmap(lua.images + ifs.GetPrivateString(@"../setting.ini", "interface", "TextImg"));
             ifs.WritePrivateStringA("param", "snd_old", "0", @"..\userdata\temp.ini");
 
@@ -184,6 +187,7 @@ namespace Visual
             pictureBox2.Visible = false;
             ago.Visible         = true;
             checkBox1.Visible   = true;
+            msound.play();
         }
         void _KeyDown(object sender, KeyEventArgs e)
         {
