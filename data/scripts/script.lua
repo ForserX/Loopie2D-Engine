@@ -1,8 +1,10 @@
 ImageNum = 1
 
 function start()
-  Color[0] = "blue"
-  Color[1] = "red"
+  Font["Name"] = "Arial"
+  Font["Text"] = "Arial"
+  Font["TextColor"] = "blue"
+  Font["NameColor"] = "red"
   Sound = "MyMusic.mp3"
   ActorName = "FX"
   Text = "Саня, жук ленивый, пора тестить! Саня, жук ленивый, пора тестить! Саня, жук ленивый, пора тестить! Саня, жук ленивый, пора тестить!"

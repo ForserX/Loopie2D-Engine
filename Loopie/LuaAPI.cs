@@ -34,7 +34,7 @@ namespace Visual
             lua["ActorName"] = "";
             lua["Sound"] = "0";
             lua["ImageNum"] = 1;
-            lua.NewTable("Color");
+            lua.NewTable("Font");
             lua.NewTable("Image");
 
             for (int i = 0; i < 10; i++)
@@ -58,11 +58,19 @@ namespace Visual
         }
         public string GetTextColor()
         {
-            return (string)lua.GetTable("Color")[0];
+            return (string)lua.GetTable("Font")["TextColor"];
         }
         public string GetNameColor()
         {
-            return (string)lua.GetTable("Color")[1];
+            return (string)lua.GetTable("Font")["NameColor"];
+        }
+        public string GetTextFont()
+        {
+            return (string)lua.GetTable("Font")["Text"];
+        }
+        public string GetNameFont()
+        {
+            return (string)lua.GetTable("Font")["Name"];
         }
 
         public string GetImage(int num)

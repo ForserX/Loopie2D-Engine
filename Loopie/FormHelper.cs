@@ -139,6 +139,7 @@ namespace Visual
                 SaveGame.Visible = false;
                 trygame = true;
                 pictureBox2.Visible = true;
+                msound.stop();
             }
             else
             {
@@ -154,6 +155,7 @@ namespace Visual
                 trygame = false;
                 pictureBox2.Visible = false;
                 pictureBox1.BackgroundImage = new Bitmap(lua.images + "logo.gif");
+                msound.play();
             }
 
             Focus();
