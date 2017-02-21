@@ -23,15 +23,14 @@ namespace Visual
         System.Windows.Media.MediaPlayer player = new System.Windows.Media.MediaPlayer();
         System.Windows.Forms.PictureBox pictureBox3, pictureBox4;
         Color color_ = new Color();
-        Sound msound = new Sound(); // Added 16.01.2017 Lord Wolf
-        public Form1()
+        Timer tmr = new Timer() { Interval = 500 };
+        void tmr_Tick(object sender, EventArgs e)
         {
-
-            InitializeComponent();
+            InitializeComponentTry();
 
             this.KeyDown += new KeyEventHandler(_KeyDown);
 
-            pictureBox4 =  pictureBox3 = pictureBox1;
+            pictureBox4 = pictureBox3 = pictureBox1;
 
             pictureBox1.MouseDown += new MouseEventHandler(_MouseDown);
             pictureBox3.MouseDown += new MouseEventHandler(_MouseDown);
@@ -46,9 +45,10 @@ namespace Visual
             panel1.Parent = pictureBox1;
             pictureBox2.BackColor = Color.Transparent;
             pictureBox2.Parent = pictureBox1;
-            label1.Parent = panel1;
-            label2.Parent = panel1;
-            label3.Parent = panel1;
+
+            for (int i = 0; i < 3; i++)
+                label_text[i].Parent = panel1;
+
             label6.Parent = pictureBox4;
             label7.Parent = pictureBox4;
 
@@ -57,14 +57,20 @@ namespace Visual
             //Пока определим тут
             g = Graphics.FromImage(pictureBox2.Image);
             ifs = new INIManager();
-            
+
             pictureBox2.BackgroundImage = new Bitmap(lua.images + ifs.GetPrivateString(@"../setting.ini", "interface", "TextImg"));
             ifs.WritePrivateStringA("param", "snd_old", "0", @"..\userdata\temp.ini");
 
             this.Width = SystemInformation.VirtualScreen.Size.Width;
             this.Height = SystemInformation.VirtualScreen.Size.Height;
-            msound.SetSound("shadowofchernobyl.ogg");
-            msound.play();
+
+            tmr.Stop();
+        }
+        public Form1()
+        {
+            InitializeComponent();
+            tmr.Tick += tmr_Tick;
+            tmr.Start();
         }
         //Прокомментирую, а то уже забыл, что к чему...
         void NextScene(bool load)
@@ -95,9 +101,9 @@ namespace Visual
                 lua.LuaFunc(ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "name"), ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "func"));
             else if (ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "type") == "Question")
             {
-                label1.Text = ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "q1");
-                label2.Text = ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "q2");
-                label3.Text = ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "q3");
+                for(int j=0; j < 3; j++)
+                    label_text[j].Text = ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "q" + Convert.ToString(j + 1));
+
                 Label_Helper(true);
             }
             heroname = lua.GetName();
@@ -189,8 +195,6 @@ namespace Visual
             pictureBox2.Visible = false;
             ago.Visible         = true;
             checkBox1.Visible   = true;
-            msound.SetSound("GEG.ogg");
-            msound.play();
         }
         void _KeyDown(object sender, KeyEventArgs e)
         {
