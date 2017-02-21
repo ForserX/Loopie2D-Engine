@@ -98,32 +98,26 @@ namespace Visual
             if (q)
             {
                 panel1.Location = new System.Drawing.Point((this.Width - panel1.Width) / 2, panel1.Location.Y);
-                if (label1.Width >= panel1.Width)
-                    panel1.Width = label1.Width + 10;
-                else if (label2.Width >= panel1.Width)
-                    panel1.Width = label2.Width + 10;
-                else if (label3.Width >= panel1.Width)
-                    panel1.Width = label3.Width + 10;
 
+                for (int j = 0; j < 3; j++)
+                {
+                    if (label_text[j].Width >= panel1.Width)
+                        panel1.Width = label_text[j].Width + 10;
 
-                label1.Location = new System.Drawing.Point((panel1.Width - label1.Width) / 2, label1.Location.Y);
-                label2.Location = new System.Drawing.Point((panel1.Width - label2.Width) / 2, label2.Location.Y);
-                label3.Location = new System.Drawing.Point((panel1.Width - label3.Width) / 2, label3.Location.Y);
+                    label_text[j].Location = new System.Drawing.Point((panel1.Width - label_text[j].Width) / 2, label_text[j].Location.Y);
+                    label_text[j].Visible = true;
+                }
+
                 panel1.Height = 104;
-
-                label1.Visible = true;
-                label2.Visible = true;
-                label3.Visible = true;
                 panel1.Visible = true;
 
                 sect_label += 1;
             }
             else
             {
+                for (int j=0; j < 3; j++)
+                    label_text[j].Visible = false;
 
-                label1.Visible = false;
-                label2.Visible = false;
-                label3.Visible = false;
                 panel1.Visible = false;
             }
         }
@@ -131,31 +125,30 @@ namespace Visual
         {
             if (!q)
             {
-                NewGame.Visible = false;
-                Options.Visible = false;
-                _exit.Visible = false;
-                Next.Visible = false;
-                label4.Visible = false;
+                NewGame.Visible  =
+                Options.Visible  = 
+                _exit.Visible    = 
+                Next.Visible     = 
+                label4.Visible   = 
                 SaveGame.Visible = false;
-                trygame = true;
+
+                trygame =
                 pictureBox2.Visible = true;
-                msound.stop();
             }
             else
             {
-                NewGame.Visible = true;
-                Options.Visible = true;
-                label4.Visible = true;
-                _exit.Visible = true;
+                NewGame.Visible  = 
+                Options.Visible  = 
+                label4.Visible   = 
+                _exit.Visible    = 
                 SaveGame.Visible = true;
 
                 if (sect != 0)
                     Next.Visible = true;
 
-                trygame = false;
+                trygame =
                 pictureBox2.Visible = false;
                 pictureBox1.BackgroundImage = new Bitmap(lua.images + "logo.gif");
-                msound.play();
             }
 
             Focus();
