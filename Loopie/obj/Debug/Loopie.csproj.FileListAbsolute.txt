@@ -7,3 +7,12 @@ C:\Users\Павел\Desktop\loopie-2d\Loopie\obj\Debug\Loopie.Properties.Resourc
 C:\Users\Павел\Desktop\loopie-2d\Loopie\obj\Debug\Loopie.csproj.GenerateResource.Cache
 C:\Users\Павел\Desktop\loopie-2d\Loopie\obj\Debug\Loopie.exe
 C:\Users\Павел\Desktop\loopie-2d\Loopie\obj\Debug\Loopie.pdb
+F:\loopie-2d\bins\Loopie.exe.config
+F:\loopie-2d\Loopie\obj\Debug\Loopie.exe
+F:\loopie-2d\Loopie\obj\Debug\Loopie.pdb
+F:\loopie-2d\bins\Loopie.exe
+F:\loopie-2d\bins\Loopie.pdb
+F:\loopie-2d\Loopie\obj\Debug\Loopie.csprojResolveAssemblyReference.cache
+F:\loopie-2d\Loopie\obj\Debug\Visual.Form1.resources
+F:\loopie-2d\Loopie\obj\Debug\Loopie.Properties.Resources.resources
+F:\loopie-2d\Loopie\obj\Debug\Loopie.csproj.GenerateResource.Cache

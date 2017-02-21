@@ -119,7 +119,7 @@ namespace Visual
                 snd = true;
             }
             //Draw ActorName
-            g.DrawString(heroname, new Font("Comic Sans ms", 10), new SolidBrush(color_), new Point(10, 9));
+            g.DrawString(heroname, new Font(lua.GetNameFont(), 10), new SolidBrush(color_), new Point(10, 9));
 
             //Считаем строки
             old_y -= 14;
@@ -143,7 +143,7 @@ namespace Visual
 
                     old_y += 14;
                     num = i;
-                    g.DrawString(ActorText_str, new Font("Arial", 10, FontStyle.Bold), new SolidBrush(color_), new Point(10, old_y));
+                    g.DrawString(ActorText_str, new Font(lua.GetTextFont(), 10, FontStyle.Bold), new SolidBrush(color_), new Point(10, old_y));
                     ActorText_str = "";
                 }
             DrawHelper();
