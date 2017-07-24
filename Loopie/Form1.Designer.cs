@@ -44,7 +44,7 @@ namespace Visual
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.ShowIcon = false;
-            this.BackgroundImage = new Bitmap(lua.images + "logo.png");
+            this.BackgroundImage = new Bitmap(lua.images + "logo.gif");
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -54,9 +54,6 @@ namespace Visual
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.label_text[0] = new System.Windows.Forms.Label();
-            this.label_text[1] = new System.Windows.Forms.Label();
-            this.label_text[2] = new System.Windows.Forms.Label();
             this._exit = new System.Windows.Forms.Label();
             this.Options = new System.Windows.Forms.Label();
             this.NewGame = new System.Windows.Forms.Label();
@@ -104,41 +101,8 @@ namespace Visual
             this.pictureBox2.TabStop = false;
             this.pictureBox2.Visible = false;
             // 
-            // label1
+            // label_text[0]
             // 
-            this.label_text[0].AutoSize = true;
-            this.label_text[0].BackColor = System.Drawing.Color.Transparent;
-            this.label_text[0].Location = new System.Drawing.Point(80, 22);
-            this.label_text[0].Name = "label1";
-            this.label_text[0].Size = new System.Drawing.Size(35, 13);
-            this.label_text[0].TabIndex = 3;
-            this.label_text[0].Text = "label1";
-            this.label_text[0].Visible = false;
-            this.label_text[0].Click += new System.EventHandler(this.label1_Click);
-            // 
-            // label2
-            // 
-            this.label_text[1].AutoSize = true;
-            this.label_text[1].BackColor = System.Drawing.Color.Transparent;
-            this.label_text[1].Location = new System.Drawing.Point(80, 47);
-            this.label_text[1].Name = "label2";
-            this.label_text[1].Size = new System.Drawing.Size(35, 13);
-            this.label_text[1].TabIndex = 4;
-            this.label_text[1].Text = "label2";
-            this.label_text[1].Visible = false;
-            this.label_text[1].Click += new System.EventHandler(this.label2_Click);
-            // 
-            // label3
-            // 
-            this.label_text[2].AutoSize = true;
-            this.label_text[2].BackColor = System.Drawing.Color.Transparent;
-            this.label_text[2].Location = new System.Drawing.Point(80, 73);
-            this.label_text[2].Name = "label3";
-            this.label_text[2].Size = new System.Drawing.Size(35, 13);
-            this.label_text[2].TabIndex = 5;
-            this.label_text[2].Text = "label3";
-            this.label_text[2].Visible = false;
-            this.label_text[2].Click += new System.EventHandler(this.label3_Click);
             // 
             // _exit
             // 
@@ -227,8 +191,6 @@ namespace Visual
             this.panel1.Controls.Add(this.SaveButton);
             this.panel1.Controls.Add(this.textBox1);
             this.panel1.Controls.Add(this.label5);
-            for (Int16 i = 0; i < 3; i++)
-                this.panel1.Controls.Add(this.label_text[i]);
             this.panel1.Location = new System.Drawing.Point(449, 144);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(199, 104);
@@ -385,7 +347,6 @@ namespace Visual
         #endregion
         public System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.Label[] label_text = new System.Windows.Forms.Label[3];
         private System.Windows.Forms.Label _exit;
         private System.Windows.Forms.Label Options;
         private System.Windows.Forms.Label NewGame;

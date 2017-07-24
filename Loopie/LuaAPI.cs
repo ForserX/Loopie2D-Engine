@@ -35,6 +35,7 @@ namespace Visual
             lua["Sound"] = "0";
             lua["ImageNum"] = 1;
             lua.NewTable("Font");
+            lua.NewTable("Scene");
             lua.NewTable("Image");
 
             for (int i = 0; i < 10; i++)
@@ -63,6 +64,14 @@ namespace Visual
         public string GetNameColor()
         {
             return (string)lua.GetTable("Font")["NameColor"];
+        }
+        public int GetLabelNum()
+        {
+            return (int)(double)lua.GetTable("Scene")["Options"];
+        }
+        public string GetLabelText(int num)
+        {
+            return (string)lua.GetTable("Scene")["Option" + Convert.ToString(num)];
         }
         public string GetTextFont()
         {

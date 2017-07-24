@@ -93,30 +93,30 @@ namespace Visual
                 break;
             }
         }
-        private void Label_Helper(bool q)
+        private void Label_Helper(bool q, int num)
         {
             if (q)
             {
                 panel1.Location = new System.Drawing.Point((this.Width - panel1.Width) / 2, panel1.Location.Y);
 
-                for (int j = 0; j < 3; j++)
+                for (int j = 0; j < num; j++)
                 {
+                    this.panel1.Controls.Add(this.label_text[j]);
                     if (label_text[j].Width >= panel1.Width)
                         panel1.Width = label_text[j].Width + 10;
 
                     label_text[j].Location = new System.Drawing.Point((panel1.Width - label_text[j].Width) / 2, label_text[j].Location.Y);
-                    label_text[j].Visible = true;
                 }
 
-                panel1.Height = 104;
+                panel1.Height = 30 + 15 * num;
                 panel1.Visible = true;
 
                 sect_label += 1;
             }
             else
             {
-                for (int j=0; j < 3; j++)
-                    label_text[j].Visible = false;
+                for (int j = 0; j < num; j++)
+                    label_text[j].Dispose();
 
                 panel1.Visible = false;
             }

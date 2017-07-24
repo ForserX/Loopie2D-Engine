@@ -14,7 +14,7 @@ namespace Visual
     public partial class Form1 : Form
     {
         private INIManager ifs;
-        private int sect, sect_next, sect_label, sect_lb_old, text_width = 115;
+        private int sect, sect_next, sect_label, sect_lb_old, text_width = 115, lnum;
         string heroname, ActorText_str = "", sect_old, sect_string, snd_old = "0";
         string [] ActorText;
         bool trygame, snd = false;
@@ -23,9 +23,11 @@ namespace Visual
         System.Windows.Media.MediaPlayer player = new System.Windows.Media.MediaPlayer();
         System.Windows.Forms.PictureBox pictureBox3, pictureBox4;
         Color color_ = new Color();
-        Timer tmr = new Timer() { Interval = 500 };
-        void tmr_Tick(object sender, EventArgs e)
+        private System.Windows.Forms.Label[] label_text;
+
+        public Form1()
         {
+            InitializeComponent();
             InitializeComponentTry();
 
             this.KeyDown += new KeyEventHandler(_KeyDown);
@@ -46,11 +48,8 @@ namespace Visual
             pictureBox2.BackColor = Color.Transparent;
             pictureBox2.Parent = pictureBox1;
 
-            for (int i = 0; i < 3; i++)
-                label_text[i].Parent = panel1;
-
             label6.Parent = pictureBox4;
-            label7.Parent = pictureBox4;
+            label7.Parent = pictureBox4; 
 
             pictureBox2.Image = (Image)new Bitmap(pictureBox2.Width, pictureBox2.Height);
 
@@ -64,17 +63,12 @@ namespace Visual
             this.Width = SystemInformation.VirtualScreen.Size.Width;
             this.Height = SystemInformation.VirtualScreen.Size.Height;
 
-            tmr.Stop();
-        }
-        public Form1()
-        {
-            InitializeComponent();
-            tmr.Tick += tmr_Tick;
-            tmr.Start();
         }
         //Прокомментирую, а то уже забыл, что к чему...
         void NextScene(bool load)
         {
+            lua.lua.Pop();
+
             //Флажок для лоадера
             if (!load)
             {
@@ -94,17 +88,29 @@ namespace Visual
             ifs.WritePrivateStringA("param", "sect_string", sect_string, lua.userdata + "temp.ini");
             ifs.WritePrivateStringA("param", "sect_old", sect_old, lua.userdata + "temp.ini");
             
-            //Подгружаем значения 
+            //Load vars
             pictureBox2.Image = (Image)new Bitmap(pictureBox2.Width, pictureBox2.Height);
             g = Graphics.FromImage(pictureBox2.Image);
-            if (ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "type") == "LuaScript")
-                lua.LuaFunc(ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "name"), ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "func"));
-            else if (ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "type") == "Question")
+            lua.LuaFunc(ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "name"), ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "func"));
+            if (ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "type") == "Question")
             {
-                for(int j=0; j < 3; j++)
-                    label_text[j].Text = ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "q" + Convert.ToString(j + 1));
-
-                Label_Helper(true);
+                int lnum = lua.GetLabelNum();
+                label_text = new System.Windows.Forms.Label[lnum]; // Set size
+                for (int i = 0; i < lnum; i++)
+                {
+                    label_text[i] = new System.Windows.Forms.Label();
+                    label_text[i].AutoSize = true;
+                    label_text[i].Name = Convert.ToString(i + 1);
+                    label_text[i].BackColor = System.Drawing.Color.Transparent;
+                    label_text[i].Location = new System.Drawing.Point(80, 22 + 10 * i);
+                    label_text[i].TabIndex = 3 + i;
+                    label_text[i].Visible = true;
+                    label_text[i].Click += new System.EventHandler(this.label1_Click);
+                    label_text[i].Parent = panel1;
+                    label_text[i].Text = lua.GetLabelText(i);
+                }
+                Label_Helper(true, lnum);
+                return;
             }
             heroname = lua.GetName();
             ActorText = lua.GetText().Split(' ');
@@ -131,7 +137,7 @@ namespace Visual
             old_y -= 14;
 
             SetColor(lua.GetTextColor());
-            for (int i = 0; i <= ActorText.Length; i++)
+            for (var i = 0; i <= ActorText.Length; i++)
                 if (str < text_width & i != ActorText.Length)
                 {
                     str += ActorText[i].Length;
@@ -222,20 +228,9 @@ namespace Visual
     
         private void label1_Click(object sender, EventArgs e)
         {
-            sect_next = 1;
-            Label_Helper(false);
-            NextScene(false);
-        }
-        private void label2_Click(object sender, EventArgs e)
-        {
-            sect_next = 2;
-            Label_Helper(false);
-            NextScene(false);
-        }
-        private void label3_Click(object sender, EventArgs e)
-        {
-            sect_next = 3;
-            Label_Helper(false);
+            Label lab = (Label)sender;
+            sect_next = Convert.ToInt32(lab.Name);
+            Label_Helper(false, lnum);
             NextScene(false);
         }
         private void NewGame_Click(object sender, EventArgs e)

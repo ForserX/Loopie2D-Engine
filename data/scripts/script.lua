@@ -7,12 +7,19 @@ function start()
   Font["NameColor"] = "red"
   Sound = "MyMusic.mp3"
   ActorName = "FX"
-  Text = "Саня, жук ленивый, пора тестить! Саня, жук ленивый, пора тестить! Саня, жук ленивый, пора тестить! Саня, жук ленивый, пора тестить!"
+  Text = "Итак, господа, проверяем первую сцену."
   Image[0] = "test.jpg";
 end
 
+function question1()
+	Scene["Options"] = 5
+	Scene["Option2"] = "Не жми"
+	Scene["Option1"] = "Жми"
+	Scene["Option3"] = "Не жми"
+	Scene["Option4"] = "Не жми"
+	Scene["Option0"] = "Не жми"
+end
+
 function start_2()
---  Form:SetText("И сейчас пашет.")
---  Form:SetName(IFS:GetPrivateString("..\\data\\configs\\test.ini", "1", "type"))
---  Form:SetBackImage("test.jpg")
+  Text = "Итак, господа, проверяем вторую сцену."
 end
