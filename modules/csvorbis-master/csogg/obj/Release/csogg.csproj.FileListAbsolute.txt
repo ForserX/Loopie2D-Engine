@@ -1,3 +1,0 @@
-C:\Users\Павел\Desktop\loopie-2d\modules\csvorbis-master\csogg\bin\Release\csogg.dll
-C:\Users\Павел\Desktop\loopie-2d\modules\csvorbis-master\csogg\obj\Release\csogg.csprojResolveAssemblyReference.cache
-C:\Users\Павел\Desktop\loopie-2d\modules\csvorbis-master\csogg\obj\Release\csogg.dll
