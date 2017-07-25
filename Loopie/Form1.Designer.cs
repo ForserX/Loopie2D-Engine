@@ -53,20 +53,34 @@ namespace Visual
             this.Center = new System.Windows.Forms.PictureBox();
             this.CRight = new System.Windows.Forms.PictureBox();
             this.ARight = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.MessBox_1 = new System.Windows.Forms.PictureBox();
             this.СancelButton = new System.Windows.Forms.Label();
             this.SaveButton = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.MessBox_2 = new System.Windows.Forms.PictureBox();
+            this.MessBox_3 = new System.Windows.Forms.PictureBox();
+            this.MessBox_4 = new System.Windows.Forms.PictureBox();
+            this.MessBox_5 = new System.Windows.Forms.PictureBox();
+            this.SpeakerName = new System.Windows.Forms.Label();
+            this.mess_1 = new System.Windows.Forms.Label();
+            this.mess_2 = new System.Windows.Forms.Label();
+            this.mess_3 = new System.Windows.Forms.Label();
+            this.mess_4 = new System.Windows.Forms.Label();
+            this.mess_5 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ALeft)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CLeft)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Center)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CRight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ARight)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MessBox_1)).BeginInit();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.MessBox_2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MessBox_3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MessBox_4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MessBox_5)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -234,7 +248,6 @@ namespace Visual
             this.ALeft.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.ALeft.TabIndex = 20;
             this.ALeft.TabStop = false;
-            this.ALeft.Visible = false;
             // 
             // CLeft
             // 
@@ -247,57 +260,56 @@ namespace Visual
             this.CLeft.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.CLeft.TabIndex = 21;
             this.CLeft.TabStop = false;
-            this.CLeft.Visible = false;
             // 
             // Center
             // 
             this.Center.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.Center.BackColor = System.Drawing.Color.Transparent;
             this.Center.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.Center.Location = new System.Drawing.Point(393, 64);
+            this.Center.Location = new System.Drawing.Point(393, 61);
             this.Center.Name = "Center";
-            this.Center.Size = new System.Drawing.Size(200, 464);
+            this.Center.Size = new System.Drawing.Size(200, 467);
+            this.Center.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.Center.TabIndex = 22;
             this.Center.TabStop = false;
             // 
             // CRight
             // 
-            this.CRight.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.CRight.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.CRight.BackColor = System.Drawing.Color.Transparent;
             this.CRight.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.CRight.Location = new System.Drawing.Point(593, 61);
+            this.CRight.Location = new System.Drawing.Point(592, 61);
             this.CRight.Name = "CRight";
-            this.CRight.Size = new System.Drawing.Size(193, 467);
+            this.CRight.Size = new System.Drawing.Size(195, 467);
             this.CRight.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.CRight.TabIndex = 23;
             this.CRight.TabStop = false;
-            this.CRight.Visible = false;
             // 
             // ARight
             // 
-            this.ARight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.ARight.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.ARight.BackColor = System.Drawing.Color.Transparent;
-            this.ARight.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ARight.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ARight.Location = new System.Drawing.Point(782, 61);
             this.ARight.Name = "ARight";
             this.ARight.Size = new System.Drawing.Size(197, 467);
-            this.ARight.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.ARight.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.ARight.TabIndex = 24;
             this.ARight.TabStop = false;
-            this.ARight.Visible = false;
             // 
-            // pictureBox2
+            // MessBox_1
             // 
-            this.pictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox2.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox2.Location = new System.Drawing.Point(16, 382);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(947, 134);
-            this.pictureBox2.TabIndex = 25;
-            this.pictureBox2.TabStop = false;
-            this.pictureBox2.Visible = false;
+            this.MessBox_1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.MessBox_1.BackColor = System.Drawing.Color.Transparent;
+            this.MessBox_1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("MessBox_1.BackgroundImage")));
+            this.MessBox_1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.MessBox_1.Location = new System.Drawing.Point(16, 321);
+            this.MessBox_1.Name = "MessBox_1";
+            this.MessBox_1.Size = new System.Drawing.Size(182, 134);
+            this.MessBox_1.TabIndex = 25;
+            this.MessBox_1.TabStop = false;
             // 
             // СancelButton
             // 
@@ -358,6 +370,126 @@ namespace Visual
             this.panel1.TabIndex = 27;
             this.panel1.Visible = false;
             // 
+            // MessBox_2
+            // 
+            this.MessBox_2.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.MessBox_2.BackColor = System.Drawing.Color.Transparent;
+            this.MessBox_2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("MessBox_2.BackgroundImage")));
+            this.MessBox_2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.MessBox_2.Location = new System.Drawing.Point(0, 321);
+            this.MessBox_2.Name = "MessBox_2";
+            this.MessBox_2.Size = new System.Drawing.Size(197, 134);
+            this.MessBox_2.TabIndex = 28;
+            this.MessBox_2.TabStop = false;
+            // 
+            // MessBox_3
+            // 
+            this.MessBox_3.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.MessBox_3.BackColor = System.Drawing.Color.Transparent;
+            this.MessBox_3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("MessBox_3.BackgroundImage")));
+            this.MessBox_3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.MessBox_3.Location = new System.Drawing.Point(0, 321);
+            this.MessBox_3.Name = "MessBox_3";
+            this.MessBox_3.Size = new System.Drawing.Size(201, 134);
+            this.MessBox_3.TabIndex = 29;
+            this.MessBox_3.TabStop = false;
+            // 
+            // MessBox_4
+            // 
+            this.MessBox_4.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.MessBox_4.BackColor = System.Drawing.Color.Transparent;
+            this.MessBox_4.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("MessBox_4.BackgroundImage")));
+            this.MessBox_4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.MessBox_4.Location = new System.Drawing.Point(0, 321);
+            this.MessBox_4.Name = "MessBox_4";
+            this.MessBox_4.Size = new System.Drawing.Size(195, 134);
+            this.MessBox_4.TabIndex = 30;
+            this.MessBox_4.TabStop = false;
+            // 
+            // MessBox_5
+            // 
+            this.MessBox_5.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.MessBox_5.BackColor = System.Drawing.Color.Transparent;
+            this.MessBox_5.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("MessBox_5.BackgroundImage")));
+            this.MessBox_5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.MessBox_5.Location = new System.Drawing.Point(-1, 321);
+            this.MessBox_5.Name = "MessBox_5";
+            this.MessBox_5.Size = new System.Drawing.Size(182, 134);
+            this.MessBox_5.TabIndex = 31;
+            this.MessBox_5.TabStop = false;
+            // 
+            // SpeakerName
+            // 
+            this.SpeakerName.AutoSize = true;
+            this.SpeakerName.BackColor = System.Drawing.Color.Transparent;
+            this.SpeakerName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.SpeakerName.Location = new System.Drawing.Point(9, 9);
+            this.SpeakerName.Name = "SpeakerName";
+            this.SpeakerName.Size = new System.Drawing.Size(86, 13);
+            this.SpeakerName.TabIndex = 32;
+            this.SpeakerName.Text = "SpeakerName";
+            this.SpeakerName.Visible = false;
+            // 
+            // mess_1
+            // 
+            this.mess_1.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.mess_1.AutoSize = true;
+            this.mess_1.BackColor = System.Drawing.Color.Transparent;
+            this.mess_1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.mess_1.Location = new System.Drawing.Point(9, 25);
+            this.mess_1.MaximumSize = new System.Drawing.Size(190, 0);
+            this.mess_1.Name = "mess_1";
+            this.mess_1.Size = new System.Drawing.Size(0, 13);
+            this.mess_1.TabIndex = 33;
+            // 
+            // mess_2
+            // 
+            this.mess_2.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.mess_2.AutoSize = true;
+            this.mess_2.BackColor = System.Drawing.Color.Transparent;
+            this.mess_2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.mess_2.Location = new System.Drawing.Point(0, 25);
+            this.mess_2.MaximumSize = new System.Drawing.Size(200, 0);
+            this.mess_2.Name = "mess_2";
+            this.mess_2.Size = new System.Drawing.Size(0, 13);
+            this.mess_2.TabIndex = 34;
+            // 
+            // mess_3
+            // 
+            this.mess_3.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.mess_3.AutoSize = true;
+            this.mess_3.BackColor = System.Drawing.Color.Transparent;
+            this.mess_3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.mess_3.Location = new System.Drawing.Point(0, 25);
+            this.mess_3.MaximumSize = new System.Drawing.Size(200, 0);
+            this.mess_3.Name = "mess_3";
+            this.mess_3.Size = new System.Drawing.Size(0, 13);
+            this.mess_3.TabIndex = 35;
+            // 
+            // mess_4
+            // 
+            this.mess_4.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.mess_4.AutoSize = true;
+            this.mess_4.BackColor = System.Drawing.Color.Transparent;
+            this.mess_4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.mess_4.Location = new System.Drawing.Point(0, 25);
+            this.mess_4.MaximumSize = new System.Drawing.Size(200, 0);
+            this.mess_4.Name = "mess_4";
+            this.mess_4.Size = new System.Drawing.Size(0, 13);
+            this.mess_4.TabIndex = 36;
+            // 
+            // mess_5
+            // 
+            this.mess_5.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.mess_5.AutoSize = true;
+            this.mess_5.BackColor = System.Drawing.Color.Transparent;
+            this.mess_5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.mess_5.Location = new System.Drawing.Point(0, 25);
+            this.mess_5.MaximumSize = new System.Drawing.Size(200, 0);
+            this.mess_5.Name = "mess_5";
+            this.mess_5.Size = new System.Drawing.Size(0, 13);
+            this.mess_5.TabIndex = 37;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -365,8 +497,18 @@ namespace Visual
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(979, 528);
             this.ControlBox = false;
+            this.Controls.Add(this.mess_5);
+            this.Controls.Add(this.mess_4);
+            this.Controls.Add(this.mess_3);
+            this.Controls.Add(this.mess_2);
+            this.Controls.Add(this.mess_1);
+            this.Controls.Add(this.SpeakerName);
+            this.Controls.Add(this.MessBox_5);
+            this.Controls.Add(this.MessBox_4);
+            this.Controls.Add(this.MessBox_3);
+            this.Controls.Add(this.MessBox_2);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.pictureBox2);
+            this.Controls.Add(this.MessBox_1);
             this.Controls.Add(this.ARight);
             this.Controls.Add(this.CRight);
             this.Controls.Add(this.Center);
@@ -398,9 +540,13 @@ namespace Visual
             ((System.ComponentModel.ISupportInitialize)(this.Center)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CRight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ARight)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MessBox_1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.MessBox_2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MessBox_3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MessBox_4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MessBox_5)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -423,12 +569,22 @@ namespace Visual
         private PictureBox Center;
         private PictureBox CRight;
         private PictureBox ARight;
-        private PictureBox pictureBox2;
         private Label СancelButton;
         private Label SaveButton;
         private TextBox textBox1;
         private Label label5;
         private Panel panel1;
+        private Label SpeakerName;
+        private Label mess_1;
+        private Label mess_2;
+        private Label mess_3;
+        private Label mess_4;
+        private Label mess_5;
+        private PictureBox MessBox_1;
+        private PictureBox MessBox_2;
+        private PictureBox MessBox_3;
+        private PictureBox MessBox_4;
+        private PictureBox MessBox_5;
     }
 }
 

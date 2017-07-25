@@ -14,12 +14,11 @@ namespace Visual
     public partial class Form1 : Form
     {
         private INIManager ifs;
-        private int sect, sect_next, sect_label, sect_lb_old, text_width = 115, lnum, inum;
+        private int sect, sect_next, sect_label, sect_lb_old, text_width = 27, lnum, inum;
         string heroname, ActorText_str = "", sect_old, sect_string, snd_old = "0";
         string [] ActorText;
         bool trygame, snd = false;
         LuaAPI lua = new LuaAPI();
-        Graphics g;
         System.Windows.Media.MediaPlayer player = new System.Windows.Media.MediaPlayer();
         Color color_ = new Color();
         private System.Windows.Forms.Label[] label_text;
@@ -37,7 +36,11 @@ namespace Visual
             CRight.MouseDown += new MouseEventHandler(_MouseDown);
             ARight.MouseDown += new MouseEventHandler(_MouseDown);
             pictureBox1.MouseDown += new MouseEventHandler(_MouseDown);
-            pictureBox2.MouseDown += new MouseEventHandler(_MouseDown);
+            MessBox_1.MouseDown += new MouseEventHandler(_MouseDown);
+            MessBox_2.MouseDown += new MouseEventHandler(_MouseDown);
+            MessBox_3.MouseDown += new MouseEventHandler(_MouseDown);
+            MessBox_4.MouseDown += new MouseEventHandler(_MouseDown);
+            MessBox_5.MouseDown += new MouseEventHandler(_MouseDown);
 
             checkBox1.Parent = pictureBox1;
             checkBox1.BackColor = Color.Transparent;
@@ -48,12 +51,21 @@ namespace Visual
 
             label6.Parent = pictureBox1;
             label7.Parent = pictureBox1;
-            //pictureBox2.Parent = pictureBox1;
+            SpeakerName.Parent = MessBox_1;
             checkBox1.Parent = pictureBox1;
-            pictureBox2.Image = (Image)new Bitmap(pictureBox2.Width, pictureBox2.Height);
+            MessBox_1.Parent = ALeft;
+            MessBox_2.Parent = CLeft;
+            MessBox_3.Parent = Center;
+            MessBox_4.Parent = CRight;
+            MessBox_5.Parent = ARight;
 
-            //this.Width = SystemInformation.VirtualScreen.Size.Width;
-           // this.Height = SystemInformation.VirtualScreen.Size.Height;
+            mess_1.Parent = MessBox_1;
+            mess_2.Parent = MessBox_2;
+            mess_3.Parent = MessBox_3;
+            mess_4.Parent = MessBox_4;
+            mess_5.Parent = MessBox_5;
+
+            //mess_1.Visible = mess_2.Visible = mess_3.Visible = mess_4.Visible = mess_5.Visible = true;
 
             ALeft.Size = new System.Drawing.Size(ppos, ALeft.Size.Height);
             CLeft.Size = new System.Drawing.Size(ppos, ALeft.Size.Height);
@@ -68,13 +80,9 @@ namespace Visual
             ARight.Location = new System.Drawing.Point(ppos * 4, ARight.Location.Y);
 
             //Пока определим тут
-            g = Graphics.FromImage(pictureBox2.Image);
             ifs = new INIManager();
 
-            pictureBox2.BackgroundImage = new Bitmap(lua.images + ifs.GetPrivateString(@"../setting.ini", "interface", "TextImg"));
             ifs.WritePrivateStringA("param", "snd_old", "0", @"..\userdata\temp.ini");
-          //  MessageBox.Show(Convert.ToString(ppos));
-
         }
         //Прокомментирую, а то уже забыл, что к чему...
         void NextScene(bool load)
@@ -101,8 +109,6 @@ namespace Visual
             ifs.WritePrivateStringA("param", "sect_old", sect_old, lua.userdata + "temp.ini");
 
             //Load vars
-            pictureBox2.Image = (Image)new Bitmap(pictureBox2.Width, pictureBox2.Height);
-            g = Graphics.FromImage(pictureBox2.Image);
             lua.LuaFunc(ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "name"), ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "func"));
             if (ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "type") == "Question")
             {
@@ -127,10 +133,6 @@ namespace Visual
             heroname = lua.GetName();
             ActorText = lua.GetText().Split(' ');
 
-            //Для отступов строк
-            int old_y = 35,
-                str = 0,
-                num = 0;
 
             //Определяем цвет
             SetColor(lua.GetNameColor());
@@ -143,77 +145,73 @@ namespace Visual
                 snd = true;
             }
             //Draw ActorName
-            g.DrawString(heroname, new Font(lua.GetNameFont(), 10), new SolidBrush(color_), new Point(10, 9));
+            SpeakerName.Visible = true;
+            SpeakerName.ForeColor = color_;
+            SpeakerName.Text = heroname;
 
-            //Считаем строки
-            old_y -= 14;
+            //Для отступов строк
+            int str = 0, lb = 0, num = 0;
+            string ActorText_tstr = "";
 
             SetColor(lua.GetTextColor());
-            for (var i = 0; i <= ActorText.Length; i++)
-                if (str < text_width & i != ActorText.Length)
-                {
-                    str += ActorText[i].Length;
-                    if (i != ActorText.Length - 1)
-                        if (str + ActorText[i + 1].Length >= text_width)
-                            str = 1116;
-                }
-                else
-                {
-                    for (int j = num + 1; j <= i; j++)
-                        ActorText_str += ActorText[j - 1] + " ";
+            mess_1.ForeColor = mess_2.ForeColor = mess_3.ForeColor = mess_4.ForeColor = mess_5.ForeColor = color_;
 
-                    if (i != ActorText.Length)
-                        str = ActorText[i].Length;
-
-                    old_y += 14;
-                    num = i;
-                    g.DrawString(ActorText_str, new Font(lua.GetTextFont(), 10, FontStyle.Bold), new SolidBrush(color_), new Point(10, old_y));
-                    ActorText_str = "";
-                }
-            // Drawing img
+            //Считаем строки
+            mess_1.Text = mess_2.Text = mess_3.Text = mess_4.Text = mess_5.Text = "";
+            for (int it = 0; it <= ActorText.Length; it++)
             {
-                this.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(0));
-                pictureBox1.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(0));
-                ALeft.Visible = CLeft.Visible = Center.Visible = CRight.Visible = ARight.Visible = false;
-                inum = lua.GetImgNum() - 1;
-                if (inum > -1)
+                if (it != ActorText.Length)
                 {
-                    //pictureBox1.Image = new Bitmap(lua.images + lua.GetImageText(1));
-                    if (inum > 0)
+                    str += ActorText[it].Length + 1;
+                    if (str < text_width)
                     {
-                        for (int it = 1; it <= inum; it++)
+                        if (ActorText_tstr != "")
                         {
-                            int Pos = lua.GetImageTextPos(it);
-                            if (Pos == 1)
-                            {
-                                ALeft.Visible = true;
-                              //  ALeft.Height = new Bitmap(lua.images + lua.GetImageText(it)).Size.Height;
-                                ALeft.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(it));
-                            }
-                            if(Pos == 2) 
-                            {
-                                CLeft.Visible = true;
-                              //  CLeft.Height = new Bitmap(lua.images + lua.GetImageText(it)).Size.Height;
-                                CLeft.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(it));
-                            }
-                            if(Pos == 3) 
-                            {
-                                Center.Visible = true;
-                              //  Center.Height = new Bitmap(lua.images + lua.GetImageText(it)).Size.Height;
-                                Center.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(it));
-                            }
-                            if(Pos == 4) 
-                            {
-                                CRight.Visible = true;
-                               // CRight.Height = new Bitmap(lua.images + lua.GetImageText(it)).Size.Height;
-                                CRight.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(it));
-                            }
-                            if(Pos == 5) 
-                            {
-                                ARight.Visible = true;
-                              //  ARight.Height = new Bitmap(lua.images + lua.GetImageText(it)).Size.Height;
-                                ARight.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(it));
-                            }
+                            ActorText_str += ActorText_tstr + " ";
+                            ActorText_tstr = "";
+                        }
+                        ActorText_str += ActorText[it] + " ";
+                        continue;
+                    }
+                    else if (str > text_width)
+                    {
+                        num = str - text_width;
+                        ActorText_str += ActorText[it].Substring(0, ActorText[it].Length - num);
+                        ActorText_tstr = ActorText[it].Substring(ActorText[it].Length - num);
+                    }
+                    else ActorText_str += ActorText[it];
+                }
+                lb++;
+                switch (lb)
+                {
+                    case 1: mess_1.Text += ActorText_str; text_width -= 2; break;
+                    case 2: mess_2.Text += ActorText_str; text_width -= 2; break;
+                    case 3: mess_3.Text += ActorText_str; break;
+                    case 4: mess_4.Text += ActorText_str; break;
+                    case 5: mess_5.Text += ActorText_str; lb = 0; text_width += 4; break;
+                }
+                ActorText_str = "";
+                str = 0;
+            }
+            // Drawing img
+            this.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(0));
+            pictureBox1.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(0));
+            ALeft.BackgroundImage = CLeft.BackgroundImage = Center.BackgroundImage = CRight.BackgroundImage = ARight.BackgroundImage = null;
+            inum = lua.GetImgNum() - 1;
+            if (inum > -1)
+            {
+                //pictureBox1.Image = new Bitmap(lua.images + lua.GetImageText(1));
+                if (inum > 0)
+                {
+                    for (int it = 1; it <= inum; it++)
+                    {
+                        switch (lua.GetImageTextPos(it))
+                        {
+                            case 1: ALeft.Visible = true; ALeft.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(it)); break;
+                            case 2: CLeft.Visible = true; CLeft.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(it)); break;
+                            case 3: Center.Visible = true; Center.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(it)); break;
+                            case 4: CRight.Visible = true; CRight.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(it)); break;
+                            case 5: ARight.Visible = true; ARight.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(it)); break;
                         }
                     }
                 }
@@ -250,14 +248,13 @@ namespace Visual
         }
         private void _exit_Click(object sender, EventArgs e)
         {
-            g.Dispose();
             this.Close();
         }
         private void Options_Click(object sender, EventArgs e)
         {
             MenuUpdate          (false);
             trygame             = false;
-            pictureBox2.Visible = false;
+             MessBox_1.Visible = MessBox_2.Visible = MessBox_3.Visible = MessBox_4.Visible = MessBox_5.Visible = false;
             ago.Visible         = true;
             checkBox1.Visible   = true;
         }
@@ -279,10 +276,10 @@ namespace Visual
                     if (e.Button == MouseButtons.Left)
                         NextScene(false);
                     else if (e.Button == MouseButtons.Right)
-                        if (pictureBox2.Visible)
-                            pictureBox2.Visible = false;
+                        if (MessBox_1.Visible)
+                            MessBox_1.Visible = MessBox_2.Visible = MessBox_3.Visible = MessBox_4.Visible = MessBox_5.Visible = false;
                         else
-                            pictureBox2.Visible = true;
+                            MessBox_1.Visible = MessBox_2.Visible = MessBox_3.Visible = MessBox_4.Visible = MessBox_5.Visible = true;
         }
     
         private void label1_Click(object sender, EventArgs e)

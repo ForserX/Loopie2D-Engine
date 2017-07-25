@@ -62,18 +62,10 @@ namespace Visual
         {
             switch (obj)
             {
-                case "white":
-                    color_ = Color.White;
-                    break;
-                case "red":
-                    color_ = Color.Red;
-                    break;
-                case "blue":
-                    color_ = Color.Blue;
-                    break;
-                default:
-                    color_ = Color.Black;
-                    break;
+                case "white": color_ = Color.White; break;
+                case "red": color_ = Color.Red; break;
+                case "blue": color_ = Color.Blue; break;
+                default: color_ = Color.Black; break;
             }
         }
         private void Label_Helper(bool q, int num)
@@ -104,6 +96,7 @@ namespace Visual
 
                 panel1.Visible = false;
                 sect++;
+                ALeft.Visible = CLeft.Visible = Center.Visible = CRight.Visible = ARight.Visible = true;
                 NextScene(true);
             }
         }
@@ -119,7 +112,8 @@ namespace Visual
                 SaveGame.Visible = false;
 
                 trygame =
-                pictureBox2.Visible = true;
+                ALeft.Visible = CLeft.Visible = Center.Visible = CRight.Visible = ARight.Visible =
+                MessBox_1.Visible = MessBox_2.Visible = MessBox_3.Visible = MessBox_4.Visible = MessBox_5.Visible = true;
             }
             else
             {
@@ -133,7 +127,8 @@ namespace Visual
                     Next.Visible = true;
 
                 trygame =
-                pictureBox2.Visible = false;
+                ALeft.Visible = CLeft.Visible = Center.Visible = CRight.Visible = ARight.Visible =
+                MessBox_1.Visible = MessBox_2.Visible = MessBox_3.Visible = MessBox_4.Visible = MessBox_5.Visible = false;
                 pictureBox1.BackgroundImage = new Bitmap(lua.images + "logo.gif");
             }
 
