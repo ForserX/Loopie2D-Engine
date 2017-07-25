@@ -1,5 +1,0 @@
-C:\Users\Павел\Desktop\loopie-2d\modules\csvorbis-master\OggDecoder\bin\Release\csogg.dll
-C:\Users\Павел\Desktop\loopie-2d\modules\csvorbis-master\OggDecoder\bin\Release\csvorbis.dll
-C:\Users\Павел\Desktop\loopie-2d\modules\csvorbis-master\OggDecoder\obj\Release\OggDecoder.csprojResolveAssemblyReference.cache
-C:\Users\Павел\Desktop\loopie-2d\modules\csvorbis-master\OggDecoder\bin\Release\OggDecoder.dll
-C:\Users\Павел\Desktop\loopie-2d\modules\csvorbis-master\OggDecoder\obj\Release\OggDecoder.dll

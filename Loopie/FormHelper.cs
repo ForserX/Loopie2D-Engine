@@ -36,8 +36,8 @@ namespace Visual
                 ifs.WritePrivateStringA("param", "backImage",   lua.GetImage(0),                path);
                 ifs.WritePrivateStringA("param", "sect_old",    sect_old,                       path);
                 ifs.WritePrivateStringA("param", "snd_old",     lua.GetSnd(),                   path);
-                ifs.WritePrivateStringA("param", "pic",         Convert.ToString(lua.GetImageNum()), path);
-                for (int i = 1; i < lua.GetImageNum(); i++)
+                ifs.WritePrivateStringA("param", "pic",         Convert.ToString(lua.GetImgNum()), path);
+                for (int i = 1; i < lua.GetImgNum(); i++)
                     ifs.WritePrivateStringA("param", "Image_" + Convert.ToString(i), lua.GetImage(i), textBox1.Text+ ".ini");
 
                 HideInputBox();
@@ -76,34 +76,18 @@ namespace Visual
                     break;
             }
         }
-        public void DrawHelper()
-        {
-            //Попробуем сделать многоуровневую отрисовку
-            pictureBox1.BackgroundImage = new Bitmap(lua.images + lua.GetImage(0));
-            switch (lua.GetImageNum())
-            {
-                case 1: // Background only
-                    pictureBox1.Image = null;
-                    pictureBox3.BackgroundImage = pictureBox1.BackgroundImage;
-                    pictureBox3.Image = null;
-                    pictureBox3.BackgroundImage = pictureBox1.BackgroundImage;
-                    break;
-                case 2:
-                    pictureBox3.Image = new Bitmap(lua.images + ifs.GetPrivateString(lua.userdata + "temp.ini", "param", "Image_1"));
-                break;
-            }
-        }
         private void Label_Helper(bool q, int num)
         {
             if (q)
             {
+                ALeft.Visible = CLeft.Visible = Center.Visible = CRight.Visible = ARight.Visible = false;
                 panel1.Location = new System.Drawing.Point((this.Width - panel1.Width) / 2, panel1.Location.Y);
 
                 for (int j = 0; j < num; j++)
                 {
                     this.panel1.Controls.Add(this.label_text[j]);
-                    if (label_text[j].Width >= panel1.Width)
-                        panel1.Width = label_text[j].Width + 10;
+                    if (label_text[j].Width >= panel1.Width) panel1.Width = label_text[j].Width + 10;
+                    else panel1.Width = 150;
 
                     label_text[j].Location = new System.Drawing.Point((panel1.Width - label_text[j].Width) / 2, label_text[j].Location.Y);
                 }
@@ -119,6 +103,8 @@ namespace Visual
                     label_text[j].Dispose();
 
                 panel1.Visible = false;
+                sect++;
+                NextScene(true);
             }
         }
         void MenuUpdate(bool q)

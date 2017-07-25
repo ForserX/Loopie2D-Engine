@@ -1,25 +1,31 @@
-ImageNum = 1
-
 function start()
   Font["Name"] = "Arial"
   Font["Text"] = "Arial"
-  Font["TextColor"] = "blue"
+  Font["TextColor"] = "white"
   Font["NameColor"] = "red"
   Sound = "MyMusic.mp3"
   ActorName = "FX"
   Text = "Итак, господа, проверяем первую сцену."
-  Image[0] = "test.jpg";
+	Scene["Images"] = 4
+	Scene["Image0"] = "ext_bus_driver.jpg"
+	Scene["Image1"] = "cirno_sprite.png"
+	Scene["Image1Pos"] = "ARight"
+	Scene["Image2"] = "alice.png"
+	Scene["Image2Pos"] = "ALeft"
+	Scene["Image3"] = "sl.png"
+	Scene["Image3Pos"] = "Center"
 end
 
 function question1()
-	Scene["Options"] = 5
+	Scene["Options"] = 3
 	Scene["Option2"] = "Не жми"
-	Scene["Option1"] = "Жми"
-	Scene["Option3"] = "Не жми"
-	Scene["Option4"] = "Не жми"
-	Scene["Option0"] = "Не жми"
+	Scene["Option0"] = "Жми"
+	Scene["Option1"] = "Не жми"
 end
 
 function start_2()
+	Scene["Images"] = 1
+	Scene["Image0"] = "test.jpg"
+	ActorName = "FX"
   Text = "Итак, господа, проверяем вторую сцену."
 end

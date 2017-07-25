@@ -14,44 +14,58 @@ namespace Visual
     public partial class Form1 : Form
     {
         private INIManager ifs;
-        private int sect, sect_next, sect_label, sect_lb_old, text_width = 115, lnum;
+        private int sect, sect_next, sect_label, sect_lb_old, text_width = 115, lnum, inum;
         string heroname, ActorText_str = "", sect_old, sect_string, snd_old = "0";
         string [] ActorText;
         bool trygame, snd = false;
         LuaAPI lua = new LuaAPI();
         Graphics g;
         System.Windows.Media.MediaPlayer player = new System.Windows.Media.MediaPlayer();
-        System.Windows.Forms.PictureBox pictureBox3, pictureBox4;
         Color color_ = new Color();
         private System.Windows.Forms.Label[] label_text;
 
         public Form1()
         {
             InitializeComponent();
-            InitializeComponentTry();
-
+            int ppos = this.Width / 5;
+            this.BackgroundImage = new Bitmap(lua.images + "logo.gif");
             this.KeyDown += new KeyEventHandler(_KeyDown);
-
-            pictureBox4 = pictureBox3 = pictureBox1;
-
+            ALeft.Parent = CLeft.Parent = CRight.Parent = Center.Parent = ARight.Parent = pictureBox1;
+            ALeft.MouseDown += new MouseEventHandler(_MouseDown);
+            CLeft.MouseDown += new MouseEventHandler(_MouseDown);
+            Center.MouseDown += new MouseEventHandler(_MouseDown);
+            CRight.MouseDown += new MouseEventHandler(_MouseDown);
+            ARight.MouseDown += new MouseEventHandler(_MouseDown);
             pictureBox1.MouseDown += new MouseEventHandler(_MouseDown);
-            pictureBox3.MouseDown += new MouseEventHandler(_MouseDown);
             pictureBox2.MouseDown += new MouseEventHandler(_MouseDown);
-            pictureBox4.MouseDown -= new MouseEventHandler(_MouseDown);
 
-            checkBox1.Parent = pictureBox4;
+            checkBox1.Parent = pictureBox1;
             checkBox1.BackColor = Color.Transparent;
             checkBox1.CheckedChanged += new EventHandler(Fullscreen);
 
             panel1.BackColor = Color.Transparent;
             panel1.Parent = pictureBox1;
-            pictureBox2.BackColor = Color.Transparent;
-            pictureBox2.Parent = pictureBox1;
 
-            label6.Parent = pictureBox4;
-            label7.Parent = pictureBox4; 
-
+            label6.Parent = pictureBox1;
+            label7.Parent = pictureBox1;
+            //pictureBox2.Parent = pictureBox1;
+            checkBox1.Parent = pictureBox1;
             pictureBox2.Image = (Image)new Bitmap(pictureBox2.Width, pictureBox2.Height);
+
+            //this.Width = SystemInformation.VirtualScreen.Size.Width;
+           // this.Height = SystemInformation.VirtualScreen.Size.Height;
+
+            ALeft.Size = new System.Drawing.Size(ppos, ALeft.Size.Height);
+            CLeft.Size = new System.Drawing.Size(ppos, ALeft.Size.Height);
+            Center.Size = new System.Drawing.Size(ppos, ALeft.Size.Height);
+            CRight.Size = new System.Drawing.Size(ppos, ALeft.Size.Height);
+            ARight.Size = new System.Drawing.Size(ppos, ALeft.Size.Height);
+
+            ALeft.Location = new System.Drawing.Point(0, ALeft.Location.Y);
+            CLeft.Location = new System.Drawing.Point(ppos, CLeft.Location.Y);
+            Center.Location = new System.Drawing.Point(ppos * 2, Center.Location.Y);
+            CRight.Location = new System.Drawing.Point(ppos * 3, CRight.Location.Y);
+            ARight.Location = new System.Drawing.Point(ppos * 4, ARight.Location.Y);
 
             //Пока определим тут
             g = Graphics.FromImage(pictureBox2.Image);
@@ -59,9 +73,7 @@ namespace Visual
 
             pictureBox2.BackgroundImage = new Bitmap(lua.images + ifs.GetPrivateString(@"../setting.ini", "interface", "TextImg"));
             ifs.WritePrivateStringA("param", "snd_old", "0", @"..\userdata\temp.ini");
-
-            this.Width = SystemInformation.VirtualScreen.Size.Width;
-            this.Height = SystemInformation.VirtualScreen.Size.Height;
+          //  MessageBox.Show(Convert.ToString(ppos));
 
         }
         //Прокомментирую, а то уже забыл, что к чему...
@@ -87,14 +99,14 @@ namespace Visual
             ifs.WritePrivateStringA("param", "sect", sect.ToString(), lua.userdata + "temp.ini");
             ifs.WritePrivateStringA("param", "sect_string", sect_string, lua.userdata + "temp.ini");
             ifs.WritePrivateStringA("param", "sect_old", sect_old, lua.userdata + "temp.ini");
-            
+
             //Load vars
             pictureBox2.Image = (Image)new Bitmap(pictureBox2.Width, pictureBox2.Height);
             g = Graphics.FromImage(pictureBox2.Image);
             lua.LuaFunc(ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "name"), ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "func"));
             if (ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "type") == "Question")
             {
-                int lnum = lua.GetLabelNum();
+                lnum = lua.GetLabelNum();
                 label_text = new System.Windows.Forms.Label[lnum]; // Set size
                 for (int i = 0; i < lnum; i++)
                 {
@@ -118,8 +130,8 @@ namespace Visual
             //Для отступов строк
             int old_y = 35,
                 str = 0,
-                num = 0; 
-            
+                num = 0;
+
             //Определяем цвет
             SetColor(lua.GetNameColor());
 
@@ -141,7 +153,7 @@ namespace Visual
                 if (str < text_width & i != ActorText.Length)
                 {
                     str += ActorText[i].Length;
-                    if (i != ActorText.Length -1)
+                    if (i != ActorText.Length - 1)
                         if (str + ActorText[i + 1].Length >= text_width)
                             str = 1116;
                 }
@@ -158,7 +170,54 @@ namespace Visual
                     g.DrawString(ActorText_str, new Font(lua.GetTextFont(), 10, FontStyle.Bold), new SolidBrush(color_), new Point(10, old_y));
                     ActorText_str = "";
                 }
-            DrawHelper();
+            // Drawing img
+            {
+                this.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(0));
+                pictureBox1.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(0));
+                ALeft.Visible = CLeft.Visible = Center.Visible = CRight.Visible = ARight.Visible = false;
+                inum = lua.GetImgNum() - 1;
+                if (inum > -1)
+                {
+                    //pictureBox1.Image = new Bitmap(lua.images + lua.GetImageText(1));
+                    if (inum > 0)
+                    {
+                        for (int it = 1; it <= inum; it++)
+                        {
+                            int Pos = lua.GetImageTextPos(it);
+                            if (Pos == 1)
+                            {
+                                ALeft.Visible = true;
+                              //  ALeft.Height = new Bitmap(lua.images + lua.GetImageText(it)).Size.Height;
+                                ALeft.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(it));
+                            }
+                            if(Pos == 2) 
+                            {
+                                CLeft.Visible = true;
+                              //  CLeft.Height = new Bitmap(lua.images + lua.GetImageText(it)).Size.Height;
+                                CLeft.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(it));
+                            }
+                            if(Pos == 3) 
+                            {
+                                Center.Visible = true;
+                              //  Center.Height = new Bitmap(lua.images + lua.GetImageText(it)).Size.Height;
+                                Center.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(it));
+                            }
+                            if(Pos == 4) 
+                            {
+                                CRight.Visible = true;
+                               // CRight.Height = new Bitmap(lua.images + lua.GetImageText(it)).Size.Height;
+                                CRight.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(it));
+                            }
+                            if(Pos == 5) 
+                            {
+                                ARight.Visible = true;
+                              //  ARight.Height = new Bitmap(lua.images + lua.GetImageText(it)).Size.Height;
+                                ARight.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(it));
+                            }
+                        }
+                    }
+                }
+            }
         }
         //Load: Game
         void Fullscreen(object sender, EventArgs e)
@@ -167,13 +226,13 @@ namespace Visual
             {
                 this.Height -= 40;
                 this.Width -= 40;
-                TopMost = true;
+                this.TopMost = true;
             }
             else
             {
                 this.Height += 40;
                 this.Width += 40;
-                TopMost = false;
+                this.TopMost = false;
             }
         }
         private void label4_Click(object sender, EventArgs e)
@@ -187,7 +246,7 @@ namespace Visual
         private void Next_Click(object sender, EventArgs e)
         {
             MenuUpdate(false);
-            DrawHelper();
+            NextScene(true);
         }
         private void _exit_Click(object sender, EventArgs e)
         {
@@ -231,7 +290,7 @@ namespace Visual
             Label lab = (Label)sender;
             sect_next = Convert.ToInt32(lab.Name);
             Label_Helper(false, lnum);
-            NextScene(false);
+            //NextScene(false);
         }
         private void NewGame_Click(object sender, EventArgs e)
         {
@@ -260,8 +319,8 @@ namespace Visual
             lua.lua["ImageNum"] = ifs.GetPrivateString          (path, "param", "pic");
             lua.lua.GetTable("Color")[1] = ifs.GetPrivateString (path, "param", "name_c");
             lua.lua.GetTable("Color")[0] = ifs.GetPrivateString (path, "param", "text_c");
-            if (lua.GetImageNum() > 1)
-                for (int i = 1; i < lua.GetImageNum(); i++)
+            if (lua.GetImgNum() > 1)
+                for (int i = 1; i < lua.GetImgNum(); i++)
                    ifs.GetPrivateString(path, "param", "Image_" + Convert.ToString(i));
 
             LoadList.Visible = false;
@@ -284,6 +343,5 @@ namespace Visual
         {
             this.WindowState = FormWindowState.Minimized;
         }
-
     }
 }

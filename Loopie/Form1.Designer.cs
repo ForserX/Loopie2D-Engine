@@ -35,74 +35,51 @@ namespace Visual
         /// </summary>
         private void InitializeComponent()
         {
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(786, 351);
-            this.ControlBox = false;
-            this.DoubleBuffered = true;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.ShowIcon = false;
-            this.BackgroundImage = new Bitmap(lua.images + "logo.gif");
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.ResumeLayout(false);
-            this.PerformLayout();
-        }
-        private void InitializeComponentTry()
-        {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this._exit = new System.Windows.Forms.Label();
             this.Options = new System.Windows.Forms.Label();
             this.NewGame = new System.Windows.Forms.Label();
             this.Next = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.SaveGame = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.СancelButton = new System.Windows.Forms.Label();
-            this.SaveButton = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
             this.ago = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.LoadList = new System.Windows.Forms.ListBox();
+            this.ALeft = new System.Windows.Forms.PictureBox();
+            this.CLeft = new System.Windows.Forms.PictureBox();
+            this.Center = new System.Windows.Forms.PictureBox();
+            this.CRight = new System.Windows.Forms.PictureBox();
+            this.ARight = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.СancelButton = new System.Windows.Forms.Label();
+            this.SaveButton = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ALeft)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CLeft)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Center)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CRight)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ARight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.BackgroundImage")));
+            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pictureBox1.Location = new System.Drawing.Point(0, -1);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(979, 529);
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox2.BackgroundImage")));
-            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox2.Location = new System.Drawing.Point(12, 360);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(955, 145);
-            this.pictureBox2.TabIndex = 2;
-            this.pictureBox2.TabStop = false;
-            this.pictureBox2.Visible = false;
-            // 
-            // label_text[0]
-            // 
             // 
             // _exit
             // 
@@ -183,63 +160,6 @@ namespace Visual
             this.SaveGame.Text = "Сохранить Игру";
             this.SaveGame.Click += new System.EventHandler(this.SaveGame_Click);
             // 
-            // panel1
-            // 
-            this.panel1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel1.BackgroundImage")));
-            this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.panel1.Controls.Add(this.СancelButton);
-            this.panel1.Controls.Add(this.SaveButton);
-            this.panel1.Controls.Add(this.textBox1);
-            this.panel1.Controls.Add(this.label5);
-            this.panel1.Location = new System.Drawing.Point(449, 144);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(199, 104);
-            this.panel1.TabIndex = 13;
-            this.panel1.Visible = false;
-            // 
-            // СancelButton
-            // 
-            this.СancelButton.AutoSize = true;
-            this.СancelButton.BackColor = System.Drawing.Color.Transparent;
-            this.СancelButton.Location = new System.Drawing.Point(103, 65);
-            this.СancelButton.Name = "СancelButton";
-            this.СancelButton.Size = new System.Drawing.Size(57, 13);
-            this.СancelButton.TabIndex = 9;
-            this.СancelButton.Text = "Отменить";
-            this.СancelButton.Visible = false;
-            this.СancelButton.Click += new System.EventHandler(this.СancelButton_Click);
-            // 
-            // SaveButton
-            // 
-            this.SaveButton.AutoSize = true;
-            this.SaveButton.BackColor = System.Drawing.Color.Transparent;
-            this.SaveButton.Location = new System.Drawing.Point(14, 65);
-            this.SaveButton.Name = "SaveButton";
-            this.SaveButton.Size = new System.Drawing.Size(60, 13);
-            this.SaveButton.TabIndex = 8;
-            this.SaveButton.Text = "Сохранить";
-            this.SaveButton.Visible = false;
-            this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(38, 38);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(116, 20);
-            this.textBox1.TabIndex = 7;
-            this.textBox1.Visible = false;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.BackColor = System.Drawing.Color.Transparent;
-            this.label5.Location = new System.Drawing.Point(35, 10);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(100, 13);
-            this.label5.TabIndex = 6;
-            this.label5.Text = "Введите название";
-            this.label5.Visible = false;
-            // 
             // ago
             // 
             this.ago.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -296,10 +216,6 @@ namespace Visual
             // LoadList
             // 
             this.LoadList.FormattingEnabled = true;
-            this.LoadList.Items.AddRange(new object[] {
-            "12",
-            "12",
-            "2"});
             this.LoadList.Location = new System.Drawing.Point(847, 19);
             this.LoadList.Name = "LoadList";
             this.LoadList.Size = new System.Drawing.Size(132, 511);
@@ -307,25 +223,166 @@ namespace Visual
             this.LoadList.Visible = false;
             this.LoadList.SelectedIndexChanged += new System.EventHandler(this.LoadList_SelectedIndexChanged);
             // 
+            // ALeft
+            // 
+            this.ALeft.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.ALeft.BackColor = System.Drawing.Color.Transparent;
+            this.ALeft.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.ALeft.Location = new System.Drawing.Point(0, 61);
+            this.ALeft.Name = "ALeft";
+            this.ALeft.Size = new System.Drawing.Size(198, 467);
+            this.ALeft.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.ALeft.TabIndex = 20;
+            this.ALeft.TabStop = false;
+            this.ALeft.Visible = false;
+            // 
+            // CLeft
+            // 
+            this.CLeft.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.CLeft.BackColor = System.Drawing.Color.Transparent;
+            this.CLeft.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.CLeft.Location = new System.Drawing.Point(197, 61);
+            this.CLeft.Name = "CLeft";
+            this.CLeft.Size = new System.Drawing.Size(197, 467);
+            this.CLeft.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.CLeft.TabIndex = 21;
+            this.CLeft.TabStop = false;
+            this.CLeft.Visible = false;
+            // 
+            // Center
+            // 
+            this.Center.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.Center.BackColor = System.Drawing.Color.Transparent;
+            this.Center.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.Center.Location = new System.Drawing.Point(393, 64);
+            this.Center.Name = "Center";
+            this.Center.Size = new System.Drawing.Size(200, 464);
+            this.Center.TabIndex = 22;
+            this.Center.TabStop = false;
+            // 
+            // CRight
+            // 
+            this.CRight.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.CRight.BackColor = System.Drawing.Color.Transparent;
+            this.CRight.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.CRight.Location = new System.Drawing.Point(593, 61);
+            this.CRight.Name = "CRight";
+            this.CRight.Size = new System.Drawing.Size(193, 467);
+            this.CRight.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.CRight.TabIndex = 23;
+            this.CRight.TabStop = false;
+            this.CRight.Visible = false;
+            // 
+            // ARight
+            // 
+            this.ARight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.ARight.BackColor = System.Drawing.Color.Transparent;
+            this.ARight.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ARight.Location = new System.Drawing.Point(782, 61);
+            this.ARight.Name = "ARight";
+            this.ARight.Size = new System.Drawing.Size(197, 467);
+            this.ARight.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.ARight.TabIndex = 24;
+            this.ARight.TabStop = false;
+            this.ARight.Visible = false;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox2.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox2.Location = new System.Drawing.Point(16, 382);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(947, 134);
+            this.pictureBox2.TabIndex = 25;
+            this.pictureBox2.TabStop = false;
+            this.pictureBox2.Visible = false;
+            // 
+            // СancelButton
+            // 
+            this.СancelButton.AutoSize = true;
+            this.СancelButton.BackColor = System.Drawing.Color.Transparent;
+            this.СancelButton.Location = new System.Drawing.Point(121, 65);
+            this.СancelButton.Name = "СancelButton";
+            this.СancelButton.Size = new System.Drawing.Size(57, 13);
+            this.СancelButton.TabIndex = 11;
+            this.СancelButton.Text = "Отменить";
+            this.СancelButton.Visible = false;
+            // 
+            // SaveButton
+            // 
+            this.SaveButton.AutoSize = true;
+            this.SaveButton.BackColor = System.Drawing.Color.Transparent;
+            this.SaveButton.Location = new System.Drawing.Point(14, 65);
+            this.SaveButton.Name = "SaveButton";
+            this.SaveButton.Size = new System.Drawing.Size(60, 13);
+            this.SaveButton.TabIndex = 8;
+            this.SaveButton.Text = "Сохранить";
+            this.SaveButton.Visible = false;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(38, 38);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(122, 20);
+            this.textBox1.TabIndex = 7;
+            this.textBox1.Visible = false;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.BackColor = System.Drawing.Color.Transparent;
+            this.label5.Location = new System.Drawing.Point(46, 12);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(100, 13);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "Введите название";
+            this.label5.Visible = false;
+            // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panel1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel1.BackgroundImage")));
+            this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panel1.Controls.Add(this.СancelButton);
+            this.panel1.Controls.Add(this.label5);
+            this.panel1.Controls.Add(this.SaveButton);
+            this.panel1.Controls.Add(this.textBox1);
+            this.panel1.Location = new System.Drawing.Point(397, 147);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(190, 104);
+            this.panel1.TabIndex = 27;
+            this.panel1.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(979, 528);
             this.ControlBox = false;
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.pictureBox2);
+            this.Controls.Add(this.ARight);
+            this.Controls.Add(this.CRight);
+            this.Controls.Add(this.Center);
+            this.Controls.Add(this.CLeft);
+            this.Controls.Add(this.ALeft);
             this.Controls.Add(this.LoadList);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.ago);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.SaveGame);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.Next);
             this.Controls.Add(this.NewGame);
             this.Controls.Add(this.Options);
             this.Controls.Add(this._exit);
-            this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -333,10 +390,14 @@ namespace Visual
             this.MinimizeBox = false;
             this.Name = "Form1";
             this.ShowIcon = false;
-            this.Location = new System.Drawing.Point(0, 0);
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ALeft)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CLeft)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Center)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CRight)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ARight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -346,23 +407,28 @@ namespace Visual
         }
         #endregion
         public System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Label _exit;
         private System.Windows.Forms.Label Options;
         private System.Windows.Forms.Label NewGame;
         private System.Windows.Forms.Label Next;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label SaveGame;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label ago;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label SaveButton;
-        private System.Windows.Forms.Label СancelButton;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.CheckBox checkBox1;
         private ListBox LoadList;
+        private PictureBox ALeft;
+        private PictureBox CLeft;
+        private PictureBox Center;
+        private PictureBox CRight;
+        private PictureBox ARight;
+        private PictureBox pictureBox2;
+        private Label СancelButton;
+        private Label SaveButton;
+        private TextBox textBox1;
+        private Label label5;
+        private Panel panel1;
     }
 }
 

@@ -41,10 +41,6 @@ namespace Visual
             for (int i = 0; i < 10; i++)
                 lua.GetTable("Image")[i] = "";
         }
-        public int GetImageNum()
-        {
-            return Convert.ToInt32(lua["ImageNum"]);
-        }
         public string GetSnd()
         {
             return (string)lua["Sound"];
@@ -68,6 +64,26 @@ namespace Visual
         public int GetLabelNum()
         {
             return (int)(double)lua.GetTable("Scene")["Options"];
+        }
+        public string GetImageText(int num)
+        {
+            return (string)lua.GetTable("Scene")["Image" + Convert.ToString(num)];
+        }
+        public int GetImageTextPos(int num)
+        {
+            switch ((string)lua.GetTable("Scene")["Image" + Convert.ToString(num) + "Pos"])
+            {
+                case "ALeft": return 1;
+                case "Left": return 2;
+                case "Center": return 3;
+                case "Right": return 4;
+                case "ARight": return 5;
+                default: return 3;
+            }
+        }
+        public int GetImgNum()
+        {
+            return (int)(double)lua.GetTable("Scene")["Images"];
         }
         public string GetLabelText(int num)
         {
