@@ -53,9 +53,8 @@
     <Reference Include="csvorbis">
       <HintPath>.\csvorbis.dll</HintPath>
     </Reference>
-    <Reference Include="LuaInterface, Version=1.5.3.0, Culture=neutral, PublicKeyToken=1e1fb15b02227b8a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\bins\LuaInterface.dll</HintPath>
+    <Reference Include="LuaInterface">
+      <HintPath>.\LuaInterface.dll</HintPath>
     </Reference>
     <Reference Include="OggDecoder">
       <HintPath>.\OggDecoder.dll</HintPath>
@@ -74,21 +73,21 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="Code\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
+    <Compile Include="Code\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormHelper.cs">
+    <Compile Include="Code\FormHelper.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="IFS.cs" />
-    <Compile Include="LuaAPI.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Code\IFS.cs" />
+    <Compile Include="Code\LuaAPI.cs" />
+    <Compile Include="Code\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SoundSystem.cs" />
-    <EmbeddedResource Include="Form1.resx">
+    <Compile Include="Code\SoundSystem.cs" />
+    <EmbeddedResource Include="Code\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -115,8 +114,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="lua51.dll" />
-    <Content Include="luanet.dll" />
+    <Content Include="Libraries\lua51.dll" />
+    <Content Include="Libraries\LuaInterface.dll" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">

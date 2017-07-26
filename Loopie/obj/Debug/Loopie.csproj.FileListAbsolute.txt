@@ -16,3 +16,6 @@ F:\loopie-2d\Loopie\obj\Debug\Loopie.csprojResolveAssemblyReference.cache
 F:\loopie-2d\Loopie\obj\Debug\Visual.Form1.resources
 F:\loopie-2d\Loopie\obj\Debug\Loopie.Properties.Resources.resources
 F:\loopie-2d\Loopie\obj\Debug\Loopie.csproj.GenerateResource.Cache
+F:\Loopie2D-Engine\bins\Loopie.exe.config
+F:\Loopie2D-Engine\Loopie\obj\Debug\Loopie.exe
+F:\Loopie2D-Engine\Loopie\obj\Debug\Loopie.pdb
