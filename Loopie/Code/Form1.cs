@@ -328,16 +328,6 @@ namespace Visual
             sect = Convert.ToInt32(ifs.GetPrivateString         (path, "param", "sect"));
             sect_old =    ifs.GetPrivateString                  (path, "param", "sect_old");
             sect_string = ifs.GetPrivateString                  (path, "param", "sect_string");
-            lua.lua["ActorName"] = ifs.GetPrivateString         (path, "param", "name");
-            lua.lua["Text"] = ifs.GetPrivateString              (path, "param", "text");
-            lua.lua.GetTable("Image")[0] = ifs.GetPrivateString (path, "param", "backImage");
-            snd_old =  ifs.GetPrivateString                     (path, "param", "snd_old");
-            lua.lua["ImageNum"] = ifs.GetPrivateString          (path, "param", "pic");
-            lua.lua.GetTable("Color")[1] = ifs.GetPrivateString (path, "param", "name_c");
-            lua.lua.GetTable("Color")[0] = ifs.GetPrivateString (path, "param", "text_c");
-            if (lua.GetImgNum() > 1)
-                for (int i = 1; i < lua.GetImgNum(); i++)
-                   ifs.GetPrivateString(path, "param", "Image_" + Convert.ToString(i));
 
             LoadList.Visible = false;
             MenuUpdate(false);
