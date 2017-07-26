@@ -94,16 +94,16 @@ namespace Visual
             {
                 snd_old = lua.GetSnd();
                 ++sect;
+                //Тут мы определяем секцию, костыльно и не интересно
+                sect_string = (sect_label == 0) ? Convert.ToString(sect) : Convert.ToString(sect) + sect_old;
+                if (sect_next != 0)
+                    if (sect_lb_old != sect_label)
+                    {
+                        sect_old += "_" + Convert.ToString(sect_next);
+                        sect_string = Convert.ToString(sect) + sect_old;
+                        sect_lb_old = sect_label;
+                    }
             }
-            //Тут мы определяем секцию, костыльно и не интересно
-            sect_string = Convert.ToString(sect);
-            if (sect_next != 0)
-                if (sect_lb_old != sect_label)
-                {
-                    sect_old += "_" + Convert.ToString(sect_next);
-                    sect_string += sect_old;
-                    sect_lb_old = sect_label;
-                }
             ifs.WritePrivateStringA("param", "sect", sect.ToString(), lua.userdata + "temp.ini");
             ifs.WritePrivateStringA("param", "sect_string", sect_string, lua.userdata + "temp.ini");
             ifs.WritePrivateStringA("param", "sect_old", sect_old, lua.userdata + "temp.ini");

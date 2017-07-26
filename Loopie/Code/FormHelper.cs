@@ -71,9 +71,9 @@ namespace Visual
                     label_text[j].Dispose();
 
                 panel1.Visible = false;
-                sect++;
+                //sect++;
                 ALeft.Visible = CLeft.Visible = Center.Visible = CRight.Visible = ARight.Visible = true;
-                NextScene(true);
+                NextScene(false);
             }
         }
         void MenuUpdate(bool q)

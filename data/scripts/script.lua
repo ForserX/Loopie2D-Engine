@@ -17,10 +17,14 @@ function start()
 end
 
 function question1()
-	Scene["Options"] = 3
-	Scene["Option2"] = "ֽו זלט"
+	Scene["Options"] = 2
 	Scene["Option0"] = "ֶלט"
 	Scene["Option1"] = "ֽו זלט"
+end
+
+function question2()
+	Scene["Options"] = 1
+	Scene["Option0"] = "ֶלט"
 end
 
 function start_2()
