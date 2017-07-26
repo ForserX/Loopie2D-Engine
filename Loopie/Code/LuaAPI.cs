@@ -8,10 +8,6 @@ using LuaInterface;
 
 namespace Visual
 {
-    public class FormAPIForLua
-    {
-
-    }
     public class LuaAPI
     {
         public string cfg, userdata, scripts, images, snd;
@@ -33,13 +29,8 @@ namespace Visual
             lua["Text"] = "";
             lua["ActorName"] = "";
             lua["Sound"] = "0";
-            lua["ImageNum"] = 1;
             lua.NewTable("Font");
             lua.NewTable("Scene");
-            lua.NewTable("Image");
-
-            for (int i = 0; i < 10; i++)
-                lua.GetTable("Image")[i] = "";
         }
         public string GetSnd()
         {
@@ -81,6 +72,7 @@ namespace Visual
                 default: return 3;
             }
         }
+        
         public int GetImgNum()
         {
             return (int)(double)lua.GetTable("Scene")["Images"];
@@ -98,10 +90,6 @@ namespace Visual
             return (string)lua.GetTable("Font")["Name"];
         }
 
-        public string GetImage(int num)
-        {
-            return (string)lua.GetTable("Image")[num];
-        }
         public void LuaFunc(string file, string func)
         {
             try

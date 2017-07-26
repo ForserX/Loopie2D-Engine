@@ -196,11 +196,11 @@ namespace Visual
                     {
                         switch (lua.GetImageTextPos(it))
                         {
-                            case 1: ALeft.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(it)); break;
-                            case 2: CLeft.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(it)); break;
-                            case 3: Center.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(it)); break;
-                            case 4: CRight.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(it)); break;
-                            case 5: ARight.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(it)); break;
+                            case 1: ALeft.Image = new Bitmap(lua.images + lua.GetImageText(it)); break;
+                            case 2: CLeft.Image = new Bitmap(lua.images + lua.GetImageText(it)); break;
+                            case 3: Center.Image = new Bitmap(lua.images + lua.GetImageText(it)); break;
+                            case 4: CRight.Image = new Bitmap(lua.images + lua.GetImageText(it)); break;
+                            case 5: ARight.Image = new Bitmap(lua.images + lua.GetImageText(it)); break;
                         }
                     }
                 }

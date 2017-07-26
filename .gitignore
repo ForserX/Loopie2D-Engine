@@ -4,16 +4,20 @@
 *.o
 *.obj
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-
 # Executables
 *.exe
 *.out
 *.app
 *.vshost
+*.suo
 
 # ETC
 *.txt
 *.cache
+*.pdb
+*.config
+
+# Path
+/Loopie/obj/
+/bins/
+/userdata/
