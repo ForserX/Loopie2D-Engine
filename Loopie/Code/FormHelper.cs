@@ -34,14 +34,14 @@ namespace Visual
             СancelButton.Visible= false;
             SaveButton.Visible  = false;
         }
-        void SetColor(string obj)
+        Color SetColor(string obj)
         {
             switch (obj)
             {
-                case "white": color_ = Color.White; break;
-                case "red": color_ = Color.Red; break;
-                case "blue": color_ = Color.Blue; break;
-                default: color_ = Color.Black; break;
+                case "white": return Color.White;
+                case "red": return Color.Red;
+                case "blue": return Color.Blue;
+                default: return Color.Black;
             }
         }
         private void Label_Helper(bool q, int num)

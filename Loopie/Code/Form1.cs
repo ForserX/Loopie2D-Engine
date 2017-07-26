@@ -20,7 +20,6 @@ namespace Visual
         bool trygame, snd = false;
         LuaAPI lua = new LuaAPI();
         System.Windows.Media.MediaPlayer player = new System.Windows.Media.MediaPlayer();
-        Color color_ = new Color();
         private System.Windows.Forms.Label[] label_text;
 
         public Form1()
@@ -80,13 +79,10 @@ namespace Visual
 
             //Пока определим тут
             ifs = new INIManager();
-
-            ifs.WritePrivateStringA("param", "snd_old", "0", @"..\userdata\temp.ini");
         }
         //Прокомментирую, а то уже забыл, что к чему...
         void NextScene(bool load)
         {
-            MessBox_4.Visible = MessBox_5.Visible = MessBox_3.Visible = MessBox_2.Visible = MessBox_1.Visible = true;
             lua.lua.Pop();
 
             //Флажок для лоадера
@@ -104,9 +100,6 @@ namespace Visual
                         sect_lb_old = sect_label;
                     }
             }
-            ifs.WritePrivateStringA("param", "sect", sect.ToString(), lua.userdata + "temp.ini");
-            ifs.WritePrivateStringA("param", "sect_string", sect_string, lua.userdata + "temp.ini");
-            ifs.WritePrivateStringA("param", "sect_old", sect_old, lua.userdata + "temp.ini");
 
             //Load vars
             lua.LuaFunc(ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "name"), ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "func"));
@@ -123,7 +116,7 @@ namespace Visual
                     label_text[i].Location = new System.Drawing.Point(80, 22 + 10 * i);
                     label_text[i].TabIndex = 3 + i;
                     label_text[i].Visible = true;
-                    label_text[i].Click += new System.EventHandler(this.label1_Click);
+                    label_text[i].Click += new System.EventHandler(this.Question_Click);
                     label_text[i].Parent = panel1;
                     label_text[i].Text = lua.GetLabelText(i);
                 }
@@ -132,10 +125,6 @@ namespace Visual
             }
             heroname = lua.GetName();
             ActorText = lua.GetText().Split(' ');
-
-
-            //Определяем цвет
-            SetColor(lua.GetNameColor());
 
             //Music
             if (flag_snd.Checked && (!snd || lua.GetSnd() != snd_old))
@@ -146,15 +135,14 @@ namespace Visual
             }
             //Draw ActorName
             SpeakerName.Visible = true;
-            SpeakerName.ForeColor = color_;
+            SpeakerName.ForeColor = SetColor(lua.GetNameColor());
             SpeakerName.Text = heroname;
 
             //Для отступов строк
             int str = 0, lb = 0, num = 0;
             string ActorText_tstr = "";
 
-            SetColor(lua.GetTextColor());
-            mess_1.ForeColor = mess_2.ForeColor = mess_3.ForeColor = mess_4.ForeColor = mess_5.ForeColor = color_;
+            mess_1.ForeColor = mess_2.ForeColor = mess_3.ForeColor = mess_4.ForeColor = mess_5.ForeColor = SetColor(lua.GetTextColor());
 
             //Считаем строки
             mess_1.Text = mess_2.Text = mess_3.Text = mess_4.Text = mess_5.Text = "";
@@ -256,14 +244,15 @@ namespace Visual
         {
             LoadList.Visible = true;
             LoadList.Items.Clear();
+
             foreach(string file_name in Directory.GetFiles(lua.userdata))
-                if(file_name != lua.userdata + "temp.ini")
-                    LoadList.Items.Add(file_name.Substring(lua.userdata.Length));
+                LoadList.Items.Add(file_name.Substring(lua.userdata.Length));
         }
         private void Next_Click(object sender, EventArgs e)
         {
             MenuUpdate(false);
             NextScene(true);
+            MessBox_4.Visible = MessBox_5.Visible = MessBox_3.Visible = MessBox_2.Visible = MessBox_1.Visible = true;
         }
         private void _exit_Click(object sender, EventArgs e)
         {
@@ -302,7 +291,7 @@ namespace Visual
                             MessBox_1.Visible = MessBox_2.Visible = MessBox_3.Visible = MessBox_4.Visible = MessBox_5.Visible = true;
         }
     
-        private void label1_Click(object sender, EventArgs e)
+        private void Question_Click(object sender, EventArgs e)
         {
             Label lab = (Label)sender;
             sect_next = Convert.ToInt32(lab.Name);
@@ -314,41 +303,39 @@ namespace Visual
             sect = 0;
             MenuUpdate(false);
             NextScene(false);
+            MessBox_4.Visible = MessBox_5.Visible = MessBox_3.Visible = MessBox_2.Visible = MessBox_1.Visible = true;
         }
         private void SaveGame_Click(object sender, EventArgs e)
         {            
             inputBox();
         }
-
         private void LoadList_SelectedIndexChanged(object sender, EventArgs e)
         {
             string path = lua.userdata + LoadList.SelectedItem.ToString();
-            MessageBox.Show(lua.userdata + LoadList.SelectedItem.ToString());
+        //    MessageBox.Show(lua.userdata + LoadList.SelectedItem.ToString());
 
             sect = Convert.ToInt32(ifs.GetPrivateString         (path, "param", "sect"));
-            sect_old =    ifs.GetPrivateString                  (path, "param", "sect_old");
+            sect_old    = ifs.GetPrivateString                  (path, "param", "sect_old");
             sect_string = ifs.GetPrivateString                  (path, "param", "sect_string");
-
+            sect_label  = Convert.ToInt32(ifs.GetPrivateString  (path, "param", "sect_label"));
             LoadList.Visible = false;
             MenuUpdate(false);
             NextScene(true);
+            MessBox_4.Visible = MessBox_5.Visible = MessBox_3.Visible = MessBox_2.Visible = MessBox_1.Visible = true;
         }
         private void ago_Click(object sender, EventArgs e)
         {
             ago.Visible = checkBox1.Visible = flag_snd.Visible = false;
             MenuUpdate(true);
         }
-
         private void label6_Click(object sender, EventArgs e)
         {
             this._exit_Click(sender, e);
         }
-
         private void label7_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
         }
-
         private void SaveButton_Click(object sender, EventArgs e)
         {
             if (textBox1.Text != "")
@@ -356,17 +343,9 @@ namespace Visual
                 string path = lua.userdata + textBox1.Text + ".ini";
                 ifs.WritePrivateStringA("param", "sect", Convert.ToString(sect), path);
                 ifs.WritePrivateStringA("param", "sect_string", sect_string, path);
-                ifs.WritePrivateStringA("param", "name", lua.GetName(), path);
-                ifs.WritePrivateStringA("param", "name_c", lua.GetNameColor(), path);
-                ifs.WritePrivateStringA("param", "text", lua.GetText(), path);
-                ifs.WritePrivateStringA("param", "text_c", lua.GetTextColor(), path);
-                ifs.WritePrivateStringA("param", "backImage", lua.GetImage(0), path);
                 ifs.WritePrivateStringA("param", "sect_old", sect_old, path);
-                ifs.WritePrivateStringA("param", "snd_old", lua.GetSnd(), path);
-                ifs.WritePrivateStringA("param", "pic", Convert.ToString(lua.GetImgNum()), path);
-                for (int i = 1; i < lua.GetImgNum(); i++)
-                    ifs.WritePrivateStringA("param", "Image_" + Convert.ToString(i), lua.GetImage(i), textBox1.Text + ".ini");
-
+                ifs.WritePrivateStringA("param", "sect_label", Convert.ToString(sect_label), path);
+              
                 HideInputBox();
             }
             else

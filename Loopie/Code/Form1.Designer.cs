@@ -173,6 +173,7 @@ namespace Visual
             this.SaveGame.Size = new System.Drawing.Size(143, 22);
             this.SaveGame.TabIndex = 11;
             this.SaveGame.Text = "Сохранить Игру";
+            this.SaveGame.Visible = false;
             this.SaveGame.Click += new System.EventHandler(this.SaveGame_Click);
             // 
             // ago
