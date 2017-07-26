@@ -69,6 +69,7 @@ namespace Visual
             this.mess_3 = new System.Windows.Forms.Label();
             this.mess_4 = new System.Windows.Forms.Label();
             this.mess_5 = new System.Windows.Forms.Label();
+            this.flag_snd = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ALeft)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CLeft)).BeginInit();
@@ -217,8 +218,6 @@ namespace Visual
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Checked = true;
-            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBox1.Location = new System.Drawing.Point(10, 19);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(145, 17);
@@ -301,7 +300,8 @@ namespace Visual
             // 
             // MessBox_1
             // 
-            this.MessBox_1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.MessBox_1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.MessBox_1.BackColor = System.Drawing.Color.Transparent;
             this.MessBox_1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("MessBox_1.BackgroundImage")));
             this.MessBox_1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -310,6 +310,7 @@ namespace Visual
             this.MessBox_1.Size = new System.Drawing.Size(182, 134);
             this.MessBox_1.TabIndex = 25;
             this.MessBox_1.TabStop = false;
+            this.MessBox_1.Visible = false;
             // 
             // СancelButton
             // 
@@ -332,6 +333,7 @@ namespace Visual
             this.SaveButton.TabIndex = 8;
             this.SaveButton.Text = "Сохранить";
             this.SaveButton.Visible = false;
+            this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
             // 
             // textBox1
             // 
@@ -372,7 +374,8 @@ namespace Visual
             // 
             // MessBox_2
             // 
-            this.MessBox_2.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.MessBox_2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.MessBox_2.BackColor = System.Drawing.Color.Transparent;
             this.MessBox_2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("MessBox_2.BackgroundImage")));
             this.MessBox_2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -381,10 +384,12 @@ namespace Visual
             this.MessBox_2.Size = new System.Drawing.Size(197, 134);
             this.MessBox_2.TabIndex = 28;
             this.MessBox_2.TabStop = false;
+            this.MessBox_2.Visible = false;
             // 
             // MessBox_3
             // 
-            this.MessBox_3.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.MessBox_3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.MessBox_3.BackColor = System.Drawing.Color.Transparent;
             this.MessBox_3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("MessBox_3.BackgroundImage")));
             this.MessBox_3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -393,10 +398,12 @@ namespace Visual
             this.MessBox_3.Size = new System.Drawing.Size(201, 134);
             this.MessBox_3.TabIndex = 29;
             this.MessBox_3.TabStop = false;
+            this.MessBox_3.Visible = false;
             // 
             // MessBox_4
             // 
-            this.MessBox_4.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.MessBox_4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.MessBox_4.BackColor = System.Drawing.Color.Transparent;
             this.MessBox_4.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("MessBox_4.BackgroundImage")));
             this.MessBox_4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -405,10 +412,12 @@ namespace Visual
             this.MessBox_4.Size = new System.Drawing.Size(195, 134);
             this.MessBox_4.TabIndex = 30;
             this.MessBox_4.TabStop = false;
+            this.MessBox_4.Visible = false;
             // 
             // MessBox_5
             // 
-            this.MessBox_5.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.MessBox_5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.MessBox_5.BackColor = System.Drawing.Color.Transparent;
             this.MessBox_5.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("MessBox_5.BackgroundImage")));
             this.MessBox_5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -417,6 +426,7 @@ namespace Visual
             this.MessBox_5.Size = new System.Drawing.Size(182, 134);
             this.MessBox_5.TabIndex = 31;
             this.MessBox_5.TabStop = false;
+            this.MessBox_5.Visible = false;
             // 
             // SpeakerName
             // 
@@ -490,6 +500,18 @@ namespace Visual
             this.mess_5.Size = new System.Drawing.Size(0, 13);
             this.mess_5.TabIndex = 37;
             // 
+            // flag_snd
+            // 
+            this.flag_snd.AutoSize = true;
+            this.flag_snd.BackColor = System.Drawing.Color.Transparent;
+            this.flag_snd.Location = new System.Drawing.Point(10, 38);
+            this.flag_snd.Name = "flag_snd";
+            this.flag_snd.Size = new System.Drawing.Size(66, 17);
+            this.flag_snd.TabIndex = 38;
+            this.flag_snd.Text = "Музыка";
+            this.flag_snd.UseVisualStyleBackColor = false;
+            this.flag_snd.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -497,6 +519,7 @@ namespace Visual
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(979, 528);
             this.ControlBox = false;
+            this.Controls.Add(this.flag_snd);
             this.Controls.Add(this.mess_5);
             this.Controls.Add(this.mess_4);
             this.Controls.Add(this.mess_3);
@@ -585,6 +608,7 @@ namespace Visual
         private PictureBox MessBox_3;
         private PictureBox MessBox_4;
         private PictureBox MessBox_5;
+        private CheckBox flag_snd;
     }
 }
 

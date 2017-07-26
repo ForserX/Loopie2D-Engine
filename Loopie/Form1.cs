@@ -65,7 +65,6 @@ namespace Visual
             mess_4.Parent = MessBox_4;
             mess_5.Parent = MessBox_5;
 
-            //mess_1.Visible = mess_2.Visible = mess_3.Visible = mess_4.Visible = mess_5.Visible = true;
 
             ALeft.Size = new System.Drawing.Size(ppos, ALeft.Size.Height);
             CLeft.Size = new System.Drawing.Size(ppos, ALeft.Size.Height);
@@ -87,6 +86,7 @@ namespace Visual
         //Прокомментирую, а то уже забыл, что к чему...
         void NextScene(bool load)
         {
+            MessBox_4.Visible = MessBox_5.Visible = MessBox_3.Visible = MessBox_2.Visible = MessBox_1.Visible = true;
             lua.lua.Pop();
 
             //Флажок для лоадера
@@ -138,7 +138,7 @@ namespace Visual
             SetColor(lua.GetNameColor());
 
             //Music
-            if (!snd || lua.GetSnd() != snd_old)
+            if (flag_snd.Checked && (!snd || lua.GetSnd() != snd_old))
             {
                 player.Open(new Uri(lua.snd + lua.GetSnd(), UriKind.Relative));
                 player.Play();
@@ -184,7 +184,7 @@ namespace Visual
                 lb++;
                 switch (lb)
                 {
-                    case 1: mess_1.Text += ActorText_str; text_width -= 2; break;
+                    case 1: mess_1.Text += ActorText_str; text_width -= checkBox1.Checked ? 0 : 2; break;
                     case 2: mess_2.Text += ActorText_str; text_width -= 2; break;
                     case 3: mess_3.Text += ActorText_str; break;
                     case 4: mess_4.Text += ActorText_str; break;
@@ -193,6 +193,7 @@ namespace Visual
                 ActorText_str = "";
                 str = 0;
             }
+            text_width = checkBox1.Checked ? 36 : 27;
             // Drawing img
             this.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(0));
             pictureBox1.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(0));
@@ -207,11 +208,11 @@ namespace Visual
                     {
                         switch (lua.GetImageTextPos(it))
                         {
-                            case 1: ALeft.Visible = true; ALeft.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(it)); break;
-                            case 2: CLeft.Visible = true; CLeft.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(it)); break;
-                            case 3: Center.Visible = true; Center.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(it)); break;
-                            case 4: CRight.Visible = true; CRight.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(it)); break;
-                            case 5: ARight.Visible = true; ARight.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(it)); break;
+                            case 1: ALeft.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(it)); break;
+                            case 2: CLeft.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(it)); break;
+                            case 3: Center.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(it)); break;
+                            case 4: CRight.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(it)); break;
+                            case 5: ARight.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(it)); break;
                         }
                     }
                 }
@@ -222,16 +223,34 @@ namespace Visual
         {
             if (checkBox1.Checked)
             {
-                this.Height -= 40;
-                this.Width -= 40;
-                this.TopMost = true;
+                this.Height = SystemInformation.VirtualScreen.Size.Height;
+                this.Width = SystemInformation.VirtualScreen.Size.Width;
+                this.TopMost = true; 
+                text_width += 9;
+                mess_1.MaximumSize = mess_2.MaximumSize = mess_3.MaximumSize = mess_4.MaximumSize = mess_5.MaximumSize = new Size(260, 120);
+            
             }
             else
             {
-                this.Height += 40;
-                this.Width += 40;
+                this.Height = 528;
+                this.Width = 979;
                 this.TopMost = false;
+                text_width = 27;
+                mess_1.MaximumSize = mess_2.MaximumSize = mess_3.MaximumSize = mess_4.MaximumSize = mess_5.MaximumSize = new Size(200, 120);
+            
             }
+            int ppos = this.Width / 5;
+            ALeft.Size = new System.Drawing.Size(ppos, ALeft.Size.Height);
+            CLeft.Size = new System.Drawing.Size(ppos, ALeft.Size.Height);
+            Center.Size = new System.Drawing.Size(ppos, ALeft.Size.Height);
+            CRight.Size = new System.Drawing.Size(ppos, ALeft.Size.Height);
+            ARight.Size = new System.Drawing.Size(ppos, ALeft.Size.Height);
+
+            ALeft.Location = new System.Drawing.Point(0, ALeft.Location.Y);
+            CLeft.Location = new System.Drawing.Point(ppos, CLeft.Location.Y);
+            Center.Location = new System.Drawing.Point(ppos * 2, Center.Location.Y);
+            CRight.Location = new System.Drawing.Point(ppos * 3, CRight.Location.Y);
+            ARight.Location = new System.Drawing.Point(ppos * 4, ARight.Location.Y);
         }
         private void label4_Click(object sender, EventArgs e)
         {
@@ -239,7 +258,7 @@ namespace Visual
             LoadList.Items.Clear();
             foreach(string file_name in Directory.GetFiles(lua.userdata))
                 if(file_name != lua.userdata + "temp.ini")
-                    LoadList.Items.Add(file_name.Substring(14));
+                    LoadList.Items.Add(file_name.Substring(lua.userdata.Length));
         }
         private void Next_Click(object sender, EventArgs e)
         {
@@ -254,7 +273,8 @@ namespace Visual
         {
             MenuUpdate          (false);
             trygame             = false;
-             MessBox_1.Visible = MessBox_2.Visible = MessBox_3.Visible = MessBox_4.Visible = MessBox_5.Visible = false;
+            MessBox_1.Visible   = MessBox_2.Visible = MessBox_3.Visible = MessBox_4.Visible = MessBox_5.Visible = false;
+            flag_snd.Visible    = true;
             ago.Visible         = true;
             checkBox1.Visible   = true;
         }
@@ -294,7 +314,6 @@ namespace Visual
             sect = 0;
             MenuUpdate(false);
             NextScene(false);
-
         }
         private void SaveGame_Click(object sender, EventArgs e)
         {            
@@ -326,9 +345,8 @@ namespace Visual
         }
         private void ago_Click(object sender, EventArgs e)
         {
-            ago.Visible = false;
+            ago.Visible = checkBox1.Visible = flag_snd.Visible = false;
             MenuUpdate(true);
-            checkBox1.Visible = false;
         }
 
         private void label6_Click(object sender, EventArgs e)
@@ -339,6 +357,30 @@ namespace Visual
         private void label7_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void SaveButton_Click(object sender, EventArgs e)
+        {
+            if (textBox1.Text != "")
+            {
+                string path = lua.userdata + textBox1.Text + ".ini";
+                ifs.WritePrivateStringA("param", "sect", Convert.ToString(sect), path);
+                ifs.WritePrivateStringA("param", "sect_string", sect_string, path);
+                ifs.WritePrivateStringA("param", "name", lua.GetName(), path);
+                ifs.WritePrivateStringA("param", "name_c", lua.GetNameColor(), path);
+                ifs.WritePrivateStringA("param", "text", lua.GetText(), path);
+                ifs.WritePrivateStringA("param", "text_c", lua.GetTextColor(), path);
+                ifs.WritePrivateStringA("param", "backImage", lua.GetImage(0), path);
+                ifs.WritePrivateStringA("param", "sect_old", sect_old, path);
+                ifs.WritePrivateStringA("param", "snd_old", lua.GetSnd(), path);
+                ifs.WritePrivateStringA("param", "pic", Convert.ToString(lua.GetImgNum()), path);
+                for (int i = 1; i < lua.GetImgNum(); i++)
+                    ifs.WritePrivateStringA("param", "Image_" + Convert.ToString(i), lua.GetImage(i), textBox1.Text + ".ini");
+
+                HideInputBox();
+            }
+            else
+                MessageBox.Show("Error", "Введите название!", MessageBoxButtons.OK);
         }
     }
 }

@@ -22,30 +22,6 @@ namespace Visual
             СancelButton.Visible = true;
             SaveButton.Visible = true;
         }
-        private void SaveButton_Click(object sender, EventArgs e)
-        {
-            if (textBox1.Text != "")
-            {
-                string path = lua.userdata + textBox1.Text + ".ini";
-                ifs.WritePrivateStringA("param", "sect",        Convert.ToString(sect),         path);
-                ifs.WritePrivateStringA("param", "sect_string", sect_string,                    path);
-                ifs.WritePrivateStringA("param", "name",        lua.GetName(),                  path);
-                ifs.WritePrivateStringA("param", "name_c",      lua.GetNameColor(),             path);
-                ifs.WritePrivateStringA("param", "text",        lua.GetText(),                  path);
-                ifs.WritePrivateStringA("param", "text_c",      lua.GetTextColor(),             path);
-                ifs.WritePrivateStringA("param", "backImage",   lua.GetImage(0),                path);
-                ifs.WritePrivateStringA("param", "sect_old",    sect_old,                       path);
-                ifs.WritePrivateStringA("param", "snd_old",     lua.GetSnd(),                   path);
-                ifs.WritePrivateStringA("param", "pic",         Convert.ToString(lua.GetImgNum()), path);
-                for (int i = 1; i < lua.GetImgNum(); i++)
-                    ifs.WritePrivateStringA("param", "Image_" + Convert.ToString(i), lua.GetImage(i), textBox1.Text+ ".ini");
-
-                HideInputBox();
-            }
-            else
-                MessageBox.Show("Error", "Введите название!", MessageBoxButtons.OK);
-       
-        }
         private void СancelButton_Click(object sender, EventArgs e)
         {
             HideInputBox();
