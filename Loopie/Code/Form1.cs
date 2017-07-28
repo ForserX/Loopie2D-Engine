@@ -185,7 +185,7 @@ namespace Visual
             // Drawing img
             this.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(0));
             pictureBox1.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(0));
-            ALeft.BackgroundImage = CLeft.BackgroundImage = Center.BackgroundImage = CRight.BackgroundImage = ARight.BackgroundImage = null;
+            ALeft.Image = CLeft.Image = Center.Image = CRight.Image = ARight.Image = null;
             inum = lua.GetImgNum() - 1;
             if (inum > -1)
             {
