@@ -6,17 +6,12 @@ function start()
   Sound = "MyMusic.mp3"
   ActorName = "FX"
   Text = "Итак, господа, проверяем первую сцену."
-	Scene["Images"] = 4
+	Scene["Images"] = 3
 	Scene["Image0"] = "ext_bus_driver.jpg"
-	Scene["Image1"] = "test.gif"
-	Scene["Image1Gif"] = true
+	Scene["Image1"] = "sl.png"
 	Scene["Image1Pos"] = "ARight"
 	Scene["Image2"] = "alice.png"
-	Scene["Image2Gif"] = false
 	Scene["Image2Pos"] = "ALeft"
-	Scene["Image3"] = "sl.png"
-	Scene["Image3Pos"] = "Center"
-	Scene["Image3Gif"] = false
 end
 
 function question1()

@@ -13,45 +13,36 @@ namespace Visual
 {
     public partial class Form1 : Form
     {
+        // Interfaces/classes
         private INIManager ifs;
-        private int sect, sect_next, sect_label, sect_lb_old, text_width = 27, lnum, inum;
-        string heroname, ActorText_str = "", sect_old, sect_string, snd_old = "0";
-        string [] ActorText;
-        bool trygame, snd = false;
-        LuaAPI lua = new LuaAPI();
-        System.Windows.Media.MediaPlayer player = new System.Windows.Media.MediaPlayer();
+        private LuaAPI lua;
+        private System.Windows.Media.MediaPlayer player;
         private System.Windows.Forms.Label[] label_text;
 
+        //Vars
+        private int sect, sect_next, sect_label, sect_lb_old, text_width, lnum, inum;
+        private string heroname, ActorText_str, sect_old, sect_string, snd_old;
+        private string [] ActorText;
+        private bool trygame, snd;
+
+        //Code
         public Form1()
         {
+            /// Init
             InitializeComponent();
             int ppos = this.Width / 5;
-            this.BackgroundImage = new Bitmap(lua.images + "logo.gif");
-            this.KeyDown += new KeyEventHandler(_KeyDown);
-            ALeft.Parent = CLeft.Parent = CRight.Parent = Center.Parent = ARight.Parent = pictureBox1;
-            ALeft.MouseDown += new MouseEventHandler(_MouseDown);
-            CLeft.MouseDown += new MouseEventHandler(_MouseDown);
-            Center.MouseDown += new MouseEventHandler(_MouseDown);
-            CRight.MouseDown += new MouseEventHandler(_MouseDown);
-            ARight.MouseDown += new MouseEventHandler(_MouseDown);
-            pictureBox1.MouseDown += new MouseEventHandler(_MouseDown);
-            MessBox_1.MouseDown += new MouseEventHandler(_MouseDown);
-            MessBox_2.MouseDown += new MouseEventHandler(_MouseDown);
-            MessBox_3.MouseDown += new MouseEventHandler(_MouseDown);
-            MessBox_4.MouseDown += new MouseEventHandler(_MouseDown);
-            MessBox_5.MouseDown += new MouseEventHandler(_MouseDown);
-
-            checkBox1.Parent = pictureBox1;
-            checkBox1.BackColor = Color.Transparent;
+            /////////////////////////////////////////////////////////////////////
+            /// ETC setter
+            panel1.Parent = label6.Parent = label7.Parent = checkBox1.Parent = pictureBox1;
+            this.KeyDown             += new KeyEventHandler(_KeyDown);
+            pictureBox1.MouseDown    += new MouseEventHandler(_MouseDown);
             checkBox1.CheckedChanged += new EventHandler(Fullscreen);
 
-            panel1.BackColor = Color.Transparent;
-            panel1.Parent = pictureBox1;
-
-            label6.Parent = pictureBox1;
-            label7.Parent = pictureBox1;
-            SpeakerName.Parent = MessBox_1;
-            checkBox1.Parent = pictureBox1;
+            checkBox1.BackColor = Color.Transparent;
+            panel1.BackColor     = Color.Transparent;
+            SpeakerName.Parent   = MessBox_1;
+            /////////////////////////////////////////////////////////////////////
+            /// Mess setter
             MessBox_1.Parent = ALeft;
             MessBox_2.Parent = CLeft;
             MessBox_3.Parent = Center;
@@ -64,6 +55,14 @@ namespace Visual
             mess_4.Parent = MessBox_4;
             mess_5.Parent = MessBox_5;
 
+            MessBox_1.MouseDown += new MouseEventHandler(_MouseDown);
+            MessBox_2.MouseDown += new MouseEventHandler(_MouseDown);
+            MessBox_3.MouseDown += new MouseEventHandler(_MouseDown);
+            MessBox_4.MouseDown += new MouseEventHandler(_MouseDown);
+            MessBox_5.MouseDown += new MouseEventHandler(_MouseDown);
+            /////////////////////////////////////////////////////////////////////
+            /// PictPositions setter
+            ALeft.Parent = CLeft.Parent = CRight.Parent = Center.Parent = ARight.Parent = pictureBox1;
 
             ALeft.Size = new System.Drawing.Size(ppos, ALeft.Size.Height);
             CLeft.Size = new System.Drawing.Size(ppos, ALeft.Size.Height);
@@ -77,8 +76,20 @@ namespace Visual
             CRight.Location = new System.Drawing.Point(ppos * 3, CRight.Location.Y);
             ARight.Location = new System.Drawing.Point(ppos * 4, ARight.Location.Y);
 
-            //Пока определим тут
-            ifs = new INIManager();
+            ALeft.MouseDown += new MouseEventHandler(_MouseDown);
+            CLeft.MouseDown += new MouseEventHandler(_MouseDown);
+            Center.MouseDown += new MouseEventHandler(_MouseDown);
+            CRight.MouseDown += new MouseEventHandler(_MouseDown);
+            ARight.MouseDown += new MouseEventHandler(_MouseDown);
+            /////////////////////////////////////////////////////////////////////
+            /// Vars setter
+            ifs                  = new INIManager();
+            lua                  = new LuaAPI();
+            player               = new System.Windows.Media.MediaPlayer();
+            ActorText_str        = "";
+            snd_old              = "0";
+            text_width           = 27;
+            snd                  = false;
         }
         //Прокомментирую, а то уже забыл, что к чему...
         void NextScene(bool load)

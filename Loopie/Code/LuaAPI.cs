@@ -13,18 +13,22 @@ namespace Visual
         public string cfg, userdata, scripts, images, snd;
 
         private INIManager ifs;
-        public Lua lua = new Lua();
+        public Lua lua;
         public LuaAPI()
         {
+            ////////////////////////////////////////////////////////
+            /// Interfaces/Classes setter
             ifs = new INIManager(@"..\\setting.ini");
-
+            lua = new Lua();
+            ////////////////////////////////////////////////////////
+            /// CFG setter
             cfg      = ifs.GetPrivateString("global", "config");
             userdata = ifs.GetPrivateString("global", "user");
             scripts  = ifs.GetPrivateString("global", "scripts");
             images   = ifs.GetPrivateString("global", "img");
             snd      = ifs.GetPrivateString("global", "snd");
-
-            //lua["Form"] = new FormAPIForLua();
+            ////////////////////////////////////////////////////////
+            /// Lua namespace setter
             lua["IFS"]  = new INIManager();
             lua["Text"] = "";
             lua["ActorName"] = "";
