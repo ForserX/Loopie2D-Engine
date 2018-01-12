@@ -160,7 +160,7 @@ namespace Visual
             this.label4.Size = new System.Drawing.Size(134, 22);
             this.label4.TabIndex = 10;
             this.label4.Text = "Загрузить игру";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
+            this.label4.Click += new System.EventHandler(this.Label4_Click);
             // 
             // SaveGame
             // 
@@ -188,7 +188,7 @@ namespace Visual
             this.ago.TabIndex = 14;
             this.ago.Text = "Назад";
             this.ago.Visible = false;
-            this.ago.Click += new System.EventHandler(this.ago_Click);
+            this.ago.Click += new System.EventHandler(this.Ago_Click);
             // 
             // label6
             // 
@@ -201,7 +201,7 @@ namespace Visual
             this.label6.Size = new System.Drawing.Size(14, 17);
             this.label6.TabIndex = 15;
             this.label6.Text = "x";
-            this.label6.Click += new System.EventHandler(this.label6_Click);
+            this.label6.Click += new System.EventHandler(this.Label6_Click);
             // 
             // label7
             // 
@@ -214,7 +214,7 @@ namespace Visual
             this.label7.Size = new System.Drawing.Size(16, 17);
             this.label7.TabIndex = 16;
             this.label7.Text = "_";
-            this.label7.Click += new System.EventHandler(this.label7_Click);
+            this.label7.Click += new System.EventHandler(this.Label7_Click);
             // 
             // checkBox1
             // 

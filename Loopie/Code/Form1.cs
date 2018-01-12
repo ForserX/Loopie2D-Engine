@@ -117,19 +117,21 @@ namespace Visual
             if (ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "type") == "Question")
             {
                 lnum = lua.GetLabelNum();
-                label_text = new System.Windows.Forms.Label[lnum]; // Set size
+                label_text = new Label[lnum]; // Set size
                 for (int i = 0; i < lnum; i++)
                 {
-                    label_text[i] = new System.Windows.Forms.Label();
-                    label_text[i].AutoSize = true;
-                    label_text[i].Name = Convert.ToString(i + 1);
-                    label_text[i].BackColor = System.Drawing.Color.Transparent;
-                    label_text[i].Location = new System.Drawing.Point(80, 22 + 10 * i);
-                    label_text[i].TabIndex = 3 + i;
-                    label_text[i].Visible = true;
+                    label_text[i] = new System.Windows.Forms.Label
+                    {
+                        AutoSize = true,
+                        Name = Convert.ToString(i + 1),
+                        BackColor = System.Drawing.Color.Transparent,
+                        Location = new System.Drawing.Point(80, 22 + 10 * i),
+                        TabIndex = 3 + i,
+                        Visible = true,
+                        Text = lua.GetLabelText(i),
+                        Parent = panel1
+                    };
                     label_text[i].Click += new System.EventHandler(this.Question_Click);
-                    label_text[i].Parent = panel1;
-                    label_text[i].Text = lua.GetLabelText(i);
                 }
                 Label_Helper(true, lnum);
                 return;
@@ -251,7 +253,7 @@ namespace Visual
             CRight.Location = new System.Drawing.Point(ppos * 3, CRight.Location.Y);
             ARight.Location = new System.Drawing.Point(ppos * 4, ARight.Location.Y);
         }
-        private void label4_Click(object sender, EventArgs e)
+        private void Label4_Click(object sender, EventArgs e)
         {
             LoadList.Visible = true;
             LoadList.Items.Clear();
@@ -323,7 +325,6 @@ namespace Visual
         private void LoadList_SelectedIndexChanged(object sender, EventArgs e)
         {
             string path = lua.userdata + LoadList.SelectedItem.ToString();
-        //    MessageBox.Show(lua.userdata + LoadList.SelectedItem.ToString());
 
             sect = Convert.ToInt32(ifs.GetPrivateString         (path, "param", "sect"));
             sect_old    = ifs.GetPrivateString                  (path, "param", "sect_old");
@@ -334,19 +335,15 @@ namespace Visual
             NextScene(true);
             MessBox_4.Visible = MessBox_5.Visible = MessBox_3.Visible = MessBox_2.Visible = MessBox_1.Visible = true;
         }
-        private void ago_Click(object sender, EventArgs e)
+        private void Ago_Click(object sender, EventArgs e)
         {
             ago.Visible = checkBox1.Visible = flag_snd.Visible = false;
             MenuUpdate(true);
         }
-        private void label6_Click(object sender, EventArgs e)
-        {
-            this._exit_Click(sender, e);
-        }
-        private void label7_Click(object sender, EventArgs e)
-        {
-            this.WindowState = FormWindowState.Minimized;
-        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void Label6_Click(object sender, EventArgs e) => this._exit_Click(sender, e);
+        private void Label7_Click(object sender, EventArgs e) => this.WindowState = FormWindowState.Minimized;
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void SaveButton_Click(object sender, EventArgs e)
         {
             if (textBox1.Text != "")

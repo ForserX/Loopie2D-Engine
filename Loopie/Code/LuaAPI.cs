@@ -36,34 +36,20 @@ namespace Visual
             lua.NewTable("Font");
             lua.NewTable("Scene");
         }
-        public string GetSnd()
-        {
-            return (string)lua["Sound"];
-        }
-        public string GetName()
-        {
-            return (string)lua["ActorName"];
-        }
-        public string GetText()
-        {
-            return (string)lua["Text"];
-        }
-        public string GetTextColor()
-        {
-            return (string)lua.GetTable("Font")["TextColor"];
-        }
-        public string GetNameColor()
-        {
-            return (string)lua.GetTable("Font")["NameColor"];
-        }
-        public int GetLabelNum()
-        {
-            return (int)(double)lua.GetTable("Scene")["Options"];
-        }
-        public string GetImageText(int num)
-        {
-            return (string)lua.GetTable("Scene")["Image" + Convert.ToString(num)];
-        }
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////                                          ООП Методы                                                //////
+        public string GetSnd() => (string)lua["Sound"];
+        public string GetName() => (string)lua["ActorName"];
+        public string GetText() => (string)lua["Text"];
+        public string GetTextColor() => (string)lua.GetTable("Font")["TextColor"];
+        public string GetNameColor() => (string)lua.GetTable("Font")["NameColor"];
+        public int GetLabelNum() => (int)(double)lua.GetTable("Scene")["Options"];
+        public string GetImageText(int num) => (string)lua.GetTable("Scene")["Image" + Convert.ToString(num)];
+        public int GetImgNum() => (int)(double)lua.GetTable("Scene")["Images"];
+        public string GetLabelText(int num) => (string)lua.GetTable("Scene")["Option" + Convert.ToString(num)];
+        public string GetTextFont() => (string)lua.GetTable("Font")["Text"];
+        public string GetNameFont() => (string)lua.GetTable("Font")["Name"];
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public int GetImageTextPos(int num)
         {
             switch ((string)lua.GetTable("Scene")["Image" + Convert.ToString(num) + "Pos"])
@@ -76,35 +62,17 @@ namespace Visual
                 default: return 3;
             }
         }
-        
-        public int GetImgNum()
-        {
-            return (int)(double)lua.GetTable("Scene")["Images"];
-        }
-        public string GetLabelText(int num)
-        {
-            return (string)lua.GetTable("Scene")["Option" + Convert.ToString(num)];
-        }
-        public string GetTextFont()
-        {
-            return (string)lua.GetTable("Font")["Text"];
-        }
-        public string GetNameFont()
-        {
-            return (string)lua.GetTable("Font")["Name"];
-        }
 
         public void LuaFunc(string file, string func)
         {
             try
             {
                 lua.DoFile(scripts + file + ".lua");
-                LuaFunction function = lua[func] as LuaFunction;
-                function.Call();
+                (lua[func] as LuaFunction).Call();
             }
             catch (LuaException ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(text: ex.Message);
             }
         }
     }

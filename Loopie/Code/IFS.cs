@@ -9,10 +9,7 @@ using System.Runtime.InteropServices;
 public class INIManager
 {
     //Конструктор, принимающий путь к INI-файлу
-    public INIManager(string aPath)
-    {
-        path = aPath;
-    }
+    public INIManager(string aPath) => path = aPath;
 
     //Конструктор без аргументов (путь к INI-файлу нужно будет задать отдельно)
     public INIManager() : this("") { }
@@ -49,7 +46,7 @@ public class INIManager
     }
 
     //Возвращает или устанавливает путь к INI файлу
-    public string Path { get { return path; } set { path = value; } }
+    public string Path { get => path; set { path = value; } }
 
     //Поля класса
     private const int SIZE = 1024; //Максимальный размер (для чтения значения из файла)
