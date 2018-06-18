@@ -103,13 +103,12 @@ namespace Visual
                 ++sect;
                 //Тут мы определяем секцию, костыльно и не интересно
                 sect_string = (sect_label == 0) ? Convert.ToString(sect) : Convert.ToString(sect) + sect_old;
-                if (sect_next != 0)
-                    if (sect_lb_old != sect_label)
-                    {
-                        sect_old += "_" + Convert.ToString(sect_next);
-                        sect_string = Convert.ToString(sect) + sect_old;
-                        sect_lb_old = sect_label;
-                    }
+                if (sect_next != 0 && sect_lb_old != sect_label)
+                {
+                    sect_old += "_" + Convert.ToString(sect_next);
+                    sect_string = Convert.ToString(sect) + sect_old;
+                    sect_lb_old = sect_label;
+                }
             }
 
             //Load vars
@@ -118,20 +117,20 @@ namespace Visual
             {
                 lnum = lua.GetLabelNum();
                 label_text = new Label[lnum]; // Set size
-                for (int i = 0; i < lnum; i++)
+                for (int it = 0; it < lnum; it++)
                 {
-                    label_text[i] = new System.Windows.Forms.Label
+                    label_text[it] = new System.Windows.Forms.Label
                     {
                         AutoSize = true,
-                        Name = Convert.ToString(i + 1),
+                        Name = Convert.ToString(it + 1),
                         BackColor = System.Drawing.Color.Transparent,
-                        Location = new System.Drawing.Point(80, 22 + 10 * i),
-                        TabIndex = 3 + i,
+                        Location = new System.Drawing.Point(80, 22 + 10 * it),
+                        TabIndex = 3 + it,
                         Visible = true,
-                        Text = lua.GetLabelText(i),
+                        Text = lua.GetLabelText(it),
                         Parent = panel1
                     };
-                    label_text[i].Click += new System.EventHandler(this.Question_Click);
+                    label_text[it].Click += new System.EventHandler(this.Question_Click);
                 }
                 Label_Helper(true, lnum);
                 return;
@@ -200,24 +199,21 @@ namespace Visual
             pictureBox1.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(0));
             ALeft.Image = CLeft.Image = Center.Image = CRight.Image = ARight.Image = null;
             inum = lua.GetImgNum() - 1;
-            if (inum > -1)
-            {
-                //pictureBox1.Image = new Bitmap(lua.images + lua.GetImageText(1));
-                if (inum > 0)
-                {
-                    for (int it = 1; it <= inum; it++)
-                    {
-                        switch (lua.GetImageTextPos(it))
-                        {
-                            case 1: ALeft.Image = new Bitmap(lua.images + lua.GetImageText(it)); break;
-                            case 2: CLeft.Image = new Bitmap(lua.images + lua.GetImageText(it)); break;
-                            case 3: Center.Image = new Bitmap(lua.images + lua.GetImageText(it)); break;
-                            case 4: CRight.Image = new Bitmap(lua.images + lua.GetImageText(it)); break;
-                            case 5: ARight.Image = new Bitmap(lua.images + lua.GetImageText(it)); break;
-                        }
-                    }
-                }
-            }
+
+			if (inum > 0)
+			{
+				for (int it = 1; it <= inum; it++)
+				{
+					switch (lua.GetImageTextPos(it))
+					{
+						case 1: ALeft.Image = new Bitmap(lua.images + lua.GetImageText(it)); break;
+						case 2: CLeft.Image = new Bitmap(lua.images + lua.GetImageText(it)); break;
+						case 3: Center.Image = new Bitmap(lua.images + lua.GetImageText(it)); break;
+						case 4: CRight.Image = new Bitmap(lua.images + lua.GetImageText(it)); break;
+						case 5: ARight.Image = new Bitmap(lua.images + lua.GetImageText(it)); break;
+					}
+				}
+			}
         }
         //Load: Game
         void Fullscreen(object sender, EventArgs e)
@@ -229,7 +225,6 @@ namespace Visual
                 this.TopMost = true; 
                 text_width += 9;
                 mess_1.MaximumSize = mess_2.MaximumSize = mess_3.MaximumSize = mess_4.MaximumSize = mess_5.MaximumSize = new Size(260, 120);
-            
             }
             else
             {
