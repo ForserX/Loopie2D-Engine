@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using SoundSystem;
+
 namespace Visual
 {
     public partial class Form1 : Form
@@ -31,60 +32,73 @@ namespace Visual
             /// Init
             InitializeComponent();
             int ppos = this.Width / 5;
-            /////////////////////////////////////////////////////////////////////
-            /// ETC setter
-            panel1.Parent = label6.Parent = label7.Parent = checkBox1.Parent = pictureBox1;
-            this.KeyDown             += new KeyEventHandler(_KeyDown);
-            pictureBox1.MouseDown    += new MouseEventHandler(_MouseDown);
-            checkBox1.CheckedChanged += new EventHandler(Fullscreen);
 
-            checkBox1.BackColor = Color.Transparent;
-            panel1.BackColor     = Color.Transparent;
-            SpeakerName.Parent   = MessBox_1;
+			/////////////////////////////////////////////////////////////////////
+			/// ETC setter
+			ifs = new INIManager();
+			lua = new LuaAPI();
+
+			this._exit.Parent = pictureBox1;
+			this.Options.Parent = pictureBox1;
+			this.NewGame.Parent = pictureBox1;
+			this.Next.Parent = pictureBox1;
+			this.label4.Parent = pictureBox1;
+			//this.TopMost = true;
+
+			this.pictureBox1.BackgroundImage = new Bitmap(lua.images + "MainFormBack.jpg");
+
+			this.panel1.Parent = label6.Parent = label7.Parent = checkBox1.Parent = pictureBox1;
+
+            this.KeyDown			      += new KeyEventHandler(_KeyDown);
+			this.pictureBox1.MouseDown    += new MouseEventHandler(_MouseDown);
+			this.checkBox1.CheckedChanged += new EventHandler(Fullscreen);
+
+			this.checkBox1.BackColor = Color.Transparent;
+			this.panel1.BackColor    = Color.Transparent;
+
+			this.SpeakerName.Parent   = MessBox_1;
             /////////////////////////////////////////////////////////////////////
             /// Mess setter
-            MessBox_1.Parent = ALeft;
-            MessBox_2.Parent = CLeft;
-            MessBox_3.Parent = Center;
-            MessBox_4.Parent = CRight;
-            MessBox_5.Parent = ARight;
+            this.MessBox_1.Parent = ALeft;
+            this.MessBox_2.Parent = CLeft;
+            this.MessBox_3.Parent = Center;
+            this.MessBox_4.Parent = CRight;
+			this.MessBox_5.Parent = ARight;
 
-            mess_1.Parent = MessBox_1;
-            mess_2.Parent = MessBox_2;
-            mess_3.Parent = MessBox_3;
-            mess_4.Parent = MessBox_4;
-            mess_5.Parent = MessBox_5;
+            this.mess_1.Parent = MessBox_1;
+            this.mess_2.Parent = MessBox_2;
+            this.mess_3.Parent = MessBox_3;
+            this.mess_4.Parent = MessBox_4;
+			this.mess_5.Parent = MessBox_5;
 
-            MessBox_1.MouseDown += new MouseEventHandler(_MouseDown);
-            MessBox_2.MouseDown += new MouseEventHandler(_MouseDown);
-            MessBox_3.MouseDown += new MouseEventHandler(_MouseDown);
-            MessBox_4.MouseDown += new MouseEventHandler(_MouseDown);
-            MessBox_5.MouseDown += new MouseEventHandler(_MouseDown);
-            /////////////////////////////////////////////////////////////////////
-            /// PictPositions setter
-            ALeft.Parent = CLeft.Parent = CRight.Parent = Center.Parent = ARight.Parent = pictureBox1;
+            this.MessBox_1.MouseDown += new MouseEventHandler(_MouseDown);
+            this.MessBox_2.MouseDown += new MouseEventHandler(_MouseDown);
+            this.MessBox_3.MouseDown += new MouseEventHandler(_MouseDown);
+            this.MessBox_4.MouseDown += new MouseEventHandler(_MouseDown);
+			this.MessBox_5.MouseDown += new MouseEventHandler(_MouseDown);
+			/////////////////////////////////////////////////////////////////////
+			/// PictPositions setter
+			this.ALeft.Parent = CLeft.Parent = CRight.Parent = Center.Parent = ARight.Parent = pictureBox1;
 
-            ALeft.Size = new System.Drawing.Size(ppos, ALeft.Size.Height);
-            CLeft.Size = new System.Drawing.Size(ppos, ALeft.Size.Height);
-            Center.Size = new System.Drawing.Size(ppos, ALeft.Size.Height);
-            CRight.Size = new System.Drawing.Size(ppos, ALeft.Size.Height);
-            ARight.Size = new System.Drawing.Size(ppos, ALeft.Size.Height);
+            this.ALeft.Size = new System.Drawing.Size(ppos, ALeft.Size.Height);
+            this.CLeft.Size = new System.Drawing.Size(ppos, ALeft.Size.Height);
+            this.Center.Size = new System.Drawing.Size(ppos, ALeft.Size.Height);
+            this.CRight.Size = new System.Drawing.Size(ppos, ALeft.Size.Height);
+			this.ARight.Size = new System.Drawing.Size(ppos, ALeft.Size.Height);
 
-            ALeft.Location = new System.Drawing.Point(0, ALeft.Location.Y);
-            CLeft.Location = new System.Drawing.Point(ppos, CLeft.Location.Y);
-            Center.Location = new System.Drawing.Point(ppos * 2, Center.Location.Y);
-            CRight.Location = new System.Drawing.Point(ppos * 3, CRight.Location.Y);
-            ARight.Location = new System.Drawing.Point(ppos * 4, ARight.Location.Y);
+            this.ALeft.Location = new System.Drawing.Point(0, ALeft.Location.Y);
+            this.CLeft.Location = new System.Drawing.Point(ppos, CLeft.Location.Y);
+            this.Center.Location = new System.Drawing.Point(ppos * 2, Center.Location.Y);
+            this.CRight.Location = new System.Drawing.Point(ppos * 3, CRight.Location.Y);
+			this.ARight.Location = new System.Drawing.Point(ppos * 4, ARight.Location.Y);
 
-            ALeft.MouseDown += new MouseEventHandler(_MouseDown);
-            CLeft.MouseDown += new MouseEventHandler(_MouseDown);
-            Center.MouseDown += new MouseEventHandler(_MouseDown);
-            CRight.MouseDown += new MouseEventHandler(_MouseDown);
-            ARight.MouseDown += new MouseEventHandler(_MouseDown);
+            this.ALeft.MouseDown += new MouseEventHandler(_MouseDown);
+            this.CLeft.MouseDown += new MouseEventHandler(_MouseDown);
+            this.Center.MouseDown += new MouseEventHandler(_MouseDown);
+            this.CRight.MouseDown += new MouseEventHandler(_MouseDown);
+			this.ARight.MouseDown += new MouseEventHandler(_MouseDown);
             /////////////////////////////////////////////////////////////////////
             /// Vars setter
-            ifs                  = new INIManager();
-            lua                  = new LuaAPI();
             player               = new System.Windows.Media.MediaPlayer();
             ActorText_str        = "";
             snd_old              = "0";
@@ -111,9 +125,15 @@ namespace Visual
                 }
             }
 
-            //Load vars
-            lua.LuaFunc(ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "name"), ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "func"));
-            if (ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "type") == "Question")
+			//Load vars
+			string TypeCurrentScene = ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "type");
+			string ScriptFileName = ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "name");
+
+			if (TypeCurrentScene == "None" | ScriptFileName == "")
+				return;
+
+			lua.LuaFunc(ScriptFileName, ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "func"));
+            if (TypeCurrentScene == "Question")
             {
                 lnum = lua.GetLabelNum();
                 label_text = new Label[lnum]; // Set size
@@ -125,7 +145,6 @@ namespace Visual
                         Name = Convert.ToString(it + 1),
                         BackColor = System.Drawing.Color.Transparent,
                         Location = new System.Drawing.Point(80, 22 + 10 * it),
-                        TabIndex = 3 + it,
                         Visible = true,
                         Text = lua.GetLabelText(it),
                         Parent = panel1
@@ -196,8 +215,8 @@ namespace Visual
             text_width = checkBox1.Checked ? 36 : 27;
             // Drawing img
             this.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(0));
-            pictureBox1.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(0));
-            ALeft.Image = CLeft.Image = Center.Image = CRight.Image = ARight.Image = null;
+			this.pictureBox1.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(0));
+			this.ALeft.Image = CLeft.Image = Center.Image = CRight.Image = ARight.Image = null;
             inum = lua.GetImgNum() - 1;
 
 			if (inum > 0)
@@ -206,11 +225,11 @@ namespace Visual
 				{
 					switch (lua.GetImageTextPos(it))
 					{
-						case 1: ALeft.Image = new Bitmap(lua.images + lua.GetImageText(it)); break;
-						case 2: CLeft.Image = new Bitmap(lua.images + lua.GetImageText(it)); break;
-						case 3: Center.Image = new Bitmap(lua.images + lua.GetImageText(it)); break;
-						case 4: CRight.Image = new Bitmap(lua.images + lua.GetImageText(it)); break;
-						case 5: ARight.Image = new Bitmap(lua.images + lua.GetImageText(it)); break;
+						case 1: this.ALeft.Image = new Bitmap(lua.images + lua.GetImageText(it)); break;
+						case 2: this.CLeft.Image = new Bitmap(lua.images + lua.GetImageText(it)); break;
+						case 3: this.Center.Image = new Bitmap(lua.images + lua.GetImageText(it)); break;
+						case 4: this.CRight.Image = new Bitmap(lua.images + lua.GetImageText(it)); break;
+						case 5: this.ARight.Image = new Bitmap(lua.images + lua.GetImageText(it)); break;
 					}
 				}
 			}
@@ -236,17 +255,17 @@ namespace Visual
             
             }
             int ppos = this.Width / 5;
-            ALeft.Size = new System.Drawing.Size(ppos, ALeft.Size.Height);
-            CLeft.Size = new System.Drawing.Size(ppos, ALeft.Size.Height);
-            Center.Size = new System.Drawing.Size(ppos, ALeft.Size.Height);
-            CRight.Size = new System.Drawing.Size(ppos, ALeft.Size.Height);
-            ARight.Size = new System.Drawing.Size(ppos, ALeft.Size.Height);
+            this.ALeft.Size = new System.Drawing.Size(ppos, ALeft.Size.Height);
+            this.CLeft.Size = new System.Drawing.Size(ppos, ALeft.Size.Height);
+            this.Center.Size = new System.Drawing.Size(ppos, ALeft.Size.Height);
+            this.CRight.Size = new System.Drawing.Size(ppos, ALeft.Size.Height);
+			this.ARight.Size = new System.Drawing.Size(ppos, ALeft.Size.Height);
 
-            ALeft.Location = new System.Drawing.Point(0, ALeft.Location.Y);
-            CLeft.Location = new System.Drawing.Point(ppos, CLeft.Location.Y);
-            Center.Location = new System.Drawing.Point(ppos * 2, Center.Location.Y);
-            CRight.Location = new System.Drawing.Point(ppos * 3, CRight.Location.Y);
-            ARight.Location = new System.Drawing.Point(ppos * 4, ARight.Location.Y);
+            this.ALeft.Location = new System.Drawing.Point(0, ALeft.Location.Y);
+            this.CLeft.Location = new System.Drawing.Point(ppos, CLeft.Location.Y);
+            this.Center.Location = new System.Drawing.Point(ppos * 2, Center.Location.Y);
+            this.CRight.Location = new System.Drawing.Point(ppos * 3, CRight.Location.Y);
+			this.ARight.Location = new System.Drawing.Point(ppos * 4, ARight.Location.Y);
         }
         private void Label4_Click(object sender, EventArgs e)
         {
@@ -275,28 +294,29 @@ namespace Visual
             ago.Visible         = true;
             checkBox1.Visible   = true;
         }
-        void _KeyDown(object sender, KeyEventArgs e)
-        {
-            if (trygame)
-                if (e.KeyData == Keys.Enter)
-                    NextScene(false);
-                else if (e.KeyData == Keys.Escape)
-                    if(_exit.Visible)
-                        MenuUpdate(false);
-                    else
-                        MenuUpdate(true);
-        }
+		void _KeyDown(object sender, KeyEventArgs e)
+		{
+			if (trygame)
+			{
+				if (e.KeyData == Keys.Enter)
+					NextScene(false);
+				else if (e.KeyData == Keys.Escape)
+					MenuUpdate(!_exit.Visible);
+			}
+		}
         void _MouseDown(object sender, MouseEventArgs e)
         {
-            if (trygame)
-                if (e.Clicks == 1)
-                    if (e.Button == MouseButtons.Left)
-                        NextScene(false);
-                    else if (e.Button == MouseButtons.Right)
-                        if (MessBox_1.Visible)
-                            MessBox_1.Visible = MessBox_2.Visible = MessBox_3.Visible = MessBox_4.Visible = MessBox_5.Visible = false;
-                        else
-                            MessBox_1.Visible = MessBox_2.Visible = MessBox_3.Visible = MessBox_4.Visible = MessBox_5.Visible = true;
+			if (trygame)
+			{
+				if (e.Clicks == 1)
+					if (e.Button == MouseButtons.Left)
+						NextScene(false);
+					else if (e.Button == MouseButtons.Right)
+						if (MessBox_1.Visible)
+							MessBox_1.Visible = MessBox_2.Visible = MessBox_3.Visible = MessBox_4.Visible = MessBox_5.Visible = false;
+						else
+							MessBox_1.Visible = MessBox_2.Visible = MessBox_3.Visible = MessBox_4.Visible = MessBox_5.Visible = true;
+			}
         }
     
         private void Question_Click(object sender, EventArgs e)

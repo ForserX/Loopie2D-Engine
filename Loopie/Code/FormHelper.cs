@@ -50,17 +50,19 @@ namespace Visual
             {
                 ALeft.Visible = CLeft.Visible = Center.Visible = CRight.Visible = ARight.Visible = false;
                 panel1.Location = new System.Drawing.Point((this.Width - panel1.Width) / 2, panel1.Location.Y);
+				panel1.Width = 150;
 
-                for (int j = 0; j < num; j++)
+				for (int j = 0; j < num; j++)
                 {
                     this.panel1.Controls.Add(this.label_text[j]);
-                    if (label_text[j].Width >= panel1.Width) panel1.Width = label_text[j].Width + 10;
-                    else panel1.Width = 150;
 
-                    label_text[j].Location = new System.Drawing.Point((panel1.Width - label_text[j].Width) / 2, label_text[j].Location.Y);
+                    if (label_text[j].Width >= panel1.Width)
+						panel1.Width = label_text[j].Width + 15;
+
+                    label_text[j].Location = new System.Drawing.Point((panel1.Width - label_text[j].Width) / 2, label_text[j].Location.Y - 15 + j);
                 }
 
-                panel1.Height = 30 + 15 * num;
+                panel1.Height = 10 + 15 * num;
                 panel1.Visible = true;
 
                 sect_label += 1;
