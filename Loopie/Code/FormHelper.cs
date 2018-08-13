@@ -47,9 +47,11 @@ namespace Visual
         private void Label_Helper(bool q, int num)
         {
             if (q)
-            {
-                ALeft.Visible = CLeft.Visible = Center.Visible = CRight.Visible = ARight.Visible = false;
-                panel1.Location = new System.Drawing.Point((this.Width - panel1.Width) / 2, panel1.Location.Y);
+			{
+				this.ALeft.Image = CLeft.Image = Center.Image = CRight.Image = ARight.Image = null;
+				MessBox_1.Visible = MessBox_2.Visible = MessBox_3.Visible = MessBox_4.Visible = MessBox_5.Visible = false;
+
+				panel1.Location = new System.Drawing.Point((this.Width - panel1.Width) / 2, panel1.Location.Y);
 				panel1.Width = 150;
 
 				for (int j = 0; j < num; j++)
@@ -72,9 +74,8 @@ namespace Visual
                 for (int j = 0; j < num; j++)
                     label_text[j].Dispose();
 
-                panel1.Visible = false;
-                //sect++;
-                ALeft.Visible = CLeft.Visible = Center.Visible = CRight.Visible = ARight.Visible = true;
+				MessBox_1.Visible = MessBox_2.Visible = MessBox_3.Visible = MessBox_4.Visible = MessBox_5.Visible = true;
+				panel1.Visible = false;
                 NextScene(false);
             }
         }
@@ -89,8 +90,7 @@ namespace Visual
                 label4.Visible   = 
                 SaveGame.Visible = false;
 
-                trygame =
-                ALeft.Visible = CLeft.Visible = Center.Visible = CRight.Visible = ARight.Visible =
+				trygame = true;
                 MessBox_1.Visible = MessBox_2.Visible = MessBox_3.Visible = MessBox_4.Visible = MessBox_5.Visible = true;
             }
             else
@@ -104,10 +104,10 @@ namespace Visual
                 if (sect != 0)
                     Next.Visible = true;
 
-                trygame =
-                ALeft.Visible = CLeft.Visible = Center.Visible = CRight.Visible = ARight.Visible =
+				trygame = false;
                 MessBox_1.Visible = MessBox_2.Visible = MessBox_3.Visible = MessBox_4.Visible = MessBox_5.Visible = false;
-                pictureBox1.BackgroundImage = new Bitmap(lua.images + "MainFormBack.jpg");
+				this.ALeft.Image = CLeft.Image = Center.Image = CRight.Image = ARight.Image = null;
+				pictureBox1.BackgroundImage = new Bitmap(lua.images + "MainFormBack.jpg");
             }
 
             Focus();

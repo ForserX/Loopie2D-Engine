@@ -32,7 +32,7 @@ namespace Visual
             /// Init
             InitializeComponent();
             int ppos = this.Width / 5;
-
+			this.DoubleBuffered = true;
 			/////////////////////////////////////////////////////////////////////
 			/// ETC setter
 			ifs = new INIManager();
@@ -293,9 +293,8 @@ namespace Visual
         {
             MenuUpdate          (false);
             trygame             = false;
-
-			ALeft.Visible = CLeft.Visible = Center.Visible = CRight.Visible = ARight.Visible =
-				MessBox_1.Visible = MessBox_2.Visible = MessBox_3.Visible = MessBox_4.Visible = MessBox_5.Visible =  false;
+			
+			MessBox_1.Visible = MessBox_2.Visible = MessBox_3.Visible = MessBox_4.Visible = MessBox_5.Visible =  false;
 
             flag_snd.Visible    = true;
             ago.Visible         = true;
