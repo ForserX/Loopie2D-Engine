@@ -43,6 +43,10 @@ namespace Visual
 			this.NewGame.Parent = pictureBox1;
 			this.Next.Parent = pictureBox1;
 			this.label4.Parent = pictureBox1;
+			this.flag_snd.Parent = pictureBox1;
+			this.SaveButton.Parent = pictureBox1;
+			this.SaveGame.Parent = pictureBox1;
+			this.ago.Parent = pictureBox1;
 			//this.TopMost = true;
 
 			this.pictureBox1.BackgroundImage = new Bitmap(lua.images + "MainFormBack.jpg");
@@ -289,7 +293,10 @@ namespace Visual
         {
             MenuUpdate          (false);
             trygame             = false;
-            MessBox_1.Visible   = MessBox_2.Visible = MessBox_3.Visible = MessBox_4.Visible = MessBox_5.Visible = false;
+
+			ALeft.Visible = CLeft.Visible = Center.Visible = CRight.Visible = ARight.Visible =
+				MessBox_1.Visible = MessBox_2.Visible = MessBox_3.Visible = MessBox_4.Visible = MessBox_5.Visible =  false;
+
             flag_snd.Visible    = true;
             ago.Visible         = true;
             checkBox1.Visible   = true;

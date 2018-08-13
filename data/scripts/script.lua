@@ -6,7 +6,7 @@ function start()
   ActorName = "FX"
   Text = "Демонстрационный текст!"
 	Scene["Images"] = 1
-	Scene["Image0"] = "SceneBack.jpg"
+	Scene["Image0"] = "SceneBack.png"
 end
 
 function SvExample()

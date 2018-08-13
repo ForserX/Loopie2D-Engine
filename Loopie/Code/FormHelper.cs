@@ -107,7 +107,7 @@ namespace Visual
                 trygame =
                 ALeft.Visible = CLeft.Visible = Center.Visible = CRight.Visible = ARight.Visible =
                 MessBox_1.Visible = MessBox_2.Visible = MessBox_3.Visible = MessBox_4.Visible = MessBox_5.Visible = false;
-                pictureBox1.BackgroundImage = new Bitmap(lua.images + "logo.gif");
+                pictureBox1.BackgroundImage = new Bitmap(lua.images + "MainFormBack.jpg");
             }
 
             Focus();

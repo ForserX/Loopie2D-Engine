@@ -239,7 +239,9 @@ namespace Visual
 			// 
 			// ALeft
 			// 
-			this.ALeft.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.ALeft.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.ALeft.BackColor = System.Drawing.Color.Transparent;
 			this.ALeft.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
 			this.ALeft.Location = new System.Drawing.Point(0, 61);
@@ -251,7 +253,9 @@ namespace Visual
 			// 
 			// CLeft
 			// 
-			this.CLeft.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+			this.CLeft.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.CLeft.BackColor = System.Drawing.Color.Transparent;
 			this.CLeft.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
 			this.CLeft.Location = new System.Drawing.Point(197, 61);
@@ -263,7 +267,9 @@ namespace Visual
 			// 
 			// Center
 			// 
-			this.Center.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+			this.Center.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.Center.BackColor = System.Drawing.Color.Transparent;
 			this.Center.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
 			this.Center.Location = new System.Drawing.Point(393, 61);
@@ -275,7 +281,8 @@ namespace Visual
 			// 
 			// CRight
 			// 
-			this.CRight.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+			this.CRight.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.CRight.BackColor = System.Drawing.Color.Transparent;
 			this.CRight.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
@@ -288,7 +295,8 @@ namespace Visual
 			// 
 			// ARight
 			// 
-			this.ARight.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+			this.ARight.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.ARight.BackColor = System.Drawing.Color.Transparent;
 			this.ARight.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
