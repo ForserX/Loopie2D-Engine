@@ -1,5 +1,6 @@
 #pragma once
 #include "Lua/lua.hpp"
+#include "LuaBridge\LuaBridge.h"
 
 class CVMLua
 {
@@ -22,9 +23,9 @@ public:
 	System::String^		GetImageName(unsigned num);
 	System::String^		GetCurrentOption(unsigned num);
 
-
-
 private:
 	lua_State* LuaVM;
+	luabridge::LuaRef* FontTable;
+	luabridge::LuaRef* SceneTable;
 };
 

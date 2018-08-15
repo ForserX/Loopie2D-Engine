@@ -1,18 +1,25 @@
 #include "stdafx.h"
 #include "CVMLua.h"
-#include "LuaBridge\LuaBridge.h"
 
+#include <fstream>
 #include <string>
+
+std::string readFile(const std::string& fileName) 
+{
+	std::ifstream f(fileName);
+	std::stringstream ss;
+	ss << f.rdbuf();
+	return ss.str();
+}
 
 CVMLua::CVMLua()
 {
 	LuaVM = luaL_newstate();
 	luaL_openlibs(LuaVM);
 
-//	lua_setglobal(LuaVM, "ActorName");
+	lua_settop(LuaVM, 0);
 }
 
-#include <fstream>
 
 CVMLua::~CVMLua()
 {
@@ -24,28 +31,20 @@ int sag(lua_State*)
 	DebugBreak();
 	return 0;
 }
+
 void CVMLua::CallScript(const char * Path, const char * file, const char* func)
 {
-	lua_settop(LuaVM, 0);
 	lua_register(LuaVM, "trip", sag);
 	std::string fullpath = Path + std::string(file) + ".lua";
 	
-	std::ifstream fin(fullpath);
-	// get pointer to associated buffer object
-	std::filebuf* pbuf = fin.rdbuf();
-	// get file size using buffer's members
-	std::size_t size = pbuf->pubseekoff(0, fin.end, fin.in);
-	pbuf->pubseekpos(0, fin.in);
-	// allocate memory to contain file data
-	char* buffer = new char[size];
-	// get file data
-	pbuf->sgetn(buffer, size);
-	fin.close();
-
-	std::string NewBuffer = buffer;
-	NewBuffer += "\n "; NewBuffer += func; NewBuffer += "()";
+	std::string NewBuffer = readFile(fullpath);
+	NewBuffer += "\n"; NewBuffer += func; NewBuffer += "()";
 	luaL_dostring(LuaVM, NewBuffer.c_str());
-	lua_pcall(LuaVM, 0, 1, 0);
+	//lua_pcall(LuaVM, 0, 1, 0);
+
+	//luaL_dofile(LuaVM, fullpath.c_str());
+//	FontTable = luabridge::getGlobal(LuaVM, "Font");
+//	SceneTable = luabridge::getGlobal(LuaVM, "Scene");
 }
 
 System::String^ CVMLua::GetName()
@@ -68,56 +67,56 @@ System::String^ CVMLua::GetSnd()
 
 System::String^ CVMLua::GetFontColor()
 {
-	luabridge::LuaRef s = luabridge::getGlobal(LuaVM, "Font")["TextColor"];
+	luabridge::LuaRef s = luabridge::getGlobal(LuaVM, "TextColor");
 	return gcnew System::String(s.cast<const char*>());
 }
 
 System::String^ CVMLua::GetFontNameColor()
 {
-	luabridge::LuaRef s = luabridge::getGlobal(LuaVM, "Font")["NameColor"];
+	luabridge::LuaRef s = luabridge::getGlobal(LuaVM, "NameColor");
 	return gcnew System::String(s.cast<const char*>());
 }
 
 System::String^ CVMLua::GetFontTextType()
 {
-	luabridge::LuaRef s = luabridge::getGlobal(LuaVM, "Font")["Text"];
+	luabridge::LuaRef s = luabridge::getGlobal(LuaVM, "FontText");
 	return gcnew System::String(s.cast<const char*>());
 }
 
 System::String^ CVMLua::GetFontNameType()
 {
-	luabridge::LuaRef s = luabridge::getGlobal(LuaVM, "Font")["Name"];
+	luabridge::LuaRef s = luabridge::getGlobal(LuaVM, "FontName");
 	return gcnew System::String(s.cast<const char*>());
 }
 
 int CVMLua::GetImagesCount()
 {
-	luabridge::LuaRef s = luabridge::getGlobal(LuaVM, "Scene")["Images"];
+	luabridge::LuaRef s = luabridge::getGlobal(LuaVM, "SceneImages");
 	return s.cast<int>();
 }
 
 int CVMLua::GetLabelsCount()
 {
-	luabridge::LuaRef s = luabridge::getGlobal(LuaVM, "Scene")["Options"];
+	luabridge::LuaRef s = luabridge::getGlobal(LuaVM, "SceneOptions");
 	return s.cast<int>();
 }
 
 System::String^ CVMLua::GetCurrentOption(unsigned num)
 {
-	luabridge::LuaRef s = luabridge::getGlobal(LuaVM, "Scene")[("Option" + std::to_string(num)).c_str()];
+	luabridge::LuaRef s = luabridge::getGlobal(LuaVM, ("SceneOption" + std::to_string(num)).c_str());
 	return gcnew System::String(s.cast<const char*>());
 }
 
 System::String^ CVMLua::GetImageName(unsigned num)
 {
-	luabridge::LuaRef s = luabridge::getGlobal(LuaVM, "Scene")[("Image" + std::to_string(num)).c_str()];
+	luabridge::LuaRef s = luabridge::getGlobal(LuaVM, ("SceneImage" + std::to_string(num)).c_str());
 	return gcnew System::String(s.cast<const char*>());
 }
 
 int CVMLua::GetImageTextPos(int num)
 {
 	std::string CurrentPos = ("Image" + std::to_string(num) + "Pos");
-	luabridge::LuaRef s = luabridge::getGlobal(LuaVM, "Scene")[CurrentPos.c_str()];
+	luabridge::LuaRef s = luabridge::getGlobal(LuaVM, ("Scene" + CurrentPos).c_str());
 	
 	if(CurrentPos == "ALeft") return 1;
 	else if (CurrentPos == "Left") return 2;

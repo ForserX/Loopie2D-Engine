@@ -14,9 +14,9 @@ namespace Loopie2DCLIPort {
 	/// </summary>
 	public ref class Interface : public System::Windows::Forms::Form
 	{
-	private:
+	public:
 		cli::array<System::Windows::Forms::Label^> ^label_text;
-
+		cli::array<System::String^> ^ActorText;
 		int sect, sect_next, sect_label, sect_lb_old, text_width, lnum, inum;
 		System::String^ heroname, ^ActorText_str, ^sect_old, ^sect_string, ^snd_old;
 		// System::String^ ActorText[];
@@ -73,10 +73,10 @@ namespace Loopie2DCLIPort {
 		{
 			if (trygame)
 			{
-				if (e->KeyData == Keys::Enter);
-					//	NextScene(false);
-				else if (e->KeyData == Keys::Escape);
-			//		MenuUpdate(!_exit->Visible);
+				if (e->KeyData == Keys::Enter)
+					NextScene(false);
+				else if (e->KeyData == Keys::Escape)
+					MenuUpdate(!_exit->Visible);
 			}
 		}
 		System::Void  _MouseDown(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e)
@@ -84,8 +84,8 @@ namespace Loopie2DCLIPort {
 			if (trygame)
 			{
 				if (e->Clicks == 1)
-					if (e->Button == System::Windows::Forms::MouseButtons::Left);
-					//	NextScene(false);
+					if (e->Button == System::Windows::Forms::MouseButtons::Left)
+						NextScene(false);
 					else if (e->Button == System::Windows::Forms::MouseButtons::Right)
 					{
 						if (MessBox_1->Visible)
@@ -110,9 +110,17 @@ namespace Loopie2DCLIPort {
 		Color SetColor(System::String ^ obj);
 		void Label_Helper(bool q, int num);
 		void MenuUpdate(bool q);
-		void _exit_Click(System::Object^ sender, EventArgs e);
-		void Options_Click(System::Object^ sender, EventArgs e);
-		void Question_Click(System::Object^ sender, EventArgs e);
+		void _exit_Click(System::Object^ sender, EventArgs^ e);
+		void Options_Click(System::Object^ sender, EventArgs^ e);
+		void Question_Click(System::Object^ sender, EventArgs^ e);
+		void NewGame_Click(System::Object ^ sender, EventArgs ^ e);
+		void SaveGame_Click(System::Object ^ sender, EventArgs ^ e);
+		void LoadList_SelectedIndexChanged(System::Object ^ sender, EventArgs ^ e);
+		void Ago_Click(System::Object ^ sender, EventArgs ^ e);
+		void Label6_Click(System::Object^ sender, EventArgs^ e);
+		void Label7_Click(System::Object ^ sender, EventArgs ^ e);
+		void SaveButton_Click(System::Object ^ sender, EventArgs ^ e);
+		void NextScene(bool load);
 	private:
 		/// <summary>
 		/// Обязательная переменная конструктора.
@@ -671,5 +679,5 @@ namespace Loopie2DCLIPort {
 
 		}
 #pragma endregion
-	};
+};
 }

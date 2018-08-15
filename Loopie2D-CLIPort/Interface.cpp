@@ -36,6 +36,7 @@ Interface::Interface(void)
 	this->checkBox1->CheckedChanged += gcnew EventHandler(this, &Interface::Fullscreen);
 	this->label4->Click += gcnew EventHandler(this, &Interface::Label4_Click);
 	this->Next->Click += gcnew EventHandler(this, &Interface::Next_Click);
+	this->NewGame->Click += gcnew EventHandler(this, &Interface::NewGame_Click);
 
 	this->checkBox1->BackColor = Color::Transparent;
 	this->panel1->BackColor = Color::Transparent;
@@ -142,7 +143,7 @@ void Interface::Label4_Click(System::Object^ sender, EventArgs^ e)
 void Interface::Next_Click(System::Object^ sender, EventArgs^ e)
 {
 	MenuUpdate(false);
-	//NextScene(true);
+	NextScene(true);
 	MessBox_4->Visible = true; MessBox_5->Visible = true; MessBox_3->Visible = true; 
 	MessBox_2->Visible = true; MessBox_1->Visible = true;
 }
@@ -218,7 +219,7 @@ void Interface::Label_Helper(bool q, int num)
 		MessBox_1->Visible = true; MessBox_2->Visible = true; MessBox_3->Visible = true; 
 		MessBox_4->Visible = true; MessBox_5->Visible = true;
 		panel1->Visible = false;
-		//NextScene(false);
+		NextScene(false);
 	}
 }
 
@@ -260,12 +261,12 @@ void Interface::MenuUpdate(bool q)
 	Focus();
 }
 
-void Interface::_exit_Click(System::Object^ sender, EventArgs e)
+void Interface::_exit_Click(System::Object^ sender, EventArgs^ e)
 {
 	this->Close();
 }
 
-void Interface::Options_Click(System::Object^ sender, EventArgs e)
+void Interface::Options_Click(System::Object^ sender, EventArgs^ e)
 {
 	MenuUpdate(false);
 	trygame = false;
@@ -278,41 +279,215 @@ void Interface::Options_Click(System::Object^ sender, EventArgs e)
 	checkBox1->Visible = true;
 }
 
-void Interface::Question_Click(System::Object^ sender, EventArgs e)
+void Interface::Question_Click(System::Object^ sender, EventArgs^ e)
 {
 	Label^ lab = safe_cast<Label^>(sender);
 	sect_next = Convert::ToInt32(lab->Name);
 	Label_Helper(false, lnum);
-	//NextScene(false);
+	NextScene(false);
 }
 
-private void NewGame_Click(object sender, EventArgs e)
+void Interface::NewGame_Click(System::Object^  sender, EventArgs^ e)
 {
 	sect = 0;
 	MenuUpdate(false);
 	NextScene(false);
-	MessBox_4.Visible = MessBox_5.Visible = MessBox_3.Visible = MessBox_2.Visible = MessBox_1.Visible = true;
+	MessBox_1->Visible = true; MessBox_2->Visible = true; MessBox_3->Visible = true;
+	MessBox_4->Visible = true; MessBox_5->Visible = true;
 }
-private void SaveGame_Click(object sender, EventArgs e)
+
+void Interface::SaveGame_Click(System::Object^  sender, EventArgs^ e)
 {
 	inputBox();
 }
 
-private void LoadList_SelectedIndexChanged(object sender, EventArgs e)
-{
-	string path = lua.userdata + LoadList.SelectedItem.ToString();
+#include <msclr/marshal_cppstd.h>
+using namespace msclr::interop;
 
-	sect = Convert.ToInt32(ifs.GetPrivateString(path, "param", "sect"));
-	sect_old = ifs.GetPrivateString(path, "param", "sect_old");
-	sect_string = ifs.GetPrivateString(path, "param", "sect_string");
-	sect_label = Convert.ToInt32(ifs.GetPrivateString(path, "param", "sect_label"));
-	LoadList.Visible = false;
+void Interface::LoadList_SelectedIndexChanged(System::Object^  sender, EventArgs^ e)
+{
+	System::String^ path = ObjectFS.ClrStr(ObjectFS.pPathList->UserData.c_str()) + LoadList->SelectedItem->ToString();
+	config ObjectParser(marshal_as<std::string>(path));
+
+	sect = ObjectParser.get_number("param", "sect");
+	sect_old = ObjectFS.ClrStr(ObjectParser.get_value("param", "sect_old"));
+	sect_string = ObjectFS.ClrStr(ObjectParser.get_value("param", "sect_string"));
+	sect_label = ObjectParser.get_number("param", "sect_label");
+	LoadList->Visible = false;
 	MenuUpdate(false);
 	NextScene(true);
-	MessBox_4.Visible = MessBox_5.Visible = MessBox_3.Visible = MessBox_2.Visible = MessBox_1.Visible = true;
+	MessBox_1->Visible = true; MessBox_2->Visible = true; MessBox_3->Visible = true;
+	MessBox_4->Visible = true; MessBox_5->Visible = true;
 }
-private void Ago_Click(object sender, EventArgs e)
+
+void Interface::Ago_Click(System::Object^  sender, EventArgs^ e)
 {
-	ago.Visible = checkBox1.Visible = flag_snd.Visible = false;
+	ago->Visible = false; checkBox1->Visible = false; flag_snd->Visible = false;
 	MenuUpdate(true);
+}
+
+void Interface::Label6_Click(System::Object^ sender, EventArgs^ e)
+{
+	this->_exit_Click(sender, e);
+}
+
+void Interface::Label7_Click(System::Object^  sender, EventArgs^ e)
+{
+	this->WindowState = FormWindowState::Minimized;
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+void Interface::SaveButton_Click(System::Object^  sender, EventArgs^ e)
+{
+	if (textBox1->Text != "")
+	{
+		msclr::interop::marshal_context^ marshal = gcnew msclr::interop::marshal_context();
+		config ObjectParser;
+		System::String^ path = ObjectFS.ClrStr(ObjectFS.pPathList->UserData.c_str()) + textBox1->Text + ".ini";
+		WritePrivateProfileString("param", "sect", std::to_string(sect).c_str(), marshal->marshal_as<const char*>(path));
+		WritePrivateProfileString("param", "sect_string", marshal->marshal_as<const char*>(sect_string), marshal->marshal_as<const char*>(path));
+		WritePrivateProfileString("param", "sect_old", marshal->marshal_as<const char*>(sect_old), marshal->marshal_as<const char*>(path));
+		WritePrivateProfileString("param", "sect_label", std::to_string(sect_label).c_str(), marshal->marshal_as<const char*>(path));
+
+		HideInputBox();
+		delete marshal;
+	}
+	else
+		MessageBox::Show("Error", "Введите название!", MessageBoxButtons::OK);
+}
+
+void Interface::NextScene(bool load)
+{
+	//lua.lua.Pop();
+
+	//Флажок для лоадера
+	if (!load)
+	{
+		snd_old = ObjectFS.pLuaInter->GetSnd();
+		++sect;
+		//Тут мы определяем секцию, костыльно и не интересно
+		sect_string = (sect_label == 0) ? Convert::ToString(sect) : Convert::ToString(sect) + sect_old;
+		if (sect_next != 0 && sect_lb_old != sect_label)
+		{
+			sect_old += "_" + Convert::ToString(sect_next);
+			sect_string = Convert::ToString(sect) + sect_old;
+			sect_lb_old = sect_label;
+		}
+	}
+
+	//Load vars
+	msclr::interop::marshal_context^ marshal = gcnew msclr::interop::marshal_context();
+	System::String^ TypeCurrentScene = ObjectFS.ClrStr(ObjectFS.pParser->get_value(marshal->marshal_as<const char*>(sect_string), "type"));
+	std::string ScriptFileName = ObjectFS.pParser->get_value(marshal->marshal_as<const char*>(sect_string), "name");
+
+	if (TypeCurrentScene == "None" || ScriptFileName == "")
+		return;
+
+	ObjectFS.CallScript(ScriptFileName.c_str(), ObjectFS.pParser->get_value(marshal->marshal_as<const char*>(sect_string), "func").c_str());
+	if (TypeCurrentScene == "Question")
+	{
+		lnum = ObjectFS.pLuaInter->GetLabelsCount();
+		label_text = gcnew  cli::array<System::Windows::Forms::Label^>(lnum);
+		
+		//label_text->Resize(12)// = gcnew Label[lnum]; // Set size
+		for (int it = 0; it < lnum; it++)
+		{
+			label_text[it] = gcnew System::Windows::Forms::Label();
+			{
+				label_text[it]->AutoSize = true;
+				label_text[it]->Name = Convert::ToString(it + 1);
+				label_text[it]->BackColor = System::Drawing::Color::Transparent;
+				label_text[it]->Location = System::Drawing::Point(80, 22 + 10 * it);
+				label_text[it]->Visible = true;
+				label_text[it]->Text = ObjectFS.pLuaInter->GetCurrentOption(it);
+				label_text[it]->Parent = panel1;
+			};
+			label_text[it]->Click += gcnew System::EventHandler(this, &Interface::Question_Click);
+		}
+		Label_Helper(true, lnum);
+		return;
+	}
+	heroname = ObjectFS.pLuaInter->GetName();
+	ActorText = ObjectFS.pLuaInter->GetText()->Split(' ');
+
+	//Music
+	if (flag_snd->Checked && (!snd || ObjectFS.pLuaInter->GetSnd() != snd_old))
+	{
+		//player->Open(gcnew Uri(lua.snd + lua.GetSnd(), UriKind::Relative));
+		//player->Play();
+		snd = true;
+	}
+	//Draw ActorName
+	SpeakerName->Visible = true;
+	SpeakerName->ForeColor = SetColor(ObjectFS.pLuaInter->GetFontNameColor());
+	SpeakerName->Text = heroname;
+
+	//Для отступов строк
+	int str = 0, lb = 0, num = 0;
+	System::String^ ActorText_tstr = "";
+
+	mess_1->ForeColor = SetColor(ObjectFS.pLuaInter->GetFontColor()); mess_2->ForeColor = SetColor(ObjectFS.pLuaInter->GetFontColor());
+	mess_3->ForeColor = SetColor(ObjectFS.pLuaInter->GetFontColor()); mess_4->ForeColor = SetColor(ObjectFS.pLuaInter->GetFontColor());
+	mess_5->ForeColor = SetColor(ObjectFS.pLuaInter->GetFontColor());
+
+	//Считаем строки
+	mess_1->Text = ""; mess_2->Text = ""; mess_3->Text = ""; mess_4->Text = ""; mess_5->Text = "";
+	for (int it = 0; it <= ActorText->Length; it++)
+	{
+		if (it != ActorText->Length)
+		{
+			str += strlen(marshal->marshal_as<const char*>(ActorText[it])) + 1;
+			if (str < text_width)
+			{
+				if (ActorText_tstr != "")
+				{
+					ActorText_str += ActorText_tstr + " ";
+					ActorText_tstr = "";
+				}
+				ActorText_str += ActorText[it] + " ";
+				continue;
+			}
+			else if (str > text_width)
+			{
+				num = str - text_width;
+				ActorText_str += ActorText[it]->Substring(0, strlen(marshal->marshal_as<const char*>(ActorText[it])) - num);
+				ActorText_tstr = ActorText[it]->Substring(strlen(marshal->marshal_as<const char*>(ActorText[it])) - num);
+			}
+			else ActorText_str += ActorText[it];
+		}
+		lb++;
+		switch (lb)
+		{
+		case 1: mess_1->Text += ActorText_str->Clone(); text_width -= checkBox1->Checked ? 0 : 2; break;
+		case 2: mess_2->Text += ActorText_str->Clone(); text_width -= 2; break;
+		case 3: mess_3->Text += ActorText_str->Clone(); break;
+		case 4: mess_4->Text += ActorText_str->Clone(); break;
+		case 5: mess_5->Text += ActorText_str->Clone(); lb = 0; text_width += 4; break;
+		}
+		ActorText_str = "";
+		str = 0;
+	}
+	text_width = checkBox1->Checked ? 36 : 27;
+	// Drawing img
+//	this->BackgroundImage = gcnew Bitmap(ObjectFS.ClrStr(ObjectFS.pPathList->Img) + ObjectFS.pLuaInter->GetImageName(0));
+	this->pictureBox1->BackgroundImage = gcnew Bitmap(ObjectFS.ClrStr(ObjectFS.pPathList->Img) + ObjectFS.pLuaInter->GetImageName(0));
+	this->ALeft->Image = nullptr; CLeft->Image = nullptr; Center->Image = nullptr;
+	this->CRight->Image = nullptr; ARight->Image = nullptr;
+
+	inum = ObjectFS.pLuaInter->GetImagesCount() - 1;
+
+	if (inum > 0)
+	{
+		for (int it = 1; it <= inum; it++)
+		{
+			switch (ObjectFS.pLuaInter->GetImageTextPos(it))
+			{
+			case 1: this->ALeft->Image = gcnew Bitmap(ObjectFS.ClrStr(ObjectFS.pPathList->Img) + ObjectFS.pLuaInter->GetImageName(it)); break;
+			case 2: this->CLeft->Image = gcnew Bitmap(ObjectFS.ClrStr(ObjectFS.pPathList->Img) + ObjectFS.pLuaInter->GetImageName(it)); break;
+			case 3: this->Center->Image = gcnew Bitmap(ObjectFS.ClrStr(ObjectFS.pPathList->Img) + ObjectFS.pLuaInter->GetImageName(it)); break;
+			case 4: this->CRight->Image = gcnew Bitmap(ObjectFS.ClrStr(ObjectFS.pPathList->Img) + ObjectFS.pLuaInter->GetImageName(it)); break;
+			case 5: this->ARight->Image = gcnew Bitmap(ObjectFS.ClrStr(ObjectFS.pPathList->Img) + ObjectFS.pLuaInter->GetImageName(it)); break;
+			}
+		}
+	}
+	delete marshal;
 }

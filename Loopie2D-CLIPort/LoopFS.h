@@ -1,8 +1,7 @@
 #pragma once
 #include <string>
 #include "CVMLua.h"
-
-class config;
+#include "IParserSystem.h"
 
 struct SPathList
 {
@@ -26,6 +25,8 @@ public:
 public:
 	SPathList*	pPathList;
 	CVMLua*		pLuaInter;
-private:
 	config*		pParser;
+
+public:
+	config*		pSystemParser;
 };

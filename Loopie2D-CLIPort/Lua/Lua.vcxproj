@@ -94,7 +94,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -108,7 +108,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -124,7 +124,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -142,7 +142,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -186,10 +186,7 @@
     <ClCompile Include="..\Lua\lapi.c" />
     <ClCompile Include="..\Lua\lauxlib.c" />
     <ClCompile Include="..\Lua\lbaselib.c" />
-    <ClCompile Include="..\Lua\lbitlib.c" />
     <ClCompile Include="..\Lua\lcode.c" />
-    <ClCompile Include="..\Lua\lcorolib.c" />
-    <ClCompile Include="..\Lua\lctype.c" />
     <ClCompile Include="..\Lua\ldblib.c" />
     <ClCompile Include="..\Lua\ldebug.c" />
     <ClCompile Include="..\Lua\ldo.c" />
@@ -215,7 +212,6 @@
     <ClCompile Include="..\Lua\lua.c" />
     <ClCompile Include="..\Lua\luac.c" />
     <ClCompile Include="..\Lua\lundump.c" />
-    <ClCompile Include="..\Lua\lutf8lib.c" />
     <ClCompile Include="..\Lua\lvm.c" />
     <ClCompile Include="..\Lua\lzio.c" />
     <ClCompile Include="stdafx.cpp">

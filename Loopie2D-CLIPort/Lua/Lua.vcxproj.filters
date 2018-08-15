@@ -113,16 +113,7 @@
     <ClCompile Include="..\Lua\lbaselib.c">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="..\Lua\lbitlib.c">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="..\Lua\lcode.c">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Lua\lcorolib.c">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Lua\lctype.c">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="..\Lua\ldblib.c">
@@ -198,9 +189,6 @@
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="..\Lua\lundump.c">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Lua\lutf8lib.c">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="..\Lua\lvm.c">
