@@ -1,20 +1,68 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2000
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loopie", "Loopie\Loopie.csproj", "{EFAC8BDF-45D4-4B53-9FA1-313FDC1D2D76}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Loopie2D-CLIPort", "Loopie2D-CLIPort\Loopie2D-CLIPort.vcxproj", "{622A0EB8-FEDA-4431-882E-9350F77131A6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{530E9051-121C-49B2-A859-8A0E83360307} = {530E9051-121C-49B2-A859-8A0E83360307}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lua", "Loopie2D-CLIPort\Lua\Lua.vcxproj", "{530E9051-121C-49B2-A859-8A0E83360307}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{EFAC8BDF-45D4-4B53-9FA1-313FDC1D2D76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EFAC8BDF-45D4-4B53-9FA1-313FDC1D2D76}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EFAC8BDF-45D4-4B53-9FA1-313FDC1D2D76}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EFAC8BDF-45D4-4B53-9FA1-313FDC1D2D76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFAC8BDF-45D4-4B53-9FA1-313FDC1D2D76}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{EFAC8BDF-45D4-4B53-9FA1-313FDC1D2D76}.Debug|x64.Build.0 = Debug|Any CPU
+		{EFAC8BDF-45D4-4B53-9FA1-313FDC1D2D76}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EFAC8BDF-45D4-4B53-9FA1-313FDC1D2D76}.Debug|x86.Build.0 = Debug|Any CPU
+		{EFAC8BDF-45D4-4B53-9FA1-313FDC1D2D76}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFAC8BDF-45D4-4B53-9FA1-313FDC1D2D76}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{EFAC8BDF-45D4-4B53-9FA1-313FDC1D2D76}.Release|x64.ActiveCfg = Debug|Any CPU
+		{EFAC8BDF-45D4-4B53-9FA1-313FDC1D2D76}.Release|x64.Build.0 = Debug|Any CPU
+		{EFAC8BDF-45D4-4B53-9FA1-313FDC1D2D76}.Release|x86.ActiveCfg = Debug|Any CPU
+		{EFAC8BDF-45D4-4B53-9FA1-313FDC1D2D76}.Release|x86.Build.0 = Debug|Any CPU
+		{622A0EB8-FEDA-4431-882E-9350F77131A6}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{622A0EB8-FEDA-4431-882E-9350F77131A6}.Debug|Any CPU.Build.0 = Debug|Win32
+		{622A0EB8-FEDA-4431-882E-9350F77131A6}.Debug|x64.ActiveCfg = Debug|Win32
+		{622A0EB8-FEDA-4431-882E-9350F77131A6}.Debug|x64.Build.0 = Debug|Win32
+		{622A0EB8-FEDA-4431-882E-9350F77131A6}.Debug|x86.ActiveCfg = Debug|Win32
+		{622A0EB8-FEDA-4431-882E-9350F77131A6}.Debug|x86.Build.0 = Debug|Win32
+		{622A0EB8-FEDA-4431-882E-9350F77131A6}.Release|Any CPU.ActiveCfg = Debug|Win32
+		{622A0EB8-FEDA-4431-882E-9350F77131A6}.Release|Any CPU.Build.0 = Debug|Win32
+		{622A0EB8-FEDA-4431-882E-9350F77131A6}.Release|x64.ActiveCfg = Debug|Win32
+		{622A0EB8-FEDA-4431-882E-9350F77131A6}.Release|x64.Build.0 = Debug|Win32
+		{622A0EB8-FEDA-4431-882E-9350F77131A6}.Release|x86.ActiveCfg = Debug|Win32
+		{622A0EB8-FEDA-4431-882E-9350F77131A6}.Release|x86.Build.0 = Debug|Win32
+		{530E9051-121C-49B2-A859-8A0E83360307}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{530E9051-121C-49B2-A859-8A0E83360307}.Debug|Any CPU.Build.0 = Debug|Win32
+		{530E9051-121C-49B2-A859-8A0E83360307}.Debug|x64.ActiveCfg = Debug|Win32
+		{530E9051-121C-49B2-A859-8A0E83360307}.Debug|x64.Build.0 = Debug|Win32
+		{530E9051-121C-49B2-A859-8A0E83360307}.Debug|x86.ActiveCfg = Debug|Win32
+		{530E9051-121C-49B2-A859-8A0E83360307}.Debug|x86.Build.0 = Debug|Win32
+		{530E9051-121C-49B2-A859-8A0E83360307}.Release|Any CPU.ActiveCfg = Debug|Win32
+		{530E9051-121C-49B2-A859-8A0E83360307}.Release|Any CPU.Build.0 = Debug|Win32
+		{530E9051-121C-49B2-A859-8A0E83360307}.Release|x64.ActiveCfg = Debug|Win32
+		{530E9051-121C-49B2-A859-8A0E83360307}.Release|x64.Build.0 = Debug|Win32
+		{530E9051-121C-49B2-A859-8A0E83360307}.Release|x86.ActiveCfg = Debug|Win32
+		{530E9051-121C-49B2-A859-8A0E83360307}.Release|x86.Build.0 = Debug|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {59C5CD85-ED22-4545-AE10-A236A62B2EDC}
 	EndGlobalSection
 EndGlobal

@@ -22,3 +22,6 @@
 /bins/
 /userdata/
 /.vs/
+Temp/
+Release/
+Debug/

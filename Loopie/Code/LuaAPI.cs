@@ -62,7 +62,6 @@ namespace Visual
                 default: return 3;
             }
         }
-
         public void LuaFunc(string file, string func)
         {
             try
