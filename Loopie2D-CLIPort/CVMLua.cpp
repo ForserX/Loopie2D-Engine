@@ -67,13 +67,13 @@ System::String^ CVMLua::GetSnd()
 
 System::String^ CVMLua::GetFontColor()
 {
-	luabridge::LuaRef s = luabridge::getGlobal(LuaVM, "TextColor");
+	luabridge::LuaRef s = luabridge::getGlobal(LuaVM, "FontTextColor");
 	return gcnew System::String(s.cast<const char*>());
 }
 
 System::String^ CVMLua::GetFontNameColor()
 {
-	luabridge::LuaRef s = luabridge::getGlobal(LuaVM, "NameColor");
+	luabridge::LuaRef s = luabridge::getGlobal(LuaVM, "FontNameColor");
 	return gcnew System::String(s.cast<const char*>());
 }
 
@@ -116,7 +116,7 @@ System::String^ CVMLua::GetImageName(unsigned num)
 int CVMLua::GetImageTextPos(int num)
 {
 	std::string CurrentPos = ("Image" + std::to_string(num) + "Pos");
-	luabridge::LuaRef s = luabridge::getGlobal(LuaVM, ("Scene" + CurrentPos).c_str());
+	CurrentPos = luabridge::getGlobal(LuaVM, ("Scene" + CurrentPos).c_str()).cast<std::string>();
 	
 	if(CurrentPos == "ALeft") return 1;
 	else if (CurrentPos == "Left") return 2;

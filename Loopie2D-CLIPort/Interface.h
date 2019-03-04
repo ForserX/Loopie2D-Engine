@@ -19,8 +19,9 @@ namespace Loopie2DCLIPort {
 		cli::array<System::String^> ^ActorText;
 		int sect, sect_next, sect_label, sect_lb_old, text_width, lnum, inum;
 		System::String^ heroname, ^ActorText_str, ^sect_old, ^sect_string, ^snd_old;
-		// System::String^ ActorText[];
+		cli::array<System::Drawing::Image^>^ MessImgList = gcnew cli::array<System::Drawing::Image^>(5);
 		bool trygame, snd;
+
 	public:
 		Interface(void);
 		/// <summary>
@@ -243,7 +244,7 @@ namespace Loopie2DCLIPort {
 			this->mess_5->BackColor = System::Drawing::Color::Transparent;
 			this->mess_5->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->mess_5->Location = System::Drawing::Point(4, 31);
+			this->mess_5->Location = System::Drawing::Point(4, 45);
 			this->mess_5->MaximumSize = System::Drawing::Size(200, 0);
 			this->mess_5->Name = L"mess_5";
 			this->mess_5->Size = System::Drawing::Size(0, 13);
@@ -256,7 +257,7 @@ namespace Loopie2DCLIPort {
 			this->mess_4->BackColor = System::Drawing::Color::Transparent;
 			this->mess_4->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->mess_4->Location = System::Drawing::Point(4, 31);
+			this->mess_4->Location = System::Drawing::Point(4, 45);
 			this->mess_4->MaximumSize = System::Drawing::Size(200, 0);
 			this->mess_4->Name = L"mess_4";
 			this->mess_4->Size = System::Drawing::Size(0, 13);
@@ -269,7 +270,7 @@ namespace Loopie2DCLIPort {
 			this->mess_3->BackColor = System::Drawing::Color::Transparent;
 			this->mess_3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->mess_3->Location = System::Drawing::Point(4, 31);
+			this->mess_3->Location = System::Drawing::Point(4, 45);
 			this->mess_3->MaximumSize = System::Drawing::Size(200, 0);
 			this->mess_3->Name = L"mess_3";
 			this->mess_3->Size = System::Drawing::Size(0, 13);
@@ -282,7 +283,7 @@ namespace Loopie2DCLIPort {
 			this->mess_2->BackColor = System::Drawing::Color::Transparent;
 			this->mess_2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->mess_2->Location = System::Drawing::Point(4, 31);
+			this->mess_2->Location = System::Drawing::Point(4, 45);
 			this->mess_2->MaximumSize = System::Drawing::Size(200, 0);
 			this->mess_2->Name = L"mess_2";
 			this->mess_2->Size = System::Drawing::Size(0, 13);
@@ -295,7 +296,7 @@ namespace Loopie2DCLIPort {
 			this->mess_1->BackColor = System::Drawing::Color::Transparent;
 			this->mess_1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->mess_1->Location = System::Drawing::Point(13, 31);
+			this->mess_1->Location = System::Drawing::Point(13, 45);
 			this->mess_1->MaximumSize = System::Drawing::Size(190, 0);
 			this->mess_1->Name = L"mess_1";
 			this->mess_1->Size = System::Drawing::Size(0, 13);
@@ -321,9 +322,9 @@ namespace Loopie2DCLIPort {
 			this->MessBox_5->BackColor = System::Drawing::Color::Transparent;
 			this->MessBox_5->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"MessBox_5.BackgroundImage")));
 			this->MessBox_5->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
-			this->MessBox_5->Location = System::Drawing::Point(3, 327);
+			this->MessBox_5->Location = System::Drawing::Point(3, 355);
 			this->MessBox_5->Name = L"MessBox_5";
-			this->MessBox_5->Size = System::Drawing::Size(182, 134);
+			this->MessBox_5->Size = System::Drawing::Size(221, 134);
 			this->MessBox_5->TabIndex = 61;
 			this->MessBox_5->TabStop = false;
 			this->MessBox_5->Visible = false;
@@ -335,9 +336,9 @@ namespace Loopie2DCLIPort {
 			this->MessBox_4->BackColor = System::Drawing::Color::Transparent;
 			this->MessBox_4->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"MessBox_4.BackgroundImage")));
 			this->MessBox_4->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
-			this->MessBox_4->Location = System::Drawing::Point(4, 327);
+			this->MessBox_4->Location = System::Drawing::Point(4, 355);
 			this->MessBox_4->Name = L"MessBox_4";
-			this->MessBox_4->Size = System::Drawing::Size(195, 134);
+			this->MessBox_4->Size = System::Drawing::Size(234, 134);
 			this->MessBox_4->TabIndex = 60;
 			this->MessBox_4->TabStop = false;
 			this->MessBox_4->Visible = false;
@@ -349,9 +350,9 @@ namespace Loopie2DCLIPort {
 			this->MessBox_3->BackColor = System::Drawing::Color::Transparent;
 			this->MessBox_3->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"MessBox_3.BackgroundImage")));
 			this->MessBox_3->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
-			this->MessBox_3->Location = System::Drawing::Point(4, 327);
+			this->MessBox_3->Location = System::Drawing::Point(4, 355);
 			this->MessBox_3->Name = L"MessBox_3";
-			this->MessBox_3->Size = System::Drawing::Size(201, 134);
+			this->MessBox_3->Size = System::Drawing::Size(240, 134);
 			this->MessBox_3->TabIndex = 59;
 			this->MessBox_3->TabStop = false;
 			this->MessBox_3->Visible = false;
@@ -363,9 +364,9 @@ namespace Loopie2DCLIPort {
 			this->MessBox_2->BackColor = System::Drawing::Color::Transparent;
 			this->MessBox_2->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"MessBox_2.BackgroundImage")));
 			this->MessBox_2->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
-			this->MessBox_2->Location = System::Drawing::Point(4, 327);
+			this->MessBox_2->Location = System::Drawing::Point(4, 355);
 			this->MessBox_2->Name = L"MessBox_2";
-			this->MessBox_2->Size = System::Drawing::Size(197, 134);
+			this->MessBox_2->Size = System::Drawing::Size(236, 134);
 			this->MessBox_2->TabIndex = 58;
 			this->MessBox_2->TabStop = false;
 			this->MessBox_2->Visible = false;
@@ -384,7 +385,7 @@ namespace Loopie2DCLIPort {
 			this->panel1->Controls->Add(this->textBox1);
 			this->panel1->Location = System::Drawing::Point(401, 153);
 			this->panel1->Name = L"panel1";
-			this->panel1->Size = System::Drawing::Size(190, 104);
+			this->panel1->Size = System::Drawing::Size(229, 132);
 			this->panel1->TabIndex = 57;
 			this->panel1->Visible = false;
 			// 
@@ -395,9 +396,9 @@ namespace Loopie2DCLIPort {
 			this->MessBox_1->BackColor = System::Drawing::Color::Transparent;
 			this->MessBox_1->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"MessBox_1.BackgroundImage")));
 			this->MessBox_1->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
-			this->MessBox_1->Location = System::Drawing::Point(20, 327);
+			this->MessBox_1->Location = System::Drawing::Point(20, 355);
 			this->MessBox_1->Name = L"MessBox_1";
-			this->MessBox_1->Size = System::Drawing::Size(182, 134);
+			this->MessBox_1->Size = System::Drawing::Size(221, 134);
 			this->MessBox_1->TabIndex = 56;
 			this->MessBox_1->TabStop = false;
 			this->MessBox_1->Visible = false;
@@ -411,7 +412,7 @@ namespace Loopie2DCLIPort {
 			this->ARight->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
 			this->ARight->Location = System::Drawing::Point(786, 67);
 			this->ARight->Name = L"ARight";
-			this->ARight->Size = System::Drawing::Size(197, 467);
+			this->ARight->Size = System::Drawing::Size(236, 495);
 			this->ARight->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->ARight->TabIndex = 55;
 			this->ARight->TabStop = false;
@@ -425,7 +426,7 @@ namespace Loopie2DCLIPort {
 			this->CRight->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
 			this->CRight->Location = System::Drawing::Point(596, 67);
 			this->CRight->Name = L"CRight";
-			this->CRight->Size = System::Drawing::Size(195, 467);
+			this->CRight->Size = System::Drawing::Size(195, 495);
 			this->CRight->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->CRight->TabIndex = 54;
 			this->CRight->TabStop = false;
@@ -439,7 +440,7 @@ namespace Loopie2DCLIPort {
 			this->Center->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
 			this->Center->Location = System::Drawing::Point(397, 67);
 			this->Center->Name = L"Center";
-			this->Center->Size = System::Drawing::Size(200, 467);
+			this->Center->Size = System::Drawing::Size(206, 495);
 			this->Center->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->Center->TabIndex = 53;
 			this->Center->TabStop = false;
@@ -453,7 +454,7 @@ namespace Loopie2DCLIPort {
 			this->CLeft->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
 			this->CLeft->Location = System::Drawing::Point(201, 67);
 			this->CLeft->Name = L"CLeft";
-			this->CLeft->Size = System::Drawing::Size(197, 467);
+			this->CLeft->Size = System::Drawing::Size(196, 495);
 			this->CLeft->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->CLeft->TabIndex = 52;
 			this->CLeft->TabStop = false;
@@ -467,7 +468,7 @@ namespace Loopie2DCLIPort {
 			this->ALeft->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
 			this->ALeft->Location = System::Drawing::Point(4, 67);
 			this->ALeft->Name = L"ALeft";
-			this->ALeft->Size = System::Drawing::Size(198, 467);
+			this->ALeft->Size = System::Drawing::Size(200, 495);
 			this->ALeft->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->ALeft->TabIndex = 51;
 			this->ALeft->TabStop = false;
@@ -499,7 +500,7 @@ namespace Loopie2DCLIPort {
 			this->label7->BackColor = System::Drawing::Color::Transparent;
 			this->label7->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->label7->Location = System::Drawing::Point(951, 2);
+			this->label7->Location = System::Drawing::Point(990, 2);
 			this->label7->Name = L"label7";
 			this->label7->Size = System::Drawing::Size(16, 17);
 			this->label7->TabIndex = 48;
@@ -512,7 +513,7 @@ namespace Loopie2DCLIPort {
 			this->label6->BackColor = System::Drawing::Color::Transparent;
 			this->label6->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->label6->Location = System::Drawing::Point(969, 5);
+			this->label6->Location = System::Drawing::Point(1008, 5);
 			this->label6->Name = L"label6";
 			this->label6->Size = System::Drawing::Size(14, 17);
 			this->label6->TabIndex = 47;
@@ -525,7 +526,7 @@ namespace Loopie2DCLIPort {
 			this->ago->BackColor = System::Drawing::Color::Transparent;
 			this->ago->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->ago->Location = System::Drawing::Point(16, 494);
+			this->ago->Location = System::Drawing::Point(16, 522);
 			this->ago->Name = L"ago";
 			this->ago->Size = System::Drawing::Size(63, 22);
 			this->ago->TabIndex = 46;
@@ -539,7 +540,7 @@ namespace Loopie2DCLIPort {
 			this->SaveGame->BackColor = System::Drawing::Color::Transparent;
 			this->SaveGame->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->SaveGame->Location = System::Drawing::Point(16, 396);
+			this->SaveGame->Location = System::Drawing::Point(16, 424);
 			this->SaveGame->Name = L"SaveGame";
 			this->SaveGame->Size = System::Drawing::Size(143, 22);
 			this->SaveGame->TabIndex = 45;
@@ -553,7 +554,7 @@ namespace Loopie2DCLIPort {
 			this->label4->BackColor = System::Drawing::Color::Transparent;
 			this->label4->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->label4->Location = System::Drawing::Point(16, 430);
+			this->label4->Location = System::Drawing::Point(16, 458);
 			this->label4->Name = L"label4";
 			this->label4->Size = System::Drawing::Size(134, 22);
 			this->label4->TabIndex = 44;
@@ -566,7 +567,7 @@ namespace Loopie2DCLIPort {
 			this->Next->BackColor = System::Drawing::Color::Transparent;
 			this->Next->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->Next->Location = System::Drawing::Point(16, 332);
+			this->Next->Location = System::Drawing::Point(16, 360);
 			this->Next->Name = L"Next";
 			this->Next->Size = System::Drawing::Size(115, 22);
 			this->Next->TabIndex = 43;
@@ -580,7 +581,7 @@ namespace Loopie2DCLIPort {
 			this->NewGame->BackColor = System::Drawing::Color::Transparent;
 			this->NewGame->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->NewGame->Location = System::Drawing::Point(16, 363);
+			this->NewGame->Location = System::Drawing::Point(16, 391);
 			this->NewGame->Name = L"NewGame";
 			this->NewGame->Size = System::Drawing::Size(108, 22);
 			this->NewGame->TabIndex = 42;
@@ -593,7 +594,7 @@ namespace Loopie2DCLIPort {
 			this->Options->BackColor = System::Drawing::Color::Transparent;
 			this->Options->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->Options->Location = System::Drawing::Point(16, 463);
+			this->Options->Location = System::Drawing::Point(16, 491);
 			this->Options->Name = L"Options";
 			this->Options->Size = System::Drawing::Size(99, 22);
 			this->Options->TabIndex = 41;
@@ -606,7 +607,7 @@ namespace Loopie2DCLIPort {
 			this->_exit->BackColor = System::Drawing::Color::Transparent;
 			this->_exit->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->_exit->Location = System::Drawing::Point(16, 494);
+			this->_exit->Location = System::Drawing::Point(16, 522);
 			this->_exit->Name = L"_exit";
 			this->_exit->Size = System::Drawing::Size(65, 22);
 			this->_exit->TabIndex = 40;
@@ -618,9 +619,9 @@ namespace Loopie2DCLIPort {
 				| System::Windows::Forms::AnchorStyles::Left)
 				| System::Windows::Forms::AnchorStyles::Right));
 			this->pictureBox1->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
-			this->pictureBox1->Location = System::Drawing::Point(4, 5);
+			this->pictureBox1->Location = System::Drawing::Point(0, 0);
 			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(979, 529);
+			this->pictureBox1->Size = System::Drawing::Size(1025, 566);
 			this->pictureBox1->TabIndex = 39;
 			this->pictureBox1->TabStop = false;
 			// 
@@ -628,7 +629,8 @@ namespace Loopie2DCLIPort {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(986, 538);
+			this->ClientSize = System::Drawing::Size(1025, 566);
+			this->ControlBox = false;
 			this->Controls->Add(this->flag_snd);
 			this->Controls->Add(this->mess_5);
 			this->Controls->Add(this->mess_4);
@@ -659,8 +661,12 @@ namespace Loopie2DCLIPort {
 			this->Controls->Add(this->Options);
 			this->Controls->Add(this->_exit);
 			this->Controls->Add(this->pictureBox1);
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::None;
+			this->MinimizeBox = false;
 			this->Name = L"Interface";
-			this->Text = L"Interface";
+			this->ShowIcon = false;
+			this->ShowInTaskbar = false;
+			this->StartPosition = System::Windows::Forms::FormStartPosition::Manual;
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->MessBox_5))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->MessBox_4))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->MessBox_3))->EndInit();

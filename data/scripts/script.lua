@@ -3,7 +3,7 @@
 --Scene{}
 
 function start()
- trip()
+-- trip()
  ActorName = "FX"
  Text = "521agggggggggggggggggggggggggggggggggwgwawsg"
  SceneImages = "1"
@@ -18,7 +18,7 @@ function SvExample()
  Text = "Check the version 2.3!"
  ActorName = "FX"
  
- Scene["Images"] = 2
- Scene["Image1"] = "sv_sp_example.png"
- Scene["Image1Pos"] = "Center"
+ SceneImages = 2
+ SceneImage1 = "sv_sp_example.png"
+ SceneImage1Pos = "Center"
 end

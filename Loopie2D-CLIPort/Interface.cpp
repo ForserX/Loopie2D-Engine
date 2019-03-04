@@ -9,7 +9,7 @@ using namespace Loopie2DCLIPort;
 Interface::Interface(void)
 {
 	InitializeComponent();
-	int ppos = this->Width / 5;
+	int ppos = this->Width / 5 ;
 	this->DoubleBuffered = true;
 	/////////////////////////////////////////////////////////////////////
 	/// ETC setter
@@ -32,11 +32,16 @@ Interface::Interface(void)
 	label7->Parent = pictureBox1; checkBox1->Parent = pictureBox1;
 
 	this->KeyDown += gcnew KeyEventHandler(this, &Interface::_KeyDown);
+	this->pictureBox1->KeyDown += gcnew KeyEventHandler(this, &Interface::_KeyDown);
 	this->pictureBox1->MouseDown += gcnew MouseEventHandler(this, &Interface::_MouseDown);
 	this->checkBox1->CheckedChanged += gcnew EventHandler(this, &Interface::Fullscreen);
 	this->label4->Click += gcnew EventHandler(this, &Interface::Label4_Click);
 	this->Next->Click += gcnew EventHandler(this, &Interface::Next_Click);
 	this->NewGame->Click += gcnew EventHandler(this, &Interface::NewGame_Click);
+	this->ÑancelButton->Click += gcnew EventHandler(this, &Interface::ÑancelButton_Click);
+	this->Options->Click += gcnew EventHandler(this, &Interface::Options_Click);
+	this->_exit->Click += gcnew EventHandler(this, &Interface::_exit_Click);
+	this->ago->Click += gcnew EventHandler(this, &Interface::Ago_Click);
 
 	this->checkBox1->BackColor = Color::Transparent;
 	this->panel1->BackColor = Color::Transparent;
@@ -66,17 +71,23 @@ Interface::Interface(void)
 	this->ALeft->Parent = pictureBox1; CLeft->Parent = pictureBox1; CRight->Parent = pictureBox1; 
 	Center->Parent = pictureBox1; ARight->Parent = pictureBox1;
 
-	this->ALeft->Size = System::Drawing::Size(ppos, ALeft->Size.Height);
-	this->CLeft->Size = System::Drawing::Size(ppos, ALeft->Size.Height);
-	this->Center->Size = System::Drawing::Size(ppos, ALeft->Size.Height);
-	this->CRight->Size = System::Drawing::Size(ppos, ALeft->Size.Height);
-	this->ARight->Size = System::Drawing::Size(ppos, ALeft->Size.Height);
+	this->ALeft->Size = System::Drawing::Size(ppos  , ALeft->Size.Height);
+	this->CLeft->Size = System::Drawing::Size(ppos  , ALeft->Size.Height);
+	this->Center->Size = System::Drawing::Size(ppos , ALeft->Size.Height);
+	this->CRight->Size = System::Drawing::Size(ppos , ALeft->Size.Height);
+	this->ARight->Size = System::Drawing::Size(ppos , ALeft->Size.Height);
+
+	this->MessBox_1->Location = System::Drawing::Point(0, MessBox_1->Location.Y);
+	this->MessBox_2->Location = System::Drawing::Point(0, MessBox_1->Location.Y);
+	this->MessBox_3->Location = System::Drawing::Point(0, MessBox_1->Location.Y);
+	this->MessBox_4->Location = System::Drawing::Point(0, MessBox_1->Location.Y);
+	this->MessBox_5->Location = System::Drawing::Point(0, MessBox_1->Location.Y);
 
 	this->ALeft->Location = System::Drawing::Point(0, ALeft->Location.Y);
-	this->CLeft->Location = System::Drawing::Point(ppos, CLeft->Location.Y);
-	this->Center->Location = System::Drawing::Point(ppos * 2, Center->Location.Y);
-	this->CRight->Location = System::Drawing::Point(ppos * 3, CRight->Location.Y);
-	this->ARight->Location = System::Drawing::Point(ppos * 4, ARight->Location.Y);
+	this->CLeft->Location = System::Drawing::Point(ppos, ALeft->Location.Y);
+	this->Center->Location = System::Drawing::Point(ppos * 2, ALeft->Location.Y);
+	this->CRight->Location = System::Drawing::Point(ppos * 3, ALeft->Location.Y);
+	this->ARight->Location = System::Drawing::Point(ppos * 4 , ALeft->Location.Y);
 
 	this->ALeft->MouseDown += gcnew MouseEventHandler(this, &Interface::_MouseDown);
 	this->CLeft->MouseDown += gcnew MouseEventHandler(this, &Interface::_MouseDown);
@@ -90,6 +101,12 @@ Interface::Interface(void)
 	snd_old = L"0";
 	text_width = 27;
 	snd = false;
+
+	MessImgList[1] = MessBox_1->BackgroundImage;
+	MessImgList[2] = MessBox_2->BackgroundImage;
+	MessImgList[3] = MessBox_3->BackgroundImage;
+	MessImgList[4] = MessBox_4->BackgroundImage;
+	MessImgList[0] = MessBox_5->BackgroundImage;
 }
 
 void Interface::Fullscreen(System::Object^ sender, EventArgs^ e)
@@ -190,8 +207,8 @@ void Interface::Label_Helper(bool q, int num)
 		this->ALeft->Image = nullptr; CLeft->Image = nullptr; Center->Image = nullptr;
 		CRight->Image = nullptr; ARight->Image = nullptr;
 
-		MessBox_1->Visible = false; MessBox_2->Visible = false; MessBox_3->Visible = false;
-		MessBox_4->Visible = false; MessBox_5->Visible = false;
+		MessBox_1->BackgroundImage = nullptr; MessBox_2->BackgroundImage = nullptr; MessBox_3->BackgroundImage = nullptr;
+		MessBox_4->BackgroundImage = nullptr; MessBox_5->BackgroundImage = nullptr;
 
 		panel1->Location = System::Drawing::Point((this->Width - panel1->Width) / 2, panel1->Location.Y);
 		panel1->Width = 150;
@@ -213,6 +230,12 @@ void Interface::Label_Helper(bool q, int num)
 	}
 	else
 	{
+		MessBox_1->BackgroundImage = MessImgList[1];
+		MessBox_2->BackgroundImage = MessImgList[2];
+		MessBox_3->BackgroundImage = MessImgList[3];
+		MessBox_4->BackgroundImage = MessImgList[4];
+		MessBox_5->BackgroundImage = MessImgList[0];
+
 		for (int j = 0; j < num; j++)
 			label_text[j]->~Label();
 
@@ -284,12 +307,16 @@ void Interface::Question_Click(System::Object^ sender, EventArgs^ e)
 	Label^ lab = safe_cast<Label^>(sender);
 	sect_next = Convert::ToInt32(lab->Name);
 	Label_Helper(false, lnum);
-	NextScene(false);
+//	NextScene(false);
 }
 
 void Interface::NewGame_Click(System::Object^  sender, EventArgs^ e)
 {
 	sect = 0;
+	sect_label = 0;
+	sect_old = "0";
+	sect_next = 1;
+
 	MenuUpdate(false);
 	NextScene(false);
 	MessBox_1->Visible = true; MessBox_2->Visible = true; MessBox_3->Visible = true;
@@ -368,7 +395,7 @@ void Interface::NextScene(bool load)
 		sect_string = (sect_label == 0) ? Convert::ToString(sect) : Convert::ToString(sect) + sect_old;
 		if (sect_next != 0 && sect_lb_old != sect_label)
 		{
-			sect_old += "_" + Convert::ToString(sect_next);
+			sect_old = "_" + Convert::ToString(sect_next);
 			sect_string = Convert::ToString(sect) + sect_old;
 			sect_lb_old = sect_label;
 		}
@@ -418,7 +445,7 @@ void Interface::NextScene(bool load)
 	}
 	//Draw ActorName
 	SpeakerName->Visible = true;
-	SpeakerName->ForeColor = SetColor(ObjectFS.pLuaInter->GetFontNameColor());
+	SpeakerName->ForeColor = SetColor(ObjectFS.pLuaInter->GetFontNameColor()->Clone()->ToString());
 	SpeakerName->Text = heroname;
 
 	//Äëÿ îòñòóïîâ ñòğîê
