@@ -44,12 +44,26 @@ namespace Visual
                 default: return Color.Black;
             }
         }
+
+        private void MakeHolderForSprites(ref PictureBox img)
+        {
+        //    img.Paint += new System.Windows.Forms.PaintEventHandler(SpriteBoxes_Paint);
+        }
+        Bitmap SpriteListPic;// = new Bitmap(ALeft.Size.Width, ALeft.Size.Height);
+
+        private void SpriteBoxesHolder(Image FreeMovePicture, int posX, int posY, float Scale = 2)
+        {
+            Graphics SpGr = Graphics.FromImage(SpriteListPic);
+            SpGr.DrawImage(FreeMovePicture, posX * 2, posY * 2, FreeMovePicture.Size.Width / Scale, FreeMovePicture.Size.Height / Scale);
+            ALeft.Image = SpriteListPic;
+        }
+    
         private void Label_Helper(bool q, int num)
         {
             if (q)
 			{
-				this.ALeft.Image = CLeft.Image = Center.Image = CRight.Image = ARight.Image = null;
-				MessBox_1.Visible = MessBox_2.Visible = MessBox_3.Visible = MessBox_4.Visible = MessBox_5.Visible = false;
+				this.ALeft.Image = null;
+				MessBox_1.Visible = false;
 
 				panel1.Location = new System.Drawing.Point((this.Width - panel1.Width) / 2, panel1.Location.Y);
 				panel1.Width = 150;
@@ -61,7 +75,7 @@ namespace Visual
                     if (label_text[j].Width >= panel1.Width)
 						panel1.Width = label_text[j].Width + 15;
 
-                    label_text[j].Location = new System.Drawing.Point((panel1.Width - label_text[j].Width) / 2, label_text[j].Location.Y - 15 + j);
+                    label_text[j].Location = new System.Drawing.Point(10, label_text[j].Location.Y - 15 + j);
                 }
 
                 panel1.Height = 10 + 15 * num;
@@ -74,7 +88,7 @@ namespace Visual
                 for (int j = 0; j < num; j++)
                     label_text[j].Dispose();
 
-				MessBox_1.Visible = MessBox_2.Visible = MessBox_3.Visible = MessBox_4.Visible = MessBox_5.Visible = true;
+				MessBox_1.Visible = true;
 				panel1.Visible = false;
                 NextScene(false);
             }
@@ -91,7 +105,7 @@ namespace Visual
                 SaveGame.Visible = false;
 
 				trygame = true;
-                MessBox_1.Visible = MessBox_2.Visible = MessBox_3.Visible = MessBox_4.Visible = MessBox_5.Visible = true;
+                MessBox_1.Visible = true;
             }
             else
             {
@@ -105,8 +119,8 @@ namespace Visual
                     Next.Visible = true;
 
 				trygame = false;
-                MessBox_1.Visible = MessBox_2.Visible = MessBox_3.Visible = MessBox_4.Visible = MessBox_5.Visible = false;
-				this.ALeft.Image = CLeft.Image = Center.Image = CRight.Image = ARight.Image = null;
+                MessBox_1.Visible = false;
+				this.ALeft.Image = null;
 				pictureBox1.BackgroundImage = new Bitmap(lua.images + "MainFormBack.jpg");
             }
 

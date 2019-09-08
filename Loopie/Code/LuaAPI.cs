@@ -38,29 +38,35 @@ namespace Visual
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////                                          ООП Методы                                                //////
-        public string GetSnd() => (string)lua["Sound"];
-        public string GetName() => (string)lua["ActorName"];
-        public string GetText() => (string)lua["Text"];
-        public string GetTextColor() => (string)lua.GetTable("Font")["TextColor"];
-        public string GetNameColor() => (string)lua.GetTable("Font")["NameColor"];
-        public int GetLabelNum() => (int)(double)lua.GetTable("Scene")["Options"];
-        public string GetImageText(int num) => (string)lua.GetTable("Scene")["Image" + Convert.ToString(num)];
-        public int GetImgNum() => (int)(double)lua.GetTable("Scene")["Images"];
-        public string GetLabelText(int num) => (string)lua.GetTable("Scene")["Option" + Convert.ToString(num)];
-        public string GetTextFont() => (string)lua.GetTable("Font")["Text"];
-        public string GetNameFont() => (string)lua.GetTable("Font")["Name"];
+        public string GetSnd() { return (string)lua["Sound"]; }
+        public string GetName() { return (string)lua["ActorName"]; }
+        public string GetText() { return (string)lua["Text"]; }
+        public string GetTextColor() { return (string)lua.GetTable("Font")["TextColor"]; }
+        public string GetNameColor() { return (string)lua.GetTable("Font")["NameColor"]; }
+        public int GetLabelNum() { return (int)(double)lua.GetTable("Scene")["Options"]; }
+        public string GetImageText(int num) { return (string)lua.GetTable("Scene")["Image" + Convert.ToString(num)]; }
+        public int GetImgNum() { return (int)(double)lua.GetTable("Scene")["Images"]; }
+        public string GetLabelText(int num) { return (string)lua.GetTable("Scene")["Option" + Convert.ToString(num)]; }
+        public string GetTextFont() { return (string)lua.GetTable("Font")["Text"]; }
+        public string GetNameFont() { return (string)lua.GetTable("Font")["Name"]; }
+        public bool GetFreeMove() { return (bool)lua["FreeMove"]; }
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public int GetImageTextPos(int num)
         {
-            switch ((string)lua.GetTable("Scene")["Image" + Convert.ToString(num) + "Pos"])
+            return (int)(double)lua.GetTable("Scene")["Image" + Convert.ToString(num) + "Pos"];
+        }
+        public float GetImageScale(int num)
+        {
+            double Size = 0;
+            try
             {
-                case "ALeft": return 1;
-                case "Left": return 2;
-                case "Center": return 3;
-                case "Right": return 4;
-                case "ARight": return 5;
-                default: return 3;
+                Size = (double)lua.GetTable("Scene")["Image" + Convert.ToString(num) + "Scale"];
             }
+            catch (Exception ex)
+            {
+                Size = 2;
+            }
+            return Convert.ToSingle(Size);
         }
         public void LuaFunc(string file, string func)
         {

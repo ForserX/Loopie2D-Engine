@@ -31,7 +31,6 @@ namespace Visual
         {
             /// Init
             InitializeComponent();
-            int ppos = this.Width / 5;
 			this.DoubleBuffered = true;
 			/////////////////////////////////////////////////////////////////////
 			/// ETC setter
@@ -50,7 +49,7 @@ namespace Visual
 			//this.TopMost = true;
 
 			this.pictureBox1.BackgroundImage = new Bitmap(lua.images + "MainFormBack.jpg");
-
+            this.MessBox_1.BackgroundImage = new Bitmap(lua.images + "box.png");
 			this.panel1.Parent = label6.Parent = label7.Parent = checkBox1.Parent = pictureBox1;
 
             this.KeyDown			      += new KeyEventHandler(_KeyDown);
@@ -64,54 +63,29 @@ namespace Visual
             /////////////////////////////////////////////////////////////////////
             /// Mess setter
             this.MessBox_1.Parent = ALeft;
-            this.MessBox_2.Parent = CLeft;
-            this.MessBox_3.Parent = Center;
-            this.MessBox_4.Parent = CRight;
-			this.MessBox_5.Parent = ARight;
-
-            this.mess_1.Parent = MessBox_1;
-            this.mess_2.Parent = MessBox_2;
-            this.mess_3.Parent = MessBox_3;
-            this.mess_4.Parent = MessBox_4;
-			this.mess_5.Parent = MessBox_5;
-
             this.MessBox_1.MouseDown += new MouseEventHandler(_MouseDown);
-            this.MessBox_2.MouseDown += new MouseEventHandler(_MouseDown);
-            this.MessBox_3.MouseDown += new MouseEventHandler(_MouseDown);
-            this.MessBox_4.MouseDown += new MouseEventHandler(_MouseDown);
-			this.MessBox_5.MouseDown += new MouseEventHandler(_MouseDown);
 			/////////////////////////////////////////////////////////////////////
 			/// PictPositions setter
-			this.ALeft.Parent = CLeft.Parent = CRight.Parent = Center.Parent = ARight.Parent = pictureBox1;
-
-            this.ALeft.Size = new System.Drawing.Size(ppos, ALeft.Size.Height);
-            this.CLeft.Size = new System.Drawing.Size(ppos, ALeft.Size.Height);
-            this.Center.Size = new System.Drawing.Size(ppos, ALeft.Size.Height);
-            this.CRight.Size = new System.Drawing.Size(ppos, ALeft.Size.Height);
-			this.ARight.Size = new System.Drawing.Size(ppos, ALeft.Size.Height);
-
-            this.ALeft.Location = new System.Drawing.Point(0, ALeft.Location.Y);
-            this.CLeft.Location = new System.Drawing.Point(ppos, CLeft.Location.Y);
-            this.Center.Location = new System.Drawing.Point(ppos * 2, Center.Location.Y);
-            this.CRight.Location = new System.Drawing.Point(ppos * 3, CRight.Location.Y);
-			this.ARight.Location = new System.Drawing.Point(ppos * 4, ARight.Location.Y);
-
+			this.ALeft.Parent = pictureBox1;
+            this.ALeft.Size = new System.Drawing.Size(this.Width, ALeft.Size.Height);
             this.ALeft.MouseDown += new MouseEventHandler(_MouseDown);
-            this.CLeft.MouseDown += new MouseEventHandler(_MouseDown);
-            this.Center.MouseDown += new MouseEventHandler(_MouseDown);
-            this.CRight.MouseDown += new MouseEventHandler(_MouseDown);
-			this.ARight.MouseDown += new MouseEventHandler(_MouseDown);
+            MakeHolderForSprites(ref ALeft);
             /////////////////////////////////////////////////////////////////////
             /// Vars setter
             player               = new System.Windows.Media.MediaPlayer();
             ActorText_str        = "";
             snd_old              = "0";
-            text_width           = 27;
+            text_width           = 27 * 5;
             snd                  = false;
+
+            SpriteListPic = new Bitmap(ALeft.Size.Width, ALeft.Size.Height);
         }
+
         //Прокомментирую, а то уже забыл, что к чему...
         void NextScene(bool load)
         {
+            // Remove old frame data
+            SpriteListPic = new Bitmap(ALeft.Size.Width, ALeft.Size.Height);
             lua.lua.Pop();
 
             //Флажок для лоадера
@@ -119,6 +93,7 @@ namespace Visual
             {
                 snd_old = lua.GetSnd();
                 ++sect;
+
                 //Тут мы определяем секцию, костыльно и не интересно
                 sect_string = (sect_label == 0) ? Convert.ToString(sect) : Convert.ToString(sect) + sect_old;
                 if (sect_next != 0 && sect_lb_old != sect_label)
@@ -133,8 +108,19 @@ namespace Visual
 			string TypeCurrentScene = ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "type");
 			string ScriptFileName = ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "name");
 
-			if (TypeCurrentScene == "None" | ScriptFileName == "")
-				return;
+            if (TypeCurrentScene == "SceneDropper")
+            {
+                sect_string = ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "id");
+                var SplitedSect = sect_string.Split('_');
+                sect = Convert.ToInt32(SplitedSect[0]);
+                sect_old = sect_string.Substring(SplitedSect[0].Length, sect_string.Length - SplitedSect[0].Length);
+                NextScene(true);
+                return;
+            }
+            else if (TypeCurrentScene == "None" | ScriptFileName == "")
+            {
+                return;
+            }
 
 			lua.LuaFunc(ScriptFileName, ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "func"));
             if (TypeCurrentScene == "Question")
@@ -148,7 +134,7 @@ namespace Visual
                         AutoSize = true,
                         Name = Convert.ToString(it + 1),
                         BackColor = System.Drawing.Color.Transparent,
-                        Location = new System.Drawing.Point(80, 22 + 10 * it),
+                        Location = new System.Drawing.Point(10, 22 + 14 * it),
                         Visible = true,
                         Text = lua.GetLabelText(it),
                         Parent = panel1
@@ -161,84 +147,67 @@ namespace Visual
             heroname = lua.GetName();
             ActorText = lua.GetText().Split(' ');
 
-            //Music
+            // Music
             if (flag_snd.Checked && (!snd || lua.GetSnd() != snd_old))
             {
                 player.Open(new Uri(lua.snd + lua.GetSnd(), UriKind.Relative));
                 player.Play();
                 snd = true;
             }
-            //Draw ActorName
+
+            // Draw ActorName
             SpeakerName.Visible = true;
             SpeakerName.ForeColor = SetColor(lua.GetNameColor());
             SpeakerName.Text = heroname;
 
-            //Для отступов строк
-            int str = 0, lb = 0, num = 0;
-            string ActorText_tstr = "";
-
-            mess_1.ForeColor = mess_2.ForeColor = mess_3.ForeColor = mess_4.ForeColor = mess_5.ForeColor = SetColor(lua.GetTextColor());
-
-            //Считаем строки
-            mess_1.Text = mess_2.Text = mess_3.Text = mess_4.Text = mess_5.Text = "";
-            for (int it = 0; it <= ActorText.Length; it++)
+            // Для отступов строк
+            int old_y = 35, str = 0, num = 0;
+            MessBox_1.Image = (Image)new Bitmap(MessBox_1.Width, MessBox_1.Height);
+            Graphics g = Graphics.FromImage(MessBox_1.Image);
+            
+            // Считаем строки
+            old_y -= 14;
+            for (var i = 0; i <= ActorText.Length; i++)
             {
-                if (it != ActorText.Length)
+                if (str < text_width & i != ActorText.Length)
                 {
-                    str += ActorText[it].Length + 1;
-                    if (str < text_width)
-                    {
-                        if (ActorText_tstr != "")
-                        {
-                            ActorText_str += ActorText_tstr + " ";
-                            ActorText_tstr = "";
-                        }
-                        ActorText_str += ActorText[it] + " ";
-                        continue;
-                    }
-                    else if (str > text_width)
-                    {
-                        num = str - text_width;
-                        ActorText_str += ActorText[it].Substring(0, ActorText[it].Length - num);
-                        ActorText_tstr = ActorText[it].Substring(ActorText[it].Length - num);
-                    }
-                    else ActorText_str += ActorText[it];
+                    str += ActorText[i].Length;
+                    if (i != ActorText.Length - 1)
+                        if (str + ActorText[i + 1].Length >= text_width)
+                            str = 1116;
                 }
-                lb++;
-                switch (lb)
+                else
                 {
-                    case 1: mess_1.Text += ActorText_str; text_width -= checkBox1.Checked ? 0 : 2; break;
-                    case 2: mess_2.Text += ActorText_str; text_width -= 2; break;
-                    case 3: mess_3.Text += ActorText_str; break;
-                    case 4: mess_4.Text += ActorText_str; break;
-                    case 5: mess_5.Text += ActorText_str; lb = 0; text_width += 4; break;
+                    for (int j = num + 1; j <= i; j++)
+                        ActorText_str += ActorText[j - 1] + " ";
+
+                    if (i != ActorText.Length)
+                        str = ActorText[i].Length;
+
+                    old_y += 14;
+                    num = i;
+                    g.DrawString(ActorText_str, new Font(lua.GetTextFont(), 10, FontStyle.Bold), new SolidBrush(SetColor(lua.GetTextColor())), new Point(10, old_y));
+                    ActorText_str = "";
                 }
-                ActorText_str = "";
-                str = 0;
             }
-            text_width = checkBox1.Checked ? 36 : 27;
+            text_width = 5 * (checkBox1.Checked ? 36 : 27);
+            g.Dispose();
+
             // Drawing img
             this.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(0));
 			this.pictureBox1.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(0));
-			this.ALeft.Image = CLeft.Image = Center.Image = CRight.Image = ARight.Image = null;
+			this.ALeft.Image = null;
             inum = lua.GetImgNum() - 1;
 
 			if (inum > 0)
 			{
 				for (int it = 1; it <= inum; it++)
 				{
-					switch (lua.GetImageTextPos(it))
-					{
-						case 1: this.ALeft.Image = new Bitmap(lua.images + lua.GetImageText(it)); break;
-						case 2: this.CLeft.Image = new Bitmap(lua.images + lua.GetImageText(it)); break;
-						case 3: this.Center.Image = new Bitmap(lua.images + lua.GetImageText(it)); break;
-						case 4: this.CRight.Image = new Bitmap(lua.images + lua.GetImageText(it)); break;
-						case 5: this.ARight.Image = new Bitmap(lua.images + lua.GetImageText(it)); break;
-					}
+                    SpriteBoxesHolder(new Bitmap(lua.images + lua.GetImageText(it)), lua.GetImageTextPos(it), 0, lua.GetImageScale(it));
 				}
 			}
         }
-        //Load: Game
+        // Load: Game
         void Fullscreen(object sender, EventArgs e)
         {
             if (checkBox1.Checked)
@@ -247,7 +216,6 @@ namespace Visual
                 this.Width = SystemInformation.VirtualScreen.Size.Width;
                 this.TopMost = true; 
                 text_width += 9;
-                mess_1.MaximumSize = mess_2.MaximumSize = mess_3.MaximumSize = mess_4.MaximumSize = mess_5.MaximumSize = new Size(260, 120);
             }
             else
             {
@@ -255,21 +223,12 @@ namespace Visual
                 this.Width = 979;
                 this.TopMost = false;
                 text_width = 27;
-                mess_1.MaximumSize = mess_2.MaximumSize = mess_3.MaximumSize = mess_4.MaximumSize = mess_5.MaximumSize = new Size(200, 120);
-            
-            }
+             }
             int ppos = this.Width / 5;
-            this.ALeft.Size = new System.Drawing.Size(ppos, ALeft.Size.Height);
-            this.CLeft.Size = new System.Drawing.Size(ppos, ALeft.Size.Height);
-            this.Center.Size = new System.Drawing.Size(ppos, ALeft.Size.Height);
-            this.CRight.Size = new System.Drawing.Size(ppos, ALeft.Size.Height);
-			this.ARight.Size = new System.Drawing.Size(ppos, ALeft.Size.Height);
-
+            this.ALeft.Size = new System.Drawing.Size(this.Width, ALeft.Size.Height);
             this.ALeft.Location = new System.Drawing.Point(0, ALeft.Location.Y);
-            this.CLeft.Location = new System.Drawing.Point(ppos, CLeft.Location.Y);
-            this.Center.Location = new System.Drawing.Point(ppos * 2, Center.Location.Y);
-            this.CRight.Location = new System.Drawing.Point(ppos * 3, CRight.Location.Y);
-			this.ARight.Location = new System.Drawing.Point(ppos * 4, ARight.Location.Y);
+
+            text_width *= 5;
         }
         private void Label4_Click(object sender, EventArgs e)
         {
@@ -283,7 +242,7 @@ namespace Visual
         {
             MenuUpdate(false);
             NextScene(true);
-            MessBox_4.Visible = MessBox_5.Visible = MessBox_3.Visible = MessBox_2.Visible = MessBox_1.Visible = true;
+            MessBox_1.Visible = true;
         }
         private void _exit_Click(object sender, EventArgs e)
         {
@@ -294,7 +253,7 @@ namespace Visual
             MenuUpdate          (false);
             trygame             = false;
 			
-			MessBox_1.Visible = MessBox_2.Visible = MessBox_3.Visible = MessBox_4.Visible = MessBox_5.Visible =  false;
+			MessBox_1.Visible =  false;
 
             flag_snd.Visible    = true;
             ago.Visible         = true;
@@ -317,11 +276,13 @@ namespace Visual
 				if (e.Clicks == 1)
 					if (e.Button == MouseButtons.Left)
 						NextScene(false);
-					else if (e.Button == MouseButtons.Right)
-						if (MessBox_1.Visible)
-							MessBox_1.Visible = MessBox_2.Visible = MessBox_3.Visible = MessBox_4.Visible = MessBox_5.Visible = false;
-						else
-							MessBox_1.Visible = MessBox_2.Visible = MessBox_3.Visible = MessBox_4.Visible = MessBox_5.Visible = true;
+                    else if (e.Button == MouseButtons.Right)
+                    {
+                        if (MessBox_1.Visible)
+                            MessBox_1.Visible = false;
+                        else
+                            MessBox_1.Visible = true;
+                    }
 			}
         }
     
@@ -334,10 +295,17 @@ namespace Visual
         }
         private void NewGame_Click(object sender, EventArgs e)
         {
+            // Disable old sections data
             sect = 0;
+            sect_next = 0;
+            sect_lb_old = 0;
+            sect_label = 0;
+            sect_string = "";
+            sect_old = "";
+
             MenuUpdate(false);
             NextScene(false);
-            MessBox_4.Visible = MessBox_5.Visible = MessBox_3.Visible = MessBox_2.Visible = MessBox_1.Visible = true;
+            MessBox_1.Visible = true;
         }
         private void SaveGame_Click(object sender, EventArgs e)
         {            
@@ -354,7 +322,7 @@ namespace Visual
             LoadList.Visible = false;
             MenuUpdate(false);
             NextScene(true);
-            MessBox_4.Visible = MessBox_5.Visible = MessBox_3.Visible = MessBox_2.Visible = MessBox_1.Visible = true;
+            MessBox_1.Visible = true;
         }
         private void Ago_Click(object sender, EventArgs e)
         {
@@ -362,8 +330,8 @@ namespace Visual
             MenuUpdate(true);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void Label6_Click(object sender, EventArgs e) => this._exit_Click(sender, e);
-        private void Label7_Click(object sender, EventArgs e) => this.WindowState = FormWindowState.Minimized;
+        private void Label6_Click(object sender, EventArgs e) { this._exit_Click(sender, e);}
+        private void Label7_Click(object sender, EventArgs e) { this.WindowState = FormWindowState.Minimized; }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void SaveButton_Click(object sender, EventArgs e)
         {

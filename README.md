@@ -1,7 +1,7 @@
 # Loopie2D Engine
 Lite Visual Novel Engine.
 
-Build project on Visual Studio 2010 and above. 
+Build project on Visual Studio 2013 and above. 
 
 * Lua 5.1
 * LuaBridge 
