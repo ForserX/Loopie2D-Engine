@@ -43,7 +43,7 @@ namespace Visual
 			this.Next.Parent = pictureBox1;
 			this.label4.Parent = pictureBox1;
 			this.flag_snd.Parent = pictureBox1;
-			this.SaveButton.Parent = pictureBox1;
+			this.SaveButton.Parent = panel1;
 			this.SaveGame.Parent = pictureBox1;
 			this.ago.Parent = pictureBox1;
 			//this.TopMost = true;
@@ -54,7 +54,7 @@ namespace Visual
 
             this.KeyDown			      += new KeyEventHandler(_KeyDown);
 			this.pictureBox1.MouseDown    += new MouseEventHandler(_MouseDown);
-			this.checkBox1.CheckedChanged += new EventHandler(Fullscreen);
+            this.checkBox1.CheckedChanged += new EventHandler(Fullscreen);
 
 			this.checkBox1.BackColor = Color.Transparent;
 			this.panel1.BackColor    = Color.Transparent;
@@ -79,6 +79,10 @@ namespace Visual
             snd                  = false;
 
             SpriteListPic = new Bitmap(ALeft.Size.Width, ALeft.Size.Height);
+
+
+           checkBox1.Checked = Convert.ToBoolean(ifs.GetString(@"..\\setting.ini","settings", "fullscreen"));
+           flag_snd.Checked = Convert.ToBoolean(ifs.GetString(@"..\\setting.ini","settings", "sound"));  
         }
 
         //Прокомментирую, а то уже забыл, что к чему...
@@ -105,45 +109,58 @@ namespace Visual
             }
 
 			//Load vars
-			string TypeCurrentScene = ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "type");
-			string ScriptFileName = ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "name");
+			string TypeCurrentScene = ifs.GetString(lua.cfg + "test.ini", sect_string, "type");
+			string ScriptFileName = ifs.GetString(lua.cfg + "test.ini", sect_string, "name");
 
-            if (TypeCurrentScene == "SceneDropper")
+            switch(TypeCurrentScene)
             {
-                sect_string = ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "id");
-                var SplitedSect = sect_string.Split('_');
-                sect = Convert.ToInt32(SplitedSect[0]);
-                sect_old = sect_string.Substring(SplitedSect[0].Length, sect_string.Length - SplitedSect[0].Length);
-                NextScene(true);
-                return;
-            }
-            else if (TypeCurrentScene == "None" | ScriptFileName == "")
-            {
-                return;
-            }
-
-			lua.LuaFunc(ScriptFileName, ifs.GetPrivateString(lua.cfg + "test.ini", sect_string, "func"));
-            if (TypeCurrentScene == "Question")
-            {
-                lnum = lua.GetLabelNum();
-                label_text = new Label[lnum]; // Set size
-                for (int it = 0; it < lnum; it++)
+                case "SceneDropper":
                 {
-                    label_text[it] = new System.Windows.Forms.Label
-                    {
-                        AutoSize = true,
-                        Name = Convert.ToString(it + 1),
-                        BackColor = System.Drawing.Color.Transparent,
-                        Location = new System.Drawing.Point(10, 22 + 14 * it),
-                        Visible = true,
-                        Text = lua.GetLabelText(it),
-                        Parent = panel1
-                    };
-                    label_text[it].Click += new System.EventHandler(this.Question_Click);
+                    sect_string = ifs.GetString(lua.cfg + "test.ini", sect_string, "id");
+                    var SplitedSect = sect_string.Split('_');
+                    sect = Convert.ToInt32(SplitedSect[0]);
+                    sect_old = sect_string.Substring(SplitedSect[0].Length, sect_string.Length - SplitedSect[0].Length);
+                    NextScene(true);
+                    return;
                 }
-                Label_Helper(true, lnum);
-                return;
+                case "None": 
+                {
+                    return;
+                }
+                case "LuaScript":
+                {
+                    lua.LuaFunc(ScriptFileName, ifs.GetString(lua.cfg + "test.ini", sect_string, "func"));
+                    break;
+                }
+                case "Question":
+                {
+                    lua.LuaFunc(ScriptFileName, ifs.GetString(lua.cfg + "test.ini", sect_string, "func"));
+                    lnum = lua.GetLabelNum();
+                    label_text = new Label[lnum]; // Set size
+                    for (int it = 0; it < lnum; it++)
+                    {
+                        label_text[it] = new System.Windows.Forms.Label
+                        {
+                            AutoSize = true,
+                            Name = Convert.ToString(it + 1),
+                            BackColor = System.Drawing.Color.Transparent,
+                            Location = new System.Drawing.Point(10, 22 + 14 * it),
+                            Visible = true,
+                            Text = lua.GetLabelText(it),
+                            Parent = panel1
+                        };
+                        label_text[it].Click += new System.EventHandler(this.Question_Click);
+                    }
+                    Label_Helper(true, lnum);
+                    return;
+                }
+                default:
+                {
+                    MessageBox.Show("Error: Unknown scene type!");
+                    return;
+                }
             }
+
             heroname = lua.GetName();
             ActorText = lua.GetText().Split(' ');
 
@@ -235,8 +252,16 @@ namespace Visual
             LoadList.Visible = true;
             LoadList.Items.Clear();
 
-            foreach(string file_name in Directory.GetFiles(lua.userdata))
-                LoadList.Items.Add(file_name.Substring(lua.userdata.Length));
+            if (Directory.Exists(lua.userdata))
+            {
+                var FilesList = Directory.GetFiles(lua.userdata);
+
+                if (FilesList != null & FilesList.Length > 0)
+                {
+                    foreach (string file_name in Directory.GetFiles(lua.userdata))
+                        LoadList.Items.Add(file_name.Substring(lua.userdata.Length));
+                }
+            }
         }
         private void Next_Click(object sender, EventArgs e)
         {
@@ -303,6 +328,7 @@ namespace Visual
             sect_string = "";
             sect_old = "";
 
+            LoadList.Visible = false;
             MenuUpdate(false);
             NextScene(false);
             MessBox_1.Visible = true;
@@ -315,10 +341,21 @@ namespace Visual
         {
             string path = lua.userdata + LoadList.SelectedItem.ToString();
 
-            sect = Convert.ToInt32(ifs.GetPrivateString         (path, "param", "sect"));
-            sect_old    = ifs.GetPrivateString                  (path, "param", "sect_old");
-            sect_string = ifs.GetPrivateString                  (path, "param", "sect_string");
-            sect_label  = Convert.ToInt32(ifs.GetPrivateString  (path, "param", "sect_label"));
+            sect = Convert.ToInt32(ifs.GetString         (path, "param", "sect"));
+            sect_old    = ifs.GetString                  (path, "param", "sect_old");
+            sect_string = ifs.GetString                  (path, "param", "sect_string");
+            sect_label  = Convert.ToInt32(ifs.GetString  (path, "param", "sect_label"));
+
+            // Restored LuaTables 
+            int LayerCount = Convert.ToInt32(ifs.GetString(path, "layer", "count"));
+            lua.lua.GetTable("Scene")["Images"] = LayerCount;
+
+            for (int Iter = 0; Iter < LayerCount; Iter++)
+                lua.lua.GetTable("Scene")["Image" + Iter.ToString()] = ifs.GetString(path, "layer", "layer" + Iter.ToString());
+
+            lua.SetHook(ifs.GetString(path, "layer", "hook"));
+            lua.CallHook();
+
             LoadList.Visible = false;
             MenuUpdate(false);
             NextScene(true);
@@ -327,6 +364,9 @@ namespace Visual
         private void Ago_Click(object sender, EventArgs e)
         {
             ago.Visible = checkBox1.Visible = flag_snd.Visible = false;
+
+            ifs.WritePrivateStringA("settings", "fullscreen", checkBox1.Checked.ToString(), @"..\\setting.ini");
+            ifs.WritePrivateStringA("settings", "sound", flag_snd.Checked.ToString(), @"..\\setting.ini");  
             MenuUpdate(true);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -342,7 +382,14 @@ namespace Visual
                 ifs.WritePrivateStringA("param", "sect_string", sect_string, path);
                 ifs.WritePrivateStringA("param", "sect_old", sect_old, path);
                 ifs.WritePrivateStringA("param", "sect_label", Convert.ToString(sect_label), path);
-              
+
+                // Save Sprites
+                for (int Iter = 0; Iter < lua.GetImgNum(); Iter++)
+                    ifs.WritePrivateStringA("layer", "layer" + Iter.ToString(), lua.GetImageText(Iter), path);
+
+                ifs.WritePrivateStringA("layer", "count", lua.GetImgNum().ToString(), path);
+                ifs.WritePrivateStringA("layer", "hook", lua.GetHook(), path);
+
                 HideInputBox();
             }
             else

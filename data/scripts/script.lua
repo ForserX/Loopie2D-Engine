@@ -2,12 +2,15 @@ ActorName = "nil"
 FreeMove = false;
 
 function start()
-  Font["Name"] = "Arial"
-  Font["Text"] = "Arial"
-  Font["TextColor"] = "white"
-  Font["NameColor"] = "red"
-  ActorName = "FX"
-  Text = "Демонстрационный текст!"
+	--// Registed hook
+	AddLoaderHook("LoaderHead")
+	
+	Font["Name"] = "Arial"
+	Font["Text"] = "Arial"
+	Font["TextColor"] = "white"
+	Font["NameColor"] = "red"
+	ActorName = "FX"
+	Text = "Демонстрационный текст!"
 	Scene["Images"] = 1
 	Scene["Image0"] = "SceneBack.png"
 end

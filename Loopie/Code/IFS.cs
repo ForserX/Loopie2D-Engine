@@ -15,7 +15,7 @@ public class INIManager
     public INIManager() : this("") { }
 
     //Возвращает значение из INI-файла (по указанным секции и ключу) 
-    public string GetPrivateString(string aSection, string aKey)
+    public string GetString(string aSection, string aKey)
     {
         //Для получения значения
         StringBuilder buffer = new StringBuilder(SIZE);
@@ -27,7 +27,7 @@ public class INIManager
         return buffer.ToString();
     }
      //и ключу) 
-    public string GetPrivateString(string afile, string aSection, string aKey)
+    public string GetString(string afile, string aSection, string aKey)
     {
         //Для получения значения
         StringBuilder buffer = new StringBuilder(SIZE);

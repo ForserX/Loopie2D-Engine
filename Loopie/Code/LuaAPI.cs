@@ -11,7 +11,7 @@ namespace Visual
     public class LuaAPI
     {
         public string cfg, userdata, scripts, images, snd;
-
+        private string LoaderHookName;
         private INIManager ifs;
         public Lua lua;
         public LuaAPI()
@@ -22,11 +22,11 @@ namespace Visual
             lua = new Lua();
             ////////////////////////////////////////////////////////
             /// CFG setter
-            cfg      = ifs.GetPrivateString("global", "config");
-            userdata = ifs.GetPrivateString("global", "user");
-            scripts  = ifs.GetPrivateString("global", "scripts");
-            images   = ifs.GetPrivateString("global", "img");
-            snd      = ifs.GetPrivateString("global", "snd");
+            cfg      = ifs.GetString("global", "config");
+            userdata = ifs.GetString("global", "user");
+            scripts  = ifs.GetString("global", "scripts");
+            images   = ifs.GetString("global", "img");
+            snd      = ifs.GetString("global", "snd");
             ////////////////////////////////////////////////////////
             /// Lua namespace setter
             lua["IFS"]  = new INIManager();
@@ -35,9 +35,25 @@ namespace Visual
             lua["Sound"] = "0";
             lua.NewTable("Font");
             lua.NewTable("Scene");
+
+            lua.RegisterFunction("AddLoaderHook", this, typeof(LuaAPI).GetMethod("SetHook"));
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        //////                                          ООП Методы                                                //////
+        // Loader hooks
+        public void SetHook(string HookName)
+        {
+            LoaderHookName = HookName;
+        }
+        public string GetHook()
+        {
+            return LoaderHookName;
+        }
+        public void CallHook()
+        {
+            LuaFunc("Loader", LoaderHookName);
+        }
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Tables
         public string GetSnd() { return (string)lua["Sound"]; }
         public string GetName() { return (string)lua["ActorName"]; }
         public string GetText() { return (string)lua["Text"]; }

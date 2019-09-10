@@ -13,7 +13,7 @@ namespace Visual
     {
         void inputBox()
         {
-            panel1.Width = 170;
+            panel1.Width = 190;
             label5.Visible = true;
             textBox1.Visible = true;
             panel1.Location = new System.Drawing.Point((this.Width - panel1.Width) / 2, panel1.Location.Y);
