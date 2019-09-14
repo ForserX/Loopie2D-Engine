@@ -80,9 +80,8 @@
     <Compile Include="Code\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Code\FormHelper.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Code\FormHelper.cs" />
+    <Compile Include="Code\GameManager.cs" />
     <Compile Include="Code\IFS.cs" />
     <Compile Include="Code\LuaAPI.cs" />
     <Compile Include="Code\Program.cs" />

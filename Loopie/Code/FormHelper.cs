@@ -11,6 +11,8 @@ namespace Visual
 {
     public partial class Form1 : Form
     {
+        Bitmap SpriteListPic;
+
         void inputBox()
         {
             panel1.Width = 190;
@@ -26,6 +28,7 @@ namespace Visual
         {
             HideInputBox();
         }
+
         void HideInputBox()
         {
             label5.Visible      = false;
@@ -34,6 +37,7 @@ namespace Visual
             СancelButton.Visible= false;
             SaveButton.Visible  = false;
         }
+
         Color SetColor(string obj)
         {
             switch (obj)
@@ -45,11 +49,27 @@ namespace Visual
             }
         }
 
-        private void MakeHolderForSprites(ref PictureBox img)
+        private void GameScenarioSelected(object sender, EventArgs e)
         {
-        //    img.Paint += new System.Windows.Forms.PaintEventHandler(SpriteBoxes_Paint);
+            Label lab = (Label)sender;
+            var DefName = GameList[Convert.ToInt32(lab.Name) - 1].Split('\\');
+
+            GameScenarioFile = DefName.Last();
+            Label_Helper(false, lnum);
+
+            MessBox_1.Visible = true;
+            LoadList.Visible = false;
+            MenuUpdate(false);
+
+            GameStarted = true;
         }
-        Bitmap SpriteListPic;// = new Bitmap(ALeft.Size.Width, ALeft.Size.Height);
+
+        private void Question_Click(object sender, EventArgs e)
+        {
+            Label lab = (Label)sender;
+            sect_next = Convert.ToInt32(lab.Name);
+            Label_Helper(false, lnum);
+        }
 
         private void SpriteBoxesHolder(Image FreeMovePicture, int posX, int posY, float Scale = 2)
         {
