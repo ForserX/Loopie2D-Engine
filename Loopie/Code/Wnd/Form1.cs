@@ -24,11 +24,31 @@ namespace Visual
         private string heroname, ActorText_str, sect_old, sect_string, snd_old, GameScenarioFile;
         private string [] ActorText, GameList;
         private bool trygame, snd, GameStarted;
+        Loopie.Code.Content.ContextBox Context;
 
+        public void MakeContextBox(string Img, string Text, int X, int Y)
+        {
+            Context.Location = new System.Drawing.Point(X, Y);
+            Context.FastInit(lua.images + Img, Text);
+            Context.Visible = true;
+        }
+
+        public void ClosedContextBox()
+        {
+            Context.Visible = false;
+        }
         //Code
         public Form1()
         {
             /// Init
+            /// /// ContextBox
+            Context = new Loopie.Code.Content.ContextBox();
+            Context.Parent = pictureBox1;
+            Context.BackColor = Color.Transparent;
+            this.Controls.Add(this.Context);
+            Context.Visible = false;
+
+            /// /// General
             InitializeComponent();
 			this.DoubleBuffered = true;
 			/////////////////////////////////////////////////////////////////////
@@ -85,6 +105,8 @@ namespace Visual
             }
             catch (Exception e) { };
             GameStarted = false;
+            lua.lua.RegisterFunction("AddContextBox", this, typeof(Form1).GetMethod("MakeContextBox"));
+            lua.lua.RegisterFunction("RemoveContextBox", this, typeof(Form1).GetMethod("ClosedContextBox"));
         }
 
         // Load: Game

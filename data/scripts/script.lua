@@ -13,6 +13,7 @@ function start()
 	Text = "Демонстрационный текст!"
 	Scene["Images"] = 1
 	Scene["Image0"] = "SceneBack.png"
+	
 end
 
 function SvExample()
@@ -27,6 +28,7 @@ function SvExample()
 	Scene["Image2Pos"] = 50
 	Scene["Image2"] = "sl_sprite.png"
 	Scene["Image2Scale"] = 1.6
+	
 end
 
 function SvExample2()

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using LuaInterface;
+using Loopie;
 
 namespace Visual
 {
@@ -84,6 +85,7 @@ namespace Visual
             }
             return Convert.ToSingle(Size);
         }
+
         public void LuaFunc(string file, string func)
         {
             try

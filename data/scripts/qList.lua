@@ -1,4 +1,5 @@
 function question1()
+	AddContextBox("box.png", "asgjhfdgjfaksdaksfihwibqfinks", 150, 40)
 	Scene["Options"] = 4
 	Scene["Option0"] = "Пример выполнения 1: Ничего не меняем"
 	Scene["Option1"] = "Пример выполнения 2: Загружаем спрайт"
