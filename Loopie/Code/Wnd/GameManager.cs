@@ -18,6 +18,7 @@ namespace Visual
         void NextScene(bool load)
         {
             // Remove old frame data
+            SpriteListPic.Dispose();
             SpriteListPic = new Bitmap(ALeft.Size.Width, ALeft.Size.Height);
             lua.lua.Pop();
 
@@ -109,35 +110,36 @@ namespace Visual
             // Для отступов строк
             int old_y = 35, str = 0, num = 0;
             MessBox_1.Image = (Image)new Bitmap(MessBox_1.Width, MessBox_1.Height);
-            Graphics g = Graphics.FromImage(MessBox_1.Image);
 
-            // Считаем строки
-            old_y -= 14;
-            for (var i = 0; i <= ActorText.Length; i++)
+            using (Graphics g = Graphics.FromImage(MessBox_1.Image))
             {
-                if (str < text_width & i != ActorText.Length)
+                // Считаем строки
+                old_y -= 14;
+                for (var i = 0; i <= ActorText.Length; i++)
                 {
-                    str += ActorText[i].Length;
-                    if (i != ActorText.Length - 1)
-                        if (str + ActorText[i + 1].Length >= text_width)
-                            str = 1116;
-                }
-                else
-                {
-                    for (int j = num + 1; j <= i; j++)
-                        ActorText_str += ActorText[j - 1] + " ";
+                    if (str < text_width & i != ActorText.Length)
+                    {
+                        str += ActorText[i].Length;
+                        if (i != ActorText.Length - 1)
+                            if (str + ActorText[i + 1].Length >= text_width)
+                                str = 1116;
+                    }
+                    else
+                    {
+                        for (int j = num + 1; j <= i; j++)
+                            ActorText_str += ActorText[j - 1] + " ";
 
-                    if (i != ActorText.Length)
-                        str = ActorText[i].Length;
+                        if (i != ActorText.Length)
+                            str = ActorText[i].Length;
 
-                    old_y += 14;
-                    num = i;
-                    g.DrawString(ActorText_str, new Font(lua.GetTextFont(), 10, FontStyle.Bold), new SolidBrush(SetColor(lua.GetTextColor())), new Point(10, old_y));
-                    ActorText_str = "";
+                        old_y += 14;
+                        num = i;
+                        g.DrawString(ActorText_str, new Font(lua.GetTextFont(), 10, FontStyle.Bold), new SolidBrush(SetColor(lua.GetTextColor())), new Point(10, old_y));
+                        ActorText_str = "";
+                    }
                 }
             }
             text_width = 5 * (checkBox1.Checked ? 36 : 27);
-            g.Dispose();
 
             // Drawing img
             this.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(0));
@@ -160,7 +162,7 @@ namespace Visual
             uint Iterator = 0;
 
             // Mod supporter
-            var GameFilesList = Directory.GetFiles(lua.cfg);
+            string[] GameFilesList = Directory.GetFiles(lua.cfg);
             if (GameFilesList.Length > 1)
             {
                 foreach (string file_name in GameFilesList)

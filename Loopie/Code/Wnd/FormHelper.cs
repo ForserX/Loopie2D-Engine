@@ -73,8 +73,10 @@ namespace Visual
 
         private void SpriteBoxesHolder(Image FreeMovePicture, int posX, int posY, float Scale = 2)
         {
-            Graphics SpGr = Graphics.FromImage(SpriteListPic);
-            SpGr.DrawImage(FreeMovePicture, posX * 2, posY * 2, FreeMovePicture.Size.Width / Scale, FreeMovePicture.Size.Height / Scale);
+            using (Graphics SpGr = Graphics.FromImage(SpriteListPic))
+            {
+                SpGr.DrawImage(FreeMovePicture, posX * 2, posY * 2, FreeMovePicture.Size.Width / Scale, FreeMovePicture.Size.Height / Scale);
+            }
             ALeft.Image = SpriteListPic;
         }
     
