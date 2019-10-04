@@ -39,6 +39,26 @@ namespace Visual
 
             lua.RegisterFunction("AddLoaderHook", this, typeof(LuaAPI).GetMethod("SetHook"));
         }
+
+        string TableReader(string Table, string Key)
+        {
+            string Ret = "";
+            using (LuaTable tabx = lua.GetTable(Table))
+            {
+                Ret = (string)tabx[Key];
+            }
+            return Ret;
+        }
+
+        int TableReaderI(string Table, string Key)
+        {
+            int Ret = -1;
+            using (LuaTable tabx = lua.GetTable(Table))
+            {
+                Ret = (int)(double)tabx[Key];
+            }
+            return Ret;
+        }
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Loader hooks
         public void SetHook(string HookName)
@@ -55,29 +75,29 @@ namespace Visual
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Tables
-        public string GetSnd() { return (string)lua["Sound"]; }
-        public string GetName() { return (string)lua["ActorName"]; }
-        public string GetText() { return (string)lua["Text"]; }
-        public string GetTextColor() { return (string)lua.GetTable("Font")["TextColor"]; }
-        public string GetNameColor() { return (string)lua.GetTable("Font")["NameColor"]; }
-        public int GetLabelNum() { return (int)(double)lua.GetTable("Scene")["Options"]; }
-        public string GetImageText(int num) { return (string)lua.GetTable("Scene")["Image" + Convert.ToString(num)]; }
-        public int GetImgNum() { return (int)(double)lua.GetTable("Scene")["Images"]; }
-        public string GetLabelText(int num) { return (string)lua.GetTable("Scene")["Option" + Convert.ToString(num)]; }
-        public string GetTextFont() { return (string)lua.GetTable("Font")["Text"]; }
-        public string GetNameFont() { return (string)lua.GetTable("Font")["Name"]; }
-        public bool GetFreeMove() { return (bool)lua["FreeMove"]; }
+        public string GetSnd()              { return (string)lua["Sound"]; }
+        public string GetName()             { return (string)lua["ActorName"]; }
+        public string GetText()             { return (string)lua["Text"]; }
+        public string GetTextColor()        { return TableReader("Font", "TextColor"); }
+        public string GetNameColor()        { return TableReader("Font", "NameColor"); }
+        public string GetTextFont()         { return TableReader("Font", "Text"); }
+        public string GetNameFont()         { return TableReader("Font", "Name"); }
+        public string GetImageText(int num) { return TableReader("Scene", "Image" + Convert.ToString(num)); }
+        public string GetLabelText(int num) { return TableReader("Scene", "Option" + Convert.ToString(num)); }
+
+        public int GetImgNum()      { return TableReaderI("Scene", "Images"); }
+        public int GetLabelNum()    { return TableReaderI("Scene", "Options"); }
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public int GetImageTextPos(int num)
         {
-            return (int)(double)lua.GetTable("Scene")["Image" + Convert.ToString(num) + "Pos"];
+            return TableReaderI("Scene", "Image" + Convert.ToString(num) + "Pos");
         }
         public float GetImageScale(int num)
         {
             double Size = 0;
             try
             {
-                Size = (double)lua.GetTable("Scene")["Image" + Convert.ToString(num) + "Scale"];
+                Size = TableReaderI("Scene", "Image" + Convert.ToString(num) + "Scale");
             }
             catch (Exception ex)
             {

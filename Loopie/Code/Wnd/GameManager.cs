@@ -108,7 +108,7 @@ namespace Visual
             SpeakerName.Text = heroname;
 
             // Для отступов строк
-            int old_y = 35, str = 0, num = 0;
+            int old_y = 35, StrSize = 0, StrEndl = 0;
             MessBox_1.Image = (Image)new Bitmap(MessBox_1.Width, MessBox_1.Height);
 
             using (Graphics g = Graphics.FromImage(MessBox_1.Image))
@@ -117,29 +117,30 @@ namespace Visual
                 old_y -= 14;
                 for (var i = 0; i <= ActorText.Length; i++)
                 {
-                    if (str < text_width & i != ActorText.Length)
+                    if (StrSize < text_width & i != ActorText.Length)
                     {
-                        str += ActorText[i].Length;
+                        StrSize += ActorText[i].Length;
                         if (i != ActorText.Length - 1)
-                            if (str + ActorText[i + 1].Length >= text_width)
-                                str = 1116;
+                            if (StrSize + ActorText[i + 1].Length >= text_width)
+                                StrSize = text_width + 12;
                     }
                     else
                     {
-                        for (int j = num + 1; j <= i; j++)
-                            ActorText_str += ActorText[j - 1] + " ";
+                        for (int CreatLineIter = StrEndl; CreatLineIter < i; CreatLineIter++)
+                            ActorText_str += ActorText[CreatLineIter] + " ";
+
+                        // Set endl pos
+                        StrEndl = i;
 
                         if (i != ActorText.Length)
-                            str = ActorText[i].Length;
+                            StrSize = ActorText[i].Length;
 
                         old_y += 14;
-                        num = i;
                         g.DrawString(ActorText_str, new Font(lua.GetTextFont(), 10, FontStyle.Bold), new SolidBrush(SetColor(lua.GetTextColor())), new Point(10, old_y));
                         ActorText_str = "";
                     }
                 }
             }
-            text_width = 5 * (checkBox1.Checked ? 36 : 27);
 
             // Drawing img
             this.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(0));
