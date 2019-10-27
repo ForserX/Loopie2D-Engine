@@ -19,9 +19,9 @@ namespace Loopie2D
         private readonly System.Windows.Media.MediaPlayer player;
 
         //Vars
-        private int sect, sect_next, sect_label, sect_lb_old, TextWidth, lnum;
-        private string heroname, SpeakerTextString, sect_old, sect_string, SoundOldName, GameScenarioFile;
-        private string [] ActorText, GameList;
+        private int sect, sect_next, sect_label, sect_lb_old, TextWidth;
+        private string SpeakerTextString, sect_old, sect_string, SoundOldName, GameScenarioFile;
+        private string[] GameList;
         private bool TryGame, SoundActive, GameStarted;
         Loopie.Code.Content.ContextBox Context;
 
@@ -103,7 +103,12 @@ namespace Loopie2D
                 FullscreenCheckBox.Checked = Convert.ToBoolean(ifs.GetString(@"..\\setting.ini", "settings", "fullscreen"));
                 SoundFlagCheck.Checked = Convert.ToBoolean(ifs.GetString(@"..\\setting.ini", "settings", "sound"));
             }
-            catch (Exception e) { };
+            finally
+            {
+                SoundFlagCheck.Checked = true;
+                FullscreenCheckBox.Checked = false;
+            }
+
             GameStarted = false;
             lua.lua.RegisterFunction("AddContextBox", this, typeof(Form1).GetMethod("MakeContextBox"));
             lua.lua.RegisterFunction("RemoveContextBox", this, typeof(Form1).GetMethod("ClosedContextBox"));

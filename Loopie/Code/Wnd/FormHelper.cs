@@ -13,6 +13,7 @@ namespace Loopie2D
     {
         private System.Windows.Forms.Label[] label_text;
         Bitmap SpriteListPic;
+        private int LablesCount;
 
         void inputBox()
         {
@@ -56,7 +57,7 @@ namespace Loopie2D
             var DefName = GameList[Convert.ToInt32(lab.Name) - 1].Split('\\');
 
             GameScenarioFile = DefName.Last();
-            Label_Helper(false, lnum);
+            Label_Helper(false, LablesCount);
 
             MessBox_1.Visible = true;
             LoadList.Visible = false;
@@ -69,7 +70,7 @@ namespace Loopie2D
         {
             Label lab = (Label)sender;
             sect_next = Convert.ToInt32(lab.Name);
-            Label_Helper(false, lnum);
+            Label_Helper(false, LablesCount);
         }
 
         private void SpriteBoxesHolder(Image FreeMovePicture, int posX, int posY, float Scale = 2)

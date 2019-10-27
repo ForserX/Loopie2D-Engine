@@ -110,9 +110,9 @@ namespace Loopie2D
             {
                 Size += TableReaderF("Scene", "Image" + Convert.ToString(num) + "Scale");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Size += 2;
+                Size += 1;
             }
             return Convert.ToSingle(Size);
         }

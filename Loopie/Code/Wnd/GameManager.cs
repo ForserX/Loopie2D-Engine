@@ -65,9 +65,9 @@ namespace Loopie2D
                 case "Question":
                     {
                         lua.LuaFunc(ScriptFileName, ifs.GetString(LuaAPI.cfg + GameScenarioFile, sect_string, "func"));
-                        lnum = lua.GetLabelNum();
-                        label_text = new Label[lnum]; // Set size
-                        for (int it = 0; it < lnum; it++)
+                        LablesCount = lua.GetLabelNum();
+                        label_text = new Label[LablesCount]; // Set size
+                        for (int it = 0; it < LablesCount; it++)
                         {
                             label_text[it] = new System.Windows.Forms.Label
                             {
@@ -81,7 +81,7 @@ namespace Loopie2D
                             };
                             label_text[it].Click += this.Question_Click;
                         }
-                        Label_Helper(true, lnum);
+                        Label_Helper(true, LablesCount);
                         return;
                     }
                 default:
@@ -91,8 +91,7 @@ namespace Loopie2D
                     }
             }
 
-            heroname = lua.GetName();
-            ActorText = lua.GetText().Split(' ');
+            string[] ActorText = lua.GetText().Split(' ');
 
             // Music
             if (SoundFlagCheck.Checked && (!SoundActive || lua.GetSoundActive() != SoundOldName))
@@ -105,7 +104,7 @@ namespace Loopie2D
             // Draw ActorName
             SpeakerName.Visible = true;
             SpeakerName.ForeColor = SetColor(lua.GetNameColor());
-            SpeakerName.Text = heroname;
+            SpeakerName.Text = lua.GetName();
 
             // Для отступов строк
             int old_y = 35, StrSize = 0, StrEndl = 0;
