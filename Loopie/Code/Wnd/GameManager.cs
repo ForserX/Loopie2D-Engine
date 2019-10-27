@@ -25,7 +25,7 @@ namespace Loopie2D
             //Флажок для лоадера
             if (!load)
             {
-                snd_old = lua.GetSnd();
+                SoundOldName = lua.GetSoundActive();
                 ++sect;
 
                 //Тут мы определяем секцию, костыльно и не интересно
@@ -39,14 +39,14 @@ namespace Loopie2D
             }
 
             //Load vars
-            string TypeCurrentScene = ifs.GetString(lua.cfg + GameScenarioFile, sect_string, "type");
-            string ScriptFileName = ifs.GetString(lua.cfg + GameScenarioFile, sect_string, "name");
+            string TypeCurrentScene = ifs.GetString(LuaAPI.cfg + GameScenarioFile, sect_string, "type");
+            string ScriptFileName = ifs.GetString(LuaAPI.cfg + GameScenarioFile, sect_string, "name");
 
             switch (TypeCurrentScene)
             {
                 case "SceneDropper":
                     {
-                        sect_string = ifs.GetString(lua.cfg + GameScenarioFile, sect_string, "id");
+                        sect_string = ifs.GetString(LuaAPI.cfg + GameScenarioFile, sect_string, "id");
                         var SplitedSect = sect_string.Split('_');
                         sect = Convert.ToInt32(SplitedSect[0]);
                         sect_old = sect_string.Substring(SplitedSect[0].Length, sect_string.Length - SplitedSect[0].Length);
@@ -59,12 +59,12 @@ namespace Loopie2D
                     }
                 case "LuaScript":
                     {
-                        lua.LuaFunc(ScriptFileName, ifs.GetString(lua.cfg + GameScenarioFile, sect_string, "func"));
+                        lua.LuaFunc(ScriptFileName, ifs.GetString(LuaAPI.cfg + GameScenarioFile, sect_string, "func"));
                         break;
                     }
                 case "Question":
                     {
-                        lua.LuaFunc(ScriptFileName, ifs.GetString(lua.cfg + GameScenarioFile, sect_string, "func"));
+                        lua.LuaFunc(ScriptFileName, ifs.GetString(LuaAPI.cfg + GameScenarioFile, sect_string, "func"));
                         lnum = lua.GetLabelNum();
                         label_text = new Label[lnum]; // Set size
                         for (int it = 0; it < lnum; it++)
@@ -79,7 +79,7 @@ namespace Loopie2D
                                 Text = lua.GetLabelText(it),
                                 Parent = UniversalPanel
                             };
-                            label_text[it].Click += new System.EventHandler(this.Question_Click);
+                            label_text[it].Click += this.Question_Click;
                         }
                         Label_Helper(true, lnum);
                         return;
@@ -95,11 +95,11 @@ namespace Loopie2D
             ActorText = lua.GetText().Split(' ');
 
             // Music
-            if (SoundFlagCheck.Checked && (!snd || lua.GetSnd() != snd_old))
+            if (SoundFlagCheck.Checked && (!SoundActive || lua.GetSoundActive() != SoundOldName))
             {
-                player.Open(new Uri(lua.snd + lua.GetSnd(), UriKind.Relative));
+                player.Open(new Uri(LuaAPI.snd + lua.GetSoundActive(), UriKind.Relative));
                 player.Play();
-                snd = true;
+                SoundActive = true;
             }
 
             // Draw ActorName
@@ -117,17 +117,19 @@ namespace Loopie2D
                 old_y -= 14;
                 for (var i = 0; i <= ActorText.Length; i++)
                 {
-                    if (StrSize < text_width & i != ActorText.Length)
+                    if (StrSize < TextWidth && i != ActorText.Length)
                     {
                         StrSize += ActorText[i].Length;
                         if (i != ActorText.Length - 1)
-                            if (StrSize + ActorText[i + 1].Length >= text_width)
-                                StrSize = text_width + 12;
+                        {
+                            if (StrSize + ActorText[i + 1].Length >= TextWidth)
+                                StrSize = TextWidth + 12;
+                        }
                     }
                     else
                     {
                         for (int CreatLineIter = StrEndl; CreatLineIter < i; CreatLineIter++)
-                            ActorText_str += ActorText[CreatLineIter] + " ";
+                            SpeakerTextString += ActorText[CreatLineIter] + " ";
 
                         // Set endl pos
                         StrEndl = i;
@@ -136,35 +138,24 @@ namespace Loopie2D
                             StrSize = ActorText[i].Length;
 
                         old_y += 14;
-                        g.DrawString(ActorText_str, new Font(lua.GetTextFont(), 10, FontStyle.Bold), new SolidBrush(SetColor(lua.GetTextColor())), new Point(10, old_y));
-                        ActorText_str = "";
+                        g.DrawString(SpeakerTextString, new Font(lua.GetTextFont(), 10, FontStyle.Bold), new SolidBrush(SetColor(lua.GetTextColor())), new Point(10, old_y));
+                        SpeakerTextString = "";
                     }
                 }
             }
 
             // Drawing img
             this.ALeft.Image = null;
-            inum = lua.GetImgNum() - 1;
+            int inum = lua.GetImgNum() - 1;
 
             if (inum > 0)
             {
                 for (int it = 1; it <= inum; it++)
                 {
-                    SpriteBoxesHolder(new Bitmap(lua.images + lua.GetImageText(it)), lua.GetImageTextPos(it), 0, lua.GetImageScale(it));
+                    SpriteBoxesHolder(new Bitmap(LuaAPI.images + lua.GetImageText(it)), lua.GetImageTextPos(it), 0, lua.GetImageScale(it));
                 }
             }
-            //else
-            //{
-                string FName = lua.GetImageText(0);
-               // if (FName.Substring(FName.Length - 5) == ".avi")
-               // {
-               //     Microsoft.DirectX.AudioVideoPlayback.Video video = new Microsoft.DirectX.AudioVideoPlayback.Video(ofd.FileName);
-               //     video.Owner = pictureBox1;
-               //     video.Play();
-               // }
-               // else 
-                    this.pictureBox1.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(0));
-            //}
+            this.pictureBox1.BackgroundImage = new Bitmap(LuaAPI.images + lua.GetImageText(0));
         }
 
         private void NewGame_Click(object sender, EventArgs e)
@@ -181,7 +172,7 @@ namespace Loopie2D
             sect_old = "";
 
             // Mod supporter
-            string[] GameFilesList = Directory.GetFiles(lua.cfg);
+            string[] GameFilesList = Directory.GetFiles(LuaAPI.cfg);
             if (GameFilesList.Length > 1)
             {
                 foreach (string file_name in GameFilesList)
@@ -203,7 +194,7 @@ namespace Loopie2D
                         Text = ifs.GetString(GameList[it], "header", "name"),
                         Parent = UniversalPanel
                     };
-                    label_text[it].Click += new System.EventHandler(this.GameScenarioSelected);
+                    label_text[it].Click += this.GameScenarioSelected;
                 }
                 Label_Helper(true, (int)Iterator);
             }

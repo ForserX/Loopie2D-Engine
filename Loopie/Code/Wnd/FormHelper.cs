@@ -11,6 +11,7 @@ namespace Loopie2D
 {
     public partial class Form1 : Form
     {
+        private System.Windows.Forms.Label[] label_text;
         Bitmap SpriteListPic;
 
         void inputBox()
@@ -136,7 +137,7 @@ namespace Loopie2D
                 LoadGameButton.Visible   = 
                 SaveGameButton.Visible = false;
 
-				trygame = true;
+				TryGame = true;
                 MessBox_1.Visible = true;
             }
             else
@@ -150,10 +151,10 @@ namespace Loopie2D
                 if (sect != 0)
                     Next.Visible = true;
 
-				trygame = false;
+				TryGame = false;
                 MessBox_1.Visible = false;
 				this.ALeft.Image = null;
-				pictureBox1.BackgroundImage = new Bitmap(lua.images + "MainFormBack.jpg");
+				pictureBox1.BackgroundImage = new Bitmap(LuaAPI.images + "MainFormBack.jpg");
             }
 
             Focus();

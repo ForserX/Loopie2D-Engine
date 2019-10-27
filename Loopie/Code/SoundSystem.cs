@@ -32,7 +32,7 @@ namespace SoundSystem
         public void SetSound(string file_name)
         {
             // Checking our file 
-            string[] files = Directory.GetDirectories(lua.snd);
+            string[] files = Directory.GetDirectories(Loopie2D.LuaAPI.snd);
             string[] files1, files2, files3, files4, files5, files6, files7, files8, files9, files10;
             FileInfo file1, file2, file3, file4, file5, file6, file7, file8, file9, file10;
 

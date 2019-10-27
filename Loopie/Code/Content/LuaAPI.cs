@@ -12,7 +12,7 @@ namespace Loopie2D
 {
     public class LuaAPI
     {
-        public string cfg, userdata, scripts, images, snd;
+        public static string cfg, userdata, scripts, images, snd;
         private string LoaderHookName;
         private INIManager ifs;
         public Lua lua;
@@ -28,7 +28,7 @@ namespace Loopie2D
             userdata = ifs.GetString("global", "user");
             scripts  = ifs.GetString("global", "scripts");
             images   = ifs.GetString("global", "img");
-            snd      = ifs.GetString("global", "snd");
+            snd      = ifs.GetString("global", "SoundActive");
             ////////////////////////////////////////////////////////
             /// Lua namespace setter
             lua["IFS"]  = new INIManager();
@@ -86,7 +86,7 @@ namespace Loopie2D
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Tables
-        public string GetSnd()              { return (string)lua["Sound"]; }
+        public string GetSoundActive()              { return (string)lua["Sound"]; }
         public string GetName()             { return (string)lua["ActorName"]; }
         public string GetText()             { return (string)lua["Text"]; }
         public string GetTextColor()        { return TableReader("Font", "TextColor"); }
