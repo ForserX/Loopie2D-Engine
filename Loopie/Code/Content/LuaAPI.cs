@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using LuaInterface;
 using Loopie;
+using System.Runtime.InteropServices;
 
 namespace Visual
 {
@@ -59,6 +60,16 @@ namespace Visual
             }
             return Ret;
         }
+
+        float TableReaderF(string Table, string Key)
+        {
+            float Ret = -1;
+            using (LuaTable tabx = lua.GetTable(Table))
+            {
+                Ret = (float)(double)tabx[Key];
+            }
+            return Ret;
+        }
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Loader hooks
         public void SetHook(string HookName)
@@ -97,11 +108,11 @@ namespace Visual
             double Size = 0;
             try
             {
-                Size = TableReaderI("Scene", "Image" + Convert.ToString(num) + "Scale");
+                Size += TableReaderF("Scene", "Image" + Convert.ToString(num) + "Scale");
             }
             catch (Exception ex)
             {
-                Size = 2;
+                Size += 2;
             }
             return Convert.ToSingle(Size);
         }
@@ -119,4 +130,7 @@ namespace Visual
             }
         }
     }
+    //[DllImport("winmm.dll"), EntryPoint = "mciSendString"]
+    //private static extern long mciSendString(string command, StringBuilder returned, int len, IntPtr callback);
+ 
 }

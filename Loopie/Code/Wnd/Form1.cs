@@ -93,7 +93,7 @@ namespace Visual
             player               = new System.Windows.Media.MediaPlayer();
             ActorText_str        = "";
             snd_old              = "0";
-            text_width           = 26 * 4;
+            text_width           = MessBox_1.Width / 11;
             snd                  = false;
 
             SpriteListPic = new Bitmap(ALeft.Size.Width, ALeft.Size.Height);
@@ -117,20 +117,21 @@ namespace Visual
                 this.Height = SystemInformation.VirtualScreen.Size.Height;
                 this.Width = SystemInformation.VirtualScreen.Size.Width;
                 this.TopMost = true; 
-                text_width += 9;
+                //text_width += 5;
             }
             else
             {
                 this.Height = 528;
                 this.Width = 979;
                 this.TopMost = false;
-                text_width = 26;
+                //text_width = 24;
              }
             int ppos = this.Width / 5;
             this.ALeft.Size = new System.Drawing.Size(this.Width, ALeft.Size.Height);
             this.ALeft.Location = new System.Drawing.Point(0, ALeft.Location.Y);
 
-            text_width *= 4;
+            //text_width *= 4;
+            text_width = MessBox_1.Width / 11;
         }
         private void Label4_Click(object sender, EventArgs e)
         {

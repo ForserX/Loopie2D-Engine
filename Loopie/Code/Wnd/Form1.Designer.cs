@@ -223,9 +223,9 @@ namespace Visual
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ALeft.BackColor = System.Drawing.Color.Transparent;
             this.ALeft.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.ALeft.Location = new System.Drawing.Point(0, 61);
+            this.ALeft.Location = new System.Drawing.Point(0, -1);
             this.ALeft.Name = "ALeft";
-            this.ALeft.Size = new System.Drawing.Size(979, 467);
+            this.ALeft.Size = new System.Drawing.Size(979, 529);
             this.ALeft.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.ALeft.TabIndex = 20;
             this.ALeft.TabStop = false;

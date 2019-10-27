@@ -75,7 +75,25 @@ namespace Visual
         {
             using (Graphics SpGr = Graphics.FromImage(SpriteListPic))
             {
-                SpGr.DrawImage(FreeMovePicture, posX * 2, posY * 2, FreeMovePicture.Size.Width / Scale, FreeMovePicture.Size.Height / Scale);
+                float TryPosY;
+                if(SpriteListPic.Size.Height < FreeMovePicture.Size.Height)
+                {
+                    float DeltPos = (float)((double)FreeMovePicture.Size.Height / (double)SpriteListPic.Size.Height);
+                    Scale = Scale < 1.01 ? Scale : Scale - DeltPos;
+
+                    if (FreeMovePicture.Size.Height * Scale > SpriteListPic.Size.Height)
+                        TryPosY = 0;
+                        //DeltPos * (SpriteListPic.Size.Height - (FreeMovePicture.Size.Height - SpriteListPic.Size.Height));
+                    else
+                        TryPosY = SpriteListPic.Size.Height - FreeMovePicture.Size.Height * Scale;
+                }
+                else
+                {
+                    TryPosY = (SpriteListPic.Size.Height - FreeMovePicture.Size.Height / 2);
+                }
+
+                float TryPosX = Convert.ToSingle(posX * 0.3);
+                SpGr.DrawImage(FreeMovePicture, posX, TryPosY, FreeMovePicture.Size.Width * Scale, FreeMovePicture.Size.Height * Scale);
             }
             ALeft.Image = SpriteListPic;
         }

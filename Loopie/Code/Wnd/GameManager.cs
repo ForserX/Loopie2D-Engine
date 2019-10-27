@@ -143,8 +143,6 @@ namespace Visual
             }
 
             // Drawing img
-            this.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(0));
-            this.pictureBox1.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(0));
             this.ALeft.Image = null;
             inum = lua.GetImgNum() - 1;
 
@@ -155,12 +153,32 @@ namespace Visual
                     SpriteBoxesHolder(new Bitmap(lua.images + lua.GetImageText(it)), lua.GetImageTextPos(it), 0, lua.GetImageScale(it));
                 }
             }
+            //else
+            //{
+                string FName = lua.GetImageText(0);
+               // if (FName.Substring(FName.Length - 5) == ".avi")
+               // {
+               //     Microsoft.DirectX.AudioVideoPlayback.Video video = new Microsoft.DirectX.AudioVideoPlayback.Video(ofd.FileName);
+               //     video.Owner = pictureBox1;
+               //     video.Play();
+               // }
+               // else 
+                    this.pictureBox1.BackgroundImage = new Bitmap(lua.images + lua.GetImageText(0));
+            //}
         }
 
         private void NewGame_Click(object sender, EventArgs e)
         {
             GameList = new string[50];
             uint Iterator = 0;
+
+            // Disable old sections data
+            sect = 0;
+            sect_next = 0;
+            sect_lb_old = 0;
+            sect_label = 0;
+            sect_string = "";
+            sect_old = "";
 
             // Mod supporter
             string[] GameFilesList = Directory.GetFiles(lua.cfg);
@@ -200,14 +218,6 @@ namespace Visual
 
                 GameStarted = true;
             }
-
-            // Disable old sections data
-            sect = 0;
-            sect_next = 0;
-            sect_lb_old = 0;
-            sect_label = 0;
-            sect_string = "";
-            sect_old = "";
         }
     }
 }
