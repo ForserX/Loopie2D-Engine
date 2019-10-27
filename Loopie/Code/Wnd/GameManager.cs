@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using System.IO;
 using SoundSystem;
 
-namespace Visual
+namespace Loopie2D
 {
     public partial class Form1 : Form
     {
@@ -77,7 +77,7 @@ namespace Visual
                                 Location = new System.Drawing.Point(10, 22 + 14 * it),
                                 Visible = true,
                                 Text = lua.GetLabelText(it),
-                                Parent = panel1
+                                Parent = UniversalPanel
                             };
                             label_text[it].Click += new System.EventHandler(this.Question_Click);
                         }
@@ -95,7 +95,7 @@ namespace Visual
             ActorText = lua.GetText().Split(' ');
 
             // Music
-            if (flag_snd.Checked && (!snd || lua.GetSnd() != snd_old))
+            if (SoundFlagCheck.Checked && (!snd || lua.GetSnd() != snd_old))
             {
                 player.Open(new Uri(lua.snd + lua.GetSnd(), UriKind.Relative));
                 player.Play();
@@ -201,7 +201,7 @@ namespace Visual
                         Location = new System.Drawing.Point(10, 22 + 14 * it),
                         Visible = true,
                         Text = ifs.GetString(GameList[it], "header", "name"),
-                        Parent = panel1
+                        Parent = UniversalPanel
                     };
                     label_text[it].Click += new System.EventHandler(this.GameScenarioSelected);
                 }

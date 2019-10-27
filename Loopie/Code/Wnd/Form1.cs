@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using System.IO;
 using SoundSystem;
 
-namespace Visual
+namespace Loopie2D
 {
     public partial class Form1 : Form
     {
@@ -56,38 +56,39 @@ namespace Visual
 			ifs = new INIManager();
 			lua = new LuaAPI();
 
-			this._exit.Parent = pictureBox1;
+			this.ExitButton.Parent = pictureBox1;
 			this.Options.Parent = pictureBox1;
 			this.NewGame.Parent = pictureBox1;
 			this.Next.Parent = pictureBox1;
-			this.label4.Parent = pictureBox1;
-			this.flag_snd.Parent = pictureBox1;
-			this.SaveButton.Parent = panel1;
-			this.SaveGame.Parent = pictureBox1;
-			this.ago.Parent = pictureBox1;
+			this.LoadGameButton.Parent = pictureBox1;
+			this.SoundFlagCheck.Parent = pictureBox1;
+			this.SaveButton.Parent = UniversalPanel;
+			this.SaveGameButton.Parent = pictureBox1;
+			this.BackButton.Parent = pictureBox1;
 			//this.TopMost = true;
 
-			this.pictureBox1.BackgroundImage = new Bitmap(lua.images + "MainFormBack.jpg");
-            this.MessBox_1.BackgroundImage = new Bitmap(lua.images + "box.png");
-			this.panel1.Parent = label6.Parent = label7.Parent = checkBox1.Parent = pictureBox1;
+			this.pictureBox1.BackgroundImage   = new Bitmap(lua.images + "MainFormBack.jpg");
+            this.MessBox_1.BackgroundImage     = new Bitmap(lua.images + "box.png");
+			this.UniversalPanel.Parent = CloseEngineButton.Parent = HideWindowsButton.Parent = FullscreenCheckBox.Parent = pictureBox1;
 
-            this.KeyDown			      += new KeyEventHandler(_KeyDown);
-			this.pictureBox1.MouseDown    += new MouseEventHandler(_MouseDown);
-            this.checkBox1.CheckedChanged += new EventHandler(Fullscreen);
+            this.KeyDown			      += new KeyEventHandler(KeyDownHandle);
+			this.pictureBox1.MouseDown    += new MouseEventHandler(MouseDownHandle);
 
-			this.checkBox1.BackColor = Color.Transparent;
-			this.panel1.BackColor    = Color.Transparent;
+            this.FullscreenCheckBox.CheckedChanged += new EventHandler(FullscreenHandle);
+			this.FullscreenCheckBox.BackColor = Color.Transparent;
+
+			this.UniversalPanel.BackColor    = Color.Transparent;
 
 			this.SpeakerName.Parent   = MessBox_1;
             /////////////////////////////////////////////////////////////////////
             /// Mess setter
             this.MessBox_1.Parent = ALeft;
-            this.MessBox_1.MouseDown += new MouseEventHandler(_MouseDown);
+            this.MessBox_1.MouseDown += new MouseEventHandler(MouseDownHandle);
 			/////////////////////////////////////////////////////////////////////
 			/// PictPositions setter
 			this.ALeft.Parent = pictureBox1;
             this.ALeft.Size = new System.Drawing.Size(this.Width, ALeft.Size.Height);
-            this.ALeft.MouseDown += new MouseEventHandler(_MouseDown);
+            this.ALeft.MouseDown += new MouseEventHandler(MouseDownHandle);
             /////////////////////////////////////////////////////////////////////
             /// Vars setter
             player               = new System.Windows.Media.MediaPlayer();
@@ -100,8 +101,8 @@ namespace Visual
 
             try
             {
-                checkBox1.Checked = Convert.ToBoolean(ifs.GetString(@"..\\setting.ini", "settings", "fullscreen"));
-                flag_snd.Checked = Convert.ToBoolean(ifs.GetString(@"..\\setting.ini", "settings", "sound"));
+                FullscreenCheckBox.Checked = Convert.ToBoolean(ifs.GetString(@"..\\setting.ini", "settings", "fullscreen"));
+                SoundFlagCheck.Checked = Convert.ToBoolean(ifs.GetString(@"..\\setting.ini", "settings", "sound"));
             }
             catch (Exception e) { };
             GameStarted = false;
@@ -110,9 +111,9 @@ namespace Visual
         }
 
         // Load: Game
-        void Fullscreen(object sender, EventArgs e)
+        void FullscreenHandle(object sender, EventArgs e)
         {
-            if (checkBox1.Checked)
+            if (FullscreenCheckBox.Checked)
             {
                 this.Height = SystemInformation.VirtualScreen.Size.Height;
                 this.Width = SystemInformation.VirtualScreen.Size.Width;
@@ -133,7 +134,7 @@ namespace Visual
             //text_width *= 4;
             text_width = MessBox_1.Width / 11;
         }
-        private void Label4_Click(object sender, EventArgs e)
+        private void LoadGameClickHandle(object sender, EventArgs e)
         {
             LoadList.Visible = true;
             LoadList.Items.Clear();
@@ -149,38 +150,40 @@ namespace Visual
                 }
             }
         }
-        private void Next_Click(object sender, EventArgs e)
+        private void NextClickHandle(object sender, EventArgs e)
         {
             MenuUpdate(false);
             NextScene(true);
             MessBox_1.Visible = true;
         }
-        private void _exit_Click(object sender, EventArgs e)
+        private void ExitClickHandle(object sender, EventArgs e)
         {
             this.Close();
         }
-        private void Options_Click(object sender, EventArgs e)
+        private void OptionsClickHandle(object sender, EventArgs e)
         {
-            MenuUpdate          (false);
-            trygame             = false;
-			
-			MessBox_1.Visible =  false;
+            MenuUpdate(false);
+            trygame = false;
 
-            flag_snd.Visible    = true;
-            ago.Visible         = true;
-            checkBox1.Visible   = true;
+            MessBox_1.Visible = false;
+
+            SoundFlagCheck.Visible = true;
+            BackButton.Visible = true;
+            FullscreenCheckBox.Visible = true;
         }
-		void _KeyDown(object sender, KeyEventArgs e)
+
+		void KeyDownHandle(object sender, KeyEventArgs e)
 		{
 			if (trygame)
 			{
 				if (e.KeyData == Keys.Enter)
 					NextScene(false);
 				else if (e.KeyData == Keys.Escape)
-					MenuUpdate(!_exit.Visible);
+					MenuUpdate(!ExitButton.Visible);
 			}
 		}
-        void _MouseDown(object sender, MouseEventArgs e)
+
+        void MouseDownHandle(object sender, MouseEventArgs e)
         {
 			if (trygame)
 			{
@@ -190,19 +193,17 @@ namespace Visual
                         NextScene(false);
                     else if (e.Button == MouseButtons.Right)
                     {
-                        if (MessBox_1.Visible)
-                            MessBox_1.Visible = false;
-                        else
-                            MessBox_1.Visible = true;
+                        MessBox_1.Visible = !MessBox_1.Visible;
                     }
                 }
 			}
         }
 
-        private void SaveGame_Click(object sender, EventArgs e)
+        private void SaveGameClickHandle(object sender, EventArgs e)
         {            
             inputBox();
         }
+
         private void LoadList_SelectedIndexChanged(object sender, EventArgs e)
         {
             string path = lua.userdata + LoadList.SelectedItem.ToString();
@@ -228,19 +229,19 @@ namespace Visual
             NextScene(true);
             MessBox_1.Visible = true;
         }
-        private void Ago_Click(object sender, EventArgs e)
+        private void BackClickHandle(object sender, EventArgs e)
         {
-            ago.Visible = checkBox1.Visible = flag_snd.Visible = false;
+            BackButton.Visible = FullscreenCheckBox.Visible = SoundFlagCheck.Visible = false;
 
-            ifs.WritePrivateStringA("settings", "fullscreen", checkBox1.Checked.ToString(), @"..\\setting.ini");
-            ifs.WritePrivateStringA("settings", "sound", flag_snd.Checked.ToString(), @"..\\setting.ini");  
+            ifs.WritePrivateStringA("settings", "fullscreen", FullscreenCheckBox.Checked.ToString(), @"..\\setting.ini");
+            ifs.WritePrivateStringA("settings", "sound", SoundFlagCheck.Checked.ToString(), @"..\\setting.ini");  
             MenuUpdate(true);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void Label6_Click(object sender, EventArgs e) { this._exit_Click(sender, e);}
-        private void Label7_Click(object sender, EventArgs e) { this.WindowState = FormWindowState.Minimized; }
+        private void CloseEngineClickHandle(object sender, EventArgs e) { this.ExitClickHandle(sender, e);}
+        private void HideWindowsClick(object sender, EventArgs e) { this.WindowState = FormWindowState.Minimized; }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void SaveButton_Click(object sender, EventArgs e)
+        private void SaveButtonClickHandle(object sender, EventArgs e)
         {
             if (textBox1.Text != "")
             {

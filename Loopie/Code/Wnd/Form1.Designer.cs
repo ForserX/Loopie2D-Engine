@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 
-namespace Visual
+namespace Loopie2D
 {
     partial class Form1
     {
@@ -37,30 +37,30 @@ namespace Visual
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this._exit = new System.Windows.Forms.Label();
+            this.ExitButton = new System.Windows.Forms.Label();
             this.Options = new System.Windows.Forms.Label();
             this.NewGame = new System.Windows.Forms.Label();
             this.Next = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.SaveGame = new System.Windows.Forms.Label();
-            this.ago = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.LoadGameButton = new System.Windows.Forms.Label();
+            this.SaveGameButton = new System.Windows.Forms.Label();
+            this.BackButton = new System.Windows.Forms.Label();
+            this.CloseEngineButton = new System.Windows.Forms.Label();
+            this.HideWindowsButton = new System.Windows.Forms.Label();
+            this.FullscreenCheckBox = new System.Windows.Forms.CheckBox();
             this.LoadList = new System.Windows.Forms.ListBox();
             this.ALeft = new System.Windows.Forms.PictureBox();
             this.MessBox_1 = new System.Windows.Forms.PictureBox();
             this.СancelButton = new System.Windows.Forms.Label();
             this.SaveButton = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.InputNameLable = new System.Windows.Forms.Label();
+            this.UniversalPanel = new System.Windows.Forms.Panel();
             this.SpeakerName = new System.Windows.Forms.Label();
-            this.flag_snd = new System.Windows.Forms.CheckBox();
+            this.SoundFlagCheck = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ALeft)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MessBox_1)).BeginInit();
-            this.panel1.SuspendLayout();
+            this.UniversalPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -75,18 +75,18 @@ namespace Visual
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
             // 
-            // _exit
+            // ExitButton
             // 
-            this._exit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this._exit.AutoSize = true;
-            this._exit.BackColor = System.Drawing.Color.Transparent;
-            this._exit.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._exit.Location = new System.Drawing.Point(12, 488);
-            this._exit.Name = "_exit";
-            this._exit.Size = new System.Drawing.Size(65, 22);
-            this._exit.TabIndex = 6;
-            this._exit.Text = "Выход";
-            this._exit.Click += new System.EventHandler(this._exit_Click);
+            this.ExitButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.ExitButton.AutoSize = true;
+            this.ExitButton.BackColor = System.Drawing.Color.Transparent;
+            this.ExitButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ExitButton.Location = new System.Drawing.Point(12, 488);
+            this.ExitButton.Name = "ExitButton";
+            this.ExitButton.Size = new System.Drawing.Size(65, 22);
+            this.ExitButton.TabIndex = 6;
+            this.ExitButton.Text = "Выход";
+            this.ExitButton.Click += new System.EventHandler(this.ExitClickHandle);
             // 
             // Options
             // 
@@ -99,7 +99,7 @@ namespace Visual
             this.Options.Size = new System.Drawing.Size(99, 22);
             this.Options.TabIndex = 7;
             this.Options.Text = "Настройки";
-            this.Options.Click += new System.EventHandler(this.Options_Click);
+            this.Options.Click += new System.EventHandler(this.OptionsClickHandle);
             // 
             // NewGame
             // 
@@ -126,85 +126,85 @@ namespace Visual
             this.Next.TabIndex = 9;
             this.Next.Text = "Продолжить";
             this.Next.Visible = false;
-            this.Next.Click += new System.EventHandler(this.Next_Click);
+            this.Next.Click += new System.EventHandler(this.NextClickHandle);
             // 
-            // label4
+            // LoadGameButton
             // 
-            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label4.AutoSize = true;
-            this.label4.BackColor = System.Drawing.Color.Transparent;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label4.Location = new System.Drawing.Point(12, 424);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(134, 22);
-            this.label4.TabIndex = 10;
-            this.label4.Text = "Загрузить игру";
-            this.label4.Click += new System.EventHandler(this.Label4_Click);
+            this.LoadGameButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.LoadGameButton.AutoSize = true;
+            this.LoadGameButton.BackColor = System.Drawing.Color.Transparent;
+            this.LoadGameButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.LoadGameButton.Location = new System.Drawing.Point(12, 424);
+            this.LoadGameButton.Name = "LoadGameButton";
+            this.LoadGameButton.Size = new System.Drawing.Size(134, 22);
+            this.LoadGameButton.TabIndex = 10;
+            this.LoadGameButton.Text = "Загрузить игру";
+            this.LoadGameButton.Click += new System.EventHandler(this.LoadGameClickHandle);
             // 
-            // SaveGame
+            // SaveGameButton
             // 
-            this.SaveGame.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.SaveGame.AutoSize = true;
-            this.SaveGame.BackColor = System.Drawing.Color.Transparent;
-            this.SaveGame.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.SaveGame.Location = new System.Drawing.Point(12, 390);
-            this.SaveGame.Name = "SaveGame";
-            this.SaveGame.Size = new System.Drawing.Size(143, 22);
-            this.SaveGame.TabIndex = 11;
-            this.SaveGame.Text = "Сохранить Игру";
-            this.SaveGame.Visible = false;
-            this.SaveGame.Click += new System.EventHandler(this.SaveGame_Click);
+            this.SaveGameButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.SaveGameButton.AutoSize = true;
+            this.SaveGameButton.BackColor = System.Drawing.Color.Transparent;
+            this.SaveGameButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.SaveGameButton.Location = new System.Drawing.Point(12, 390);
+            this.SaveGameButton.Name = "SaveGameButton";
+            this.SaveGameButton.Size = new System.Drawing.Size(143, 22);
+            this.SaveGameButton.TabIndex = 11;
+            this.SaveGameButton.Text = "Сохранить Игру";
+            this.SaveGameButton.Visible = false;
+            this.SaveGameButton.Click += new System.EventHandler(this.SaveGameClickHandle);
             // 
-            // ago
+            // BackButton
             // 
-            this.ago.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.ago.AutoSize = true;
-            this.ago.BackColor = System.Drawing.Color.Transparent;
-            this.ago.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ago.Location = new System.Drawing.Point(12, 488);
-            this.ago.Name = "ago";
-            this.ago.Size = new System.Drawing.Size(63, 22);
-            this.ago.TabIndex = 14;
-            this.ago.Text = "Назад";
-            this.ago.Visible = false;
-            this.ago.Click += new System.EventHandler(this.Ago_Click);
+            this.BackButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.BackButton.AutoSize = true;
+            this.BackButton.BackColor = System.Drawing.Color.Transparent;
+            this.BackButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.BackButton.Location = new System.Drawing.Point(12, 488);
+            this.BackButton.Name = "BackButton";
+            this.BackButton.Size = new System.Drawing.Size(63, 22);
+            this.BackButton.TabIndex = 14;
+            this.BackButton.Text = "Назад";
+            this.BackButton.Visible = false;
+            this.BackButton.Click += new System.EventHandler(this.BackClickHandle);
             // 
-            // label6
+            // CloseEngineButton
             // 
-            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label6.AutoSize = true;
-            this.label6.BackColor = System.Drawing.Color.Transparent;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label6.Location = new System.Drawing.Point(965, -1);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(14, 17);
-            this.label6.TabIndex = 15;
-            this.label6.Text = "x";
-            this.label6.Click += new System.EventHandler(this.Label6_Click);
+            this.CloseEngineButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.CloseEngineButton.AutoSize = true;
+            this.CloseEngineButton.BackColor = System.Drawing.Color.Transparent;
+            this.CloseEngineButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.CloseEngineButton.Location = new System.Drawing.Point(965, -1);
+            this.CloseEngineButton.Name = "CloseEngineButton";
+            this.CloseEngineButton.Size = new System.Drawing.Size(14, 17);
+            this.CloseEngineButton.TabIndex = 15;
+            this.CloseEngineButton.Text = "x";
+            this.CloseEngineButton.Click += new System.EventHandler(this.CloseEngineClickHandle);
             // 
-            // label7
+            // HideWindowsButton
             // 
-            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label7.AutoSize = true;
-            this.label7.BackColor = System.Drawing.Color.Transparent;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label7.Location = new System.Drawing.Point(947, -4);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(16, 17);
-            this.label7.TabIndex = 16;
-            this.label7.Text = "_";
-            this.label7.Click += new System.EventHandler(this.Label7_Click);
+            this.HideWindowsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.HideWindowsButton.AutoSize = true;
+            this.HideWindowsButton.BackColor = System.Drawing.Color.Transparent;
+            this.HideWindowsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.HideWindowsButton.Location = new System.Drawing.Point(947, -4);
+            this.HideWindowsButton.Name = "HideWindowsButton";
+            this.HideWindowsButton.Size = new System.Drawing.Size(16, 17);
+            this.HideWindowsButton.TabIndex = 16;
+            this.HideWindowsButton.Text = "_";
+            this.HideWindowsButton.Click += new System.EventHandler(this.HideWindowsClick);
             // 
-            // checkBox1
+            // FullscreenCheckBox
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(10, 19);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(145, 17);
-            this.checkBox1.TabIndex = 17;
-            this.checkBox1.Text = "Полноэкранный режим";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.Visible = false;
+            this.FullscreenCheckBox.AutoSize = true;
+            this.FullscreenCheckBox.Location = new System.Drawing.Point(10, 19);
+            this.FullscreenCheckBox.Name = "FullscreenCheckBox";
+            this.FullscreenCheckBox.Size = new System.Drawing.Size(145, 17);
+            this.FullscreenCheckBox.TabIndex = 17;
+            this.FullscreenCheckBox.Text = "Полноэкранный режим";
+            this.FullscreenCheckBox.UseVisualStyleBackColor = true;
+            this.FullscreenCheckBox.Visible = false;
             // 
             // LoadList
             // 
@@ -265,7 +265,7 @@ namespace Visual
             this.SaveButton.TabIndex = 8;
             this.SaveButton.Text = "Сохранить";
             this.SaveButton.Visible = false;
-            this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
+            this.SaveButton.Click += new System.EventHandler(this.SaveButtonClickHandle);
             // 
             // textBox1
             // 
@@ -275,34 +275,34 @@ namespace Visual
             this.textBox1.TabIndex = 7;
             this.textBox1.Visible = false;
             // 
-            // label5
+            // InputNameLable
             // 
-            this.label5.AutoSize = true;
-            this.label5.BackColor = System.Drawing.Color.Transparent;
-            this.label5.Location = new System.Drawing.Point(46, 12);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(100, 13);
-            this.label5.TabIndex = 10;
-            this.label5.Text = "Введите название";
-            this.label5.Visible = false;
+            this.InputNameLable.AutoSize = true;
+            this.InputNameLable.BackColor = System.Drawing.Color.Transparent;
+            this.InputNameLable.Location = new System.Drawing.Point(46, 12);
+            this.InputNameLable.Name = "InputNameLable";
+            this.InputNameLable.Size = new System.Drawing.Size(100, 13);
+            this.InputNameLable.TabIndex = 10;
+            this.InputNameLable.Text = "Введите название";
+            this.InputNameLable.Visible = false;
             // 
-            // panel1
+            // UniversalPanel
             // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.UniversalPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.panel1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel1.BackgroundImage")));
-            this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.panel1.Controls.Add(this.СancelButton);
-            this.panel1.Controls.Add(this.label5);
-            this.panel1.Controls.Add(this.SaveButton);
-            this.panel1.Controls.Add(this.textBox1);
-            this.panel1.Location = new System.Drawing.Point(397, 147);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(190, 104);
-            this.panel1.TabIndex = 27;
-            this.panel1.Visible = false;
+            this.UniversalPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.UniversalPanel.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("UniversalPanel.BackgroundImage")));
+            this.UniversalPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.UniversalPanel.Controls.Add(this.СancelButton);
+            this.UniversalPanel.Controls.Add(this.InputNameLable);
+            this.UniversalPanel.Controls.Add(this.SaveButton);
+            this.UniversalPanel.Controls.Add(this.textBox1);
+            this.UniversalPanel.Location = new System.Drawing.Point(397, 147);
+            this.UniversalPanel.Name = "UniversalPanel";
+            this.UniversalPanel.Size = new System.Drawing.Size(190, 104);
+            this.UniversalPanel.TabIndex = 27;
+            this.UniversalPanel.Visible = false;
             // 
             // SpeakerName
             // 
@@ -316,17 +316,17 @@ namespace Visual
             this.SpeakerName.Text = "SpeakerName";
             this.SpeakerName.Visible = false;
             // 
-            // flag_snd
+            // SoundFlagCheck
             // 
-            this.flag_snd.AutoSize = true;
-            this.flag_snd.BackColor = System.Drawing.Color.Transparent;
-            this.flag_snd.Location = new System.Drawing.Point(10, 38);
-            this.flag_snd.Name = "flag_snd";
-            this.flag_snd.Size = new System.Drawing.Size(66, 17);
-            this.flag_snd.TabIndex = 38;
-            this.flag_snd.Text = "Музыка";
-            this.flag_snd.UseVisualStyleBackColor = false;
-            this.flag_snd.Visible = false;
+            this.SoundFlagCheck.AutoSize = true;
+            this.SoundFlagCheck.BackColor = System.Drawing.Color.Transparent;
+            this.SoundFlagCheck.Location = new System.Drawing.Point(10, 38);
+            this.SoundFlagCheck.Name = "SoundFlagCheck";
+            this.SoundFlagCheck.Size = new System.Drawing.Size(66, 17);
+            this.SoundFlagCheck.TabIndex = 38;
+            this.SoundFlagCheck.Text = "Музыка";
+            this.SoundFlagCheck.UseVisualStyleBackColor = false;
+            this.SoundFlagCheck.Visible = false;
             // 
             // Form1
             // 
@@ -335,22 +335,22 @@ namespace Visual
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(979, 528);
             this.ControlBox = false;
-            this.Controls.Add(this.flag_snd);
+            this.Controls.Add(this.SoundFlagCheck);
             this.Controls.Add(this.SpeakerName);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.UniversalPanel);
             this.Controls.Add(this.MessBox_1);
             this.Controls.Add(this.ALeft);
             this.Controls.Add(this.LoadList);
-            this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.ago);
-            this.Controls.Add(this.SaveGame);
-            this.Controls.Add(this.label4);
+            this.Controls.Add(this.FullscreenCheckBox);
+            this.Controls.Add(this.HideWindowsButton);
+            this.Controls.Add(this.CloseEngineButton);
+            this.Controls.Add(this.BackButton);
+            this.Controls.Add(this.SaveGameButton);
+            this.Controls.Add(this.LoadGameButton);
             this.Controls.Add(this.Next);
             this.Controls.Add(this.NewGame);
             this.Controls.Add(this.Options);
-            this.Controls.Add(this._exit);
+            this.Controls.Add(this.ExitButton);
             this.Controls.Add(this.pictureBox1);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -363,34 +363,34 @@ namespace Visual
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ALeft)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.MessBox_1)).EndInit();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.UniversalPanel.ResumeLayout(false);
+            this.UniversalPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
         #endregion
         public System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label _exit;
+        private System.Windows.Forms.Label ExitButton;
         private System.Windows.Forms.Label Options;
         private System.Windows.Forms.Label NewGame;
         private System.Windows.Forms.Label Next;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label SaveGame;
-        private System.Windows.Forms.Label ago;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Label LoadGameButton;
+        private System.Windows.Forms.Label SaveGameButton;
+        private System.Windows.Forms.Label BackButton;
+        private System.Windows.Forms.Label CloseEngineButton;
+        private System.Windows.Forms.Label HideWindowsButton;
+        private System.Windows.Forms.CheckBox FullscreenCheckBox;
         private ListBox LoadList;
         private PictureBox ALeft;
         private Label СancelButton;
         private Label SaveButton;
         private TextBox textBox1;
-        private Label label5;
-        private Panel panel1;
+        private Label InputNameLable;
+        private Panel UniversalPanel;
         private Label SpeakerName;
         private PictureBox MessBox_1;
-        private CheckBox flag_snd;
+        private CheckBox SoundFlagCheck;
     }
 }
 

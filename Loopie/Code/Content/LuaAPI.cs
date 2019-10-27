@@ -8,7 +8,7 @@ using LuaInterface;
 using Loopie;
 using System.Runtime.InteropServices;
 
-namespace Visual
+namespace Loopie2D
 {
     public class LuaAPI
     {

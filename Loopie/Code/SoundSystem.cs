@@ -24,7 +24,7 @@ namespace SoundSystem
         private FileStream file_ogg;
         private SoundPlayer master_sound;
         /// File Manager
-        private Visual.LuaAPI lua = new Visual.LuaAPI();
+        private Loopie2D.LuaAPI lua = new Loopie2D.LuaAPI();
         /// File Manager
         // Empty Constructor
         public Sound()
