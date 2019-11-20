@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loopie", "Loopie\Loopie.csproj", "{EFAC8BDF-45D4-4B53-9FA1-313FDC1D2D76}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "USM", "USM\USM.csproj", "{8F34D70B-B8FA-4AAF-83DE-435F07315EB9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,20 @@ Global
 		{EFAC8BDF-45D4-4B53-9FA1-313FDC1D2D76}.Release|x64.Build.0 = Debug|Any CPU
 		{EFAC8BDF-45D4-4B53-9FA1-313FDC1D2D76}.Release|x86.ActiveCfg = Debug|Any CPU
 		{EFAC8BDF-45D4-4B53-9FA1-313FDC1D2D76}.Release|x86.Build.0 = Debug|Any CPU
+		{8F34D70B-B8FA-4AAF-83DE-435F07315EB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F34D70B-B8FA-4AAF-83DE-435F07315EB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F34D70B-B8FA-4AAF-83DE-435F07315EB9}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{8F34D70B-B8FA-4AAF-83DE-435F07315EB9}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{8F34D70B-B8FA-4AAF-83DE-435F07315EB9}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{8F34D70B-B8FA-4AAF-83DE-435F07315EB9}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8F34D70B-B8FA-4AAF-83DE-435F07315EB9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8F34D70B-B8FA-4AAF-83DE-435F07315EB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F34D70B-B8FA-4AAF-83DE-435F07315EB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F34D70B-B8FA-4AAF-83DE-435F07315EB9}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{8F34D70B-B8FA-4AAF-83DE-435F07315EB9}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{8F34D70B-B8FA-4AAF-83DE-435F07315EB9}.Release|Win32.ActiveCfg = Release|Any CPU
+		{8F34D70B-B8FA-4AAF-83DE-435F07315EB9}.Release|x64.ActiveCfg = Release|Any CPU
+		{8F34D70B-B8FA-4AAF-83DE-435F07315EB9}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

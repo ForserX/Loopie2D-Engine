@@ -20,7 +20,7 @@ namespace Loopie2D
         {
             ////////////////////////////////////////////////////////
             /// Interfaces/Classes setter
-            ifs = new INIManager(@"..\\setting.ini");
+            ifs = new INIManager(@"..\setting.ini");
             lua = new Lua();
             ////////////////////////////////////////////////////////
             /// CFG setter
@@ -86,7 +86,7 @@ namespace Loopie2D
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Tables
-        public string GetSoundActive()              { return (string)lua["Sound"]; }
+        public string GetSoundActive()      { return (string)lua["Sound"]; }
         public string GetName()             { return (string)lua["ActorName"]; }
         public string GetText()             { return (string)lua["Text"]; }
         public string GetTextColor()        { return TableReader("Font", "TextColor"); }

@@ -1,0 +1,39 @@
+﻿<Window x:Class="USM.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="650" Width="1200">
+    <Grid Background="#FF493A3A" Margin="0,0,2,-20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="277*"/>
+            <ColumnDefinition Width="62*"/>
+        </Grid.ColumnDefinitions>
+        <Image x:Name="ImgBox" Margin="0,0,216,0" Source="D:/bye_bye_city.jpg" Stretch="Fill" Height="637" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+
+        <Frame x:Name="ToolsWND" Content="" Background="#FF5A5B64" NavigationUIVisibility="Hidden" Grid.Column="1" Margin="2,0,0,0">
+            <Frame.Foreground>
+                <SolidColorBrush Color="White"/>
+            </Frame.Foreground>
+        </Frame>
+        <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="26" Stroke="Black" VerticalAlignment="Top" Width="180"/>
+        <Label Content="Layout: " HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Height="21" Margin="58,2,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.5,0.5" TextAlignment="Center">
+            <TextBox.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleY="1" ScaleX="1"/>
+                    <SkewTransform AngleY="0" AngleX="0"/>
+                    <RotateTransform Angle="0"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </TextBox.RenderTransform>
+        </TextBox>
+        <GroupBox Grid.Column="1" Header="Properties" HorizontalAlignment="Left" Margin="13,4,0,0" VerticalAlignment="Top" Height="104" Width="203">
+            <TextBox x:Name="BackImageTextBox" Margin="0,0,-2,58" TextWrapping="Wrap" Text="TextBox" TextChanged="TextBox_TextChanged" FontSize="8" HorizontalAlignment="Right" Width="104"/>
+
+        </GroupBox>
+        <Label Content="Background" Margin="18,18,117,0" VerticalAlignment="Top" Foreground="White" Grid.Column="1" Height="26"/>
+        <GroupBox Grid.Column="1" Header="Tools" HorizontalAlignment="Left" Margin="13,113,0,0" VerticalAlignment="Top" Height="125" Width="203">
+            <Button Content="Add Sprite" HorizontalAlignment="Left" Margin="54,32,0,0" VerticalAlignment="Top" Width="74" RenderTransformOrigin="0.3,-0.818"/>
+        </GroupBox>
+
+    </Grid>
+</Window>
