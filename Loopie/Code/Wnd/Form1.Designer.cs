@@ -80,12 +80,9 @@ namespace Loopie2D
             this.ExitButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.ExitButton.AutoSize = true;
             this.ExitButton.BackColor = System.Drawing.Color.Transparent;
-            this.ExitButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ExitButton.Location = new System.Drawing.Point(12, 488);
             this.ExitButton.Name = "ExitButton";
             this.ExitButton.Size = new System.Drawing.Size(65, 22);
             this.ExitButton.TabIndex = 6;
-            this.ExitButton.Text = "Выход";
             this.ExitButton.Click += new System.EventHandler(this.ExitClickHandle);
             // 
             // Options
@@ -106,12 +103,9 @@ namespace Loopie2D
             this.NewGame.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.NewGame.AutoSize = true;
             this.NewGame.BackColor = System.Drawing.Color.Transparent;
-            this.NewGame.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.NewGame.Location = new System.Drawing.Point(12, 357);
             this.NewGame.Name = "NewGame";
             this.NewGame.Size = new System.Drawing.Size(108, 22);
             this.NewGame.TabIndex = 8;
-            this.NewGame.Text = "Новая Игра";
             this.NewGame.Click += new System.EventHandler(this.NewGame_Click);
             // 
             // Next
@@ -133,12 +127,9 @@ namespace Loopie2D
             this.LoadGameButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.LoadGameButton.AutoSize = true;
             this.LoadGameButton.BackColor = System.Drawing.Color.Transparent;
-            this.LoadGameButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.LoadGameButton.Location = new System.Drawing.Point(12, 424);
             this.LoadGameButton.Name = "LoadGameButton";
             this.LoadGameButton.Size = new System.Drawing.Size(134, 22);
             this.LoadGameButton.TabIndex = 10;
-            this.LoadGameButton.Text = "Загрузить игру";
             this.LoadGameButton.Click += new System.EventHandler(this.LoadGameClickHandle);
             // 
             // SaveGameButton
@@ -146,12 +137,9 @@ namespace Loopie2D
             this.SaveGameButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.SaveGameButton.AutoSize = true;
             this.SaveGameButton.BackColor = System.Drawing.Color.Transparent;
-            this.SaveGameButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.SaveGameButton.Location = new System.Drawing.Point(12, 390);
             this.SaveGameButton.Name = "SaveGameButton";
             this.SaveGameButton.Size = new System.Drawing.Size(143, 22);
             this.SaveGameButton.TabIndex = 11;
-            this.SaveGameButton.Text = "Сохранить Игру";
             this.SaveGameButton.Visible = false;
             this.SaveGameButton.Click += new System.EventHandler(this.SaveGameClickHandle);
             // 

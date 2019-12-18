@@ -35,8 +35,10 @@ namespace Loopie2D
             lua["Text"] = "";
             lua["ActorName"] = "";
             lua["Sound"] = "0";
+
             lua.NewTable("Font");
             lua.NewTable("Scene");
+            lua.NewTable("MainMenu");
 
             lua.RegisterFunction("AddLoaderHook", this, typeof(LuaAPI).GetMethod("SetHook"));
         }
@@ -99,10 +101,21 @@ namespace Loopie2D
         public int GetImgNum()      { return TableReaderI("Scene", "Images"); }
         public int GetLabelNum()    { return TableReaderI("Scene", "Options"); }
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public string GetMenuTbl(string Idx) { return TableReader("MainMenu", Idx); }
+
+        public System.Drawing.Point GetMenuButtonLocation(string ButtonName)
+        {
+            int x = TableReaderI("MainMenu", ButtonName + "PosX");
+            int y = TableReaderI("MainMenu", ButtonName + "PosY");
+
+            return new System.Drawing.Point(x, y);
+        }
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public int GetImageTextPos(int num)
         {
             return TableReaderI("Scene", "Image" + Convert.ToString(num) + "Pos");
         }
+
         public float GetImageScale(int num)
         {
             double Size = 0;

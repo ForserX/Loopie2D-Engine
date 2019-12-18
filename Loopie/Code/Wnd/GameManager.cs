@@ -204,7 +204,11 @@ namespace Loopie2D
 
                 GameScenarioFile = GameFilesList[0].Split('\\').Last();
                 MenuUpdate(false);
-                NextScene(false);
+                
+                if (ifs.GetString(LuaAPI.cfg + GameScenarioFile, "header", "mode") == "VisualNovel")
+                    NextScene(false);
+                else
+                    ;// Soon
 
                 GameStarted = true;
             }

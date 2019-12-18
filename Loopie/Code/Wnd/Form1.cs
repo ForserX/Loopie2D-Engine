@@ -47,13 +47,15 @@ namespace Loopie2D
             this.Controls.Add(this.Context);
             Context.Visible = false;
 
+            /////////////////////////////////////////////////////////////////////
+            /// ETC setter
+            ifs = new INIManager();
+            lua = new LuaAPI();
+
             /// /// General
             InitializeComponent();
+            MainMenuInit();
 			this.DoubleBuffered = true;
-			/////////////////////////////////////////////////////////////////////
-			/// ETC setter
-			ifs = new INIManager();
-			lua = new LuaAPI();
 
 			this.ExitButton.Parent = pictureBox1;
 			this.Options.Parent = pictureBox1;
@@ -66,7 +68,6 @@ namespace Loopie2D
 			this.BackButton.Parent = pictureBox1;
 			//this.TopMost = true;
 
-			this.pictureBox1.BackgroundImage   = new Bitmap(LuaAPI.images + "MainFormBack.jpg");
             this.MessBox_1.BackgroundImage     = new Bitmap(LuaAPI.images + "box.png");
 			this.UniversalPanel.Parent = CloseEngineButton.Parent = HideWindowsButton.Parent = FullscreenCheckBox.Parent = pictureBox1;
 
@@ -208,11 +209,11 @@ namespace Loopie2D
         {
             string path = LuaAPI.userdata + LoadList.SelectedItem.ToString();
 
-            GameScenarioFile = ifs.GetString(path, "param", "game");
-            sect = Convert.ToInt32(ifs.GetString         (path, "param", "sect"));
-            sect_old    = ifs.GetString                  (path, "param", "sect_old");
-            sect_string = ifs.GetString                  (path, "param", "sect_string");
-            sect_label  = Convert.ToInt32(ifs.GetString  (path, "param", "sect_label"));
+            GameScenarioFile = ifs.GetString            (path, "param", "game");
+            sect = Convert.ToInt32(ifs.GetString        (path, "param", "sect"));
+            sect_old    = ifs.GetString                 (path, "param", "sect_old");
+            sect_string = ifs.GetString                 (path, "param", "sect_string");
+            sect_label  = Convert.ToInt32(ifs.GetString (path, "param", "sect_label"));
 
             // Restored LuaTables 
             int LayerCount = Convert.ToInt32(ifs.GetString(path, "layer", "count"));

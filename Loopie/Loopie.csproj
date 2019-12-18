@@ -74,6 +74,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Code\Content\ClickableObj.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Code\Content\ClickableObj.Designer.cs">
+      <DependentUpon>ClickableObj.cs</DependentUpon>
+    </Compile>
     <Compile Include="Code\Content\ContextBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -86,13 +92,20 @@
     <Compile Include="Code\Wnd\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Code\Wnd\FormHelper.cs" />
-    <Compile Include="Code\Wnd\GameManager.cs" />
+    <Compile Include="Code\Wnd\FormHelper.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Code\Wnd\GameManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Code\Content\IFS.cs" />
     <Compile Include="Code\Content\LuaAPI.cs" />
     <Compile Include="Code\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Code\SoundSystem.cs" />
+    <EmbeddedResource Include="Code\Content\ClickableObj.resx">
+      <DependentUpon>ClickableObj.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Code\Content\ContextBox.resx">
       <DependentUpon>ContextBox.cs</DependentUpon>
     </EmbeddedResource>

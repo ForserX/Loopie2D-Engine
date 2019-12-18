@@ -12,8 +12,55 @@ namespace Loopie2D
     public partial class Form1 : Form
     {
         private System.Windows.Forms.Label[] label_text;
+        private Loopie.Code.Content.ClickableObj[] UsableObjects;
+
         Bitmap SpriteListPic;
         private int LablesCount;
+
+        private void MainMenuInit()
+        {
+            lua.LuaFunc("MainMenu", GameStarted ? "Started" : "PreStart");
+            this.pictureBox1.BackgroundImage = new Bitmap(LuaAPI.images + lua.GetMenuTbl("Background"));
+
+            // Exit button
+            this.ExitButton.Text = lua.GetMenuTbl("ExitText");
+            this.ExitButton.ForeColor = SetColor(lua.GetMenuTbl("ExitColor"));
+            this.ExitButton.Location = lua.GetMenuButtonLocation("Exit");
+            this.ExitButton.Font = new System.Drawing.Font(lua.GetMenuTbl("ExitFont"), 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+
+            // New game button
+            this.NewGame.Text = lua.GetMenuTbl("NewGameText");
+            this.NewGame.ForeColor = SetColor(lua.GetMenuTbl("NewGameColor"));
+            this.NewGame.Location = lua.GetMenuButtonLocation("NewGame");
+            this.NewGame.Font = new System.Drawing.Font(lua.GetMenuTbl("NewGameFont"), 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+
+            // Options button
+            this.Options.Text = lua.GetMenuTbl("OptionsText");
+            this.Options.ForeColor = SetColor(lua.GetMenuTbl("OptionsColor"));
+            this.Options.Location = lua.GetMenuButtonLocation("Options");
+            this.Options.Font = new System.Drawing.Font(lua.GetMenuTbl("OptionsFont"), 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+
+            // Load Game button
+            this.LoadGameButton.Text = lua.GetMenuTbl("LoadText");
+            this.LoadGameButton.ForeColor = SetColor(lua.GetMenuTbl("LoadColor"));
+            this.LoadGameButton.Location = lua.GetMenuButtonLocation("Load");
+            this.LoadGameButton.Font = new System.Drawing.Font(lua.GetMenuTbl("LoadFont"), 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+
+            // Save Game button
+            if (GameStarted)
+            {
+                this.SaveGameButton.Text = lua.GetMenuTbl("SaveText");
+                this.SaveGameButton.ForeColor = SetColor(lua.GetMenuTbl("SaveColor"));
+                this.SaveGameButton.Location = lua.GetMenuButtonLocation("Save");
+                this.SaveGameButton.Font = new System.Drawing.Font(lua.GetMenuTbl("SaveFont"), 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+
+                // Continue button
+                this.Next.Text = lua.GetMenuTbl("NextText");
+                this.Next.ForeColor = SetColor(lua.GetMenuTbl("NextColor"));
+                this.Next.Location = lua.GetMenuButtonLocation("Next");
+                this.Next.Font = new System.Drawing.Font(lua.GetMenuTbl("NextFont"), 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            }
+        }
 
         void inputBox()
         {
@@ -61,7 +108,11 @@ namespace Loopie2D
 
             MessBox_1.Visible = true;
             LoadList.Visible = false;
-            MenuUpdate(false);
+            
+            if (ifs.GetString(LuaAPI.cfg + GameScenarioFile, "header", "mode") == "VisualNovel")
+                NextScene(false);
+            else
+                ;// Soon
 
             GameStarted = true;
         }
@@ -129,14 +180,16 @@ namespace Loopie2D
         }
         void MenuUpdate(bool q)
         {
+            MainMenuInit();
+
             if (!q)
             {
                 NewGame.Visible  =
                 Options.Visible  = 
                 ExitButton.Visible    = 
                 Next.Visible     = 
-                LoadGameButton.Visible   = 
-                SaveGameButton.Visible = false;
+                SaveGameButton.Visible =
+                LoadGameButton.Visible   =  false;
 
 				TryGame = true;
                 MessBox_1.Visible = true;
@@ -146,8 +199,7 @@ namespace Loopie2D
                 NewGame.Visible  = 
                 Options.Visible  = 
                 LoadGameButton.Visible   = 
-                ExitButton.Visible    = 
-                SaveGameButton.Visible = true;
+                ExitButton.Visible    = true;
 
                 if (sect != 0)
                     Next.Visible = true;
@@ -155,7 +207,7 @@ namespace Loopie2D
 				TryGame = false;
                 MessBox_1.Visible = false;
 				this.ALeft.Image = null;
-				pictureBox1.BackgroundImage = new Bitmap(LuaAPI.images + "MainFormBack.jpg");
+                SaveGameButton.Visible = GameStarted;
             }
 
             Focus();
