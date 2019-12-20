@@ -14,13 +14,14 @@ namespace Loopie2D
     public partial class Form1 : Form
     {
         // Interfaces/classes
-        private readonly INIManager ifs;
+        private INIManager ifs;
         private readonly LuaAPI lua;
         private readonly System.Windows.Media.MediaPlayer player;
 
         //Vars
-        private int sect, sect_next, sect_label, sect_lb_old, TextWidth;
-        private string SpeakerTextString, sect_old, sect_string, SoundOldName, GameScenarioFile;
+        private SectionEditon GlobalSection, LastSection;
+        private int TextWidth;
+        private string SpeakerTextString, SoundOldName, GameScenarioFile;
         private string[] GameList;
         private bool TryGame, SoundActive, GameStarted;
         Loopie.Code.Content.ContextBox Context;
@@ -42,7 +43,6 @@ namespace Loopie2D
             /// Init
             /// /// ContextBox
             Context = new Loopie.Code.Content.ContextBox();
-            Context.Parent = pictureBox1;
             Context.BackColor = Color.Transparent;
             this.Controls.Add(this.Context);
             Context.Visible = false;
@@ -55,24 +55,14 @@ namespace Loopie2D
             /// /// General
             InitializeComponent();
             MainMenuInit();
-			this.DoubleBuffered = true;
 
-			this.ExitButton.Parent = pictureBox1;
-			this.Options.Parent = pictureBox1;
-			this.NewGame.Parent = pictureBox1;
-			this.Next.Parent = pictureBox1;
-			this.LoadGameButton.Parent = pictureBox1;
-			this.SoundFlagCheck.Parent = pictureBox1;
 			this.SaveButton.Parent = UniversalPanel;
-			this.SaveGameButton.Parent = pictureBox1;
-			this.BackButton.Parent = pictureBox1;
 			//this.TopMost = true;
 
             this.MessBox_1.BackgroundImage     = new Bitmap(LuaAPI.images + "box.png");
-			this.UniversalPanel.Parent = CloseEngineButton.Parent = HideWindowsButton.Parent = FullscreenCheckBox.Parent = pictureBox1;
 
-            this.KeyDown			      += KeyDownHandle;
-			this.pictureBox1.MouseDown    += MouseDownHandle;
+            this.KeyDown      += KeyDownHandle;
+			this.MouseDown    += MouseDownHandle;
 
             this.FullscreenCheckBox.CheckedChanged += FullscreenHandle;
 			this.FullscreenCheckBox.BackColor = Color.Transparent;
@@ -82,13 +72,7 @@ namespace Loopie2D
 			this.SpeakerName.Parent   = MessBox_1;
             /////////////////////////////////////////////////////////////////////
             /// Mess setter
-            this.MessBox_1.Parent = ALeft;
             this.MessBox_1.MouseDown += MouseDownHandle;
-			/////////////////////////////////////////////////////////////////////
-			/// PictPositions setter
-			this.ALeft.Parent = pictureBox1;
-            this.ALeft.Size = new System.Drawing.Size(this.Width, ALeft.Size.Height);
-            this.ALeft.MouseDown += MouseDownHandle;
             /////////////////////////////////////////////////////////////////////
             /// Vars setter
             player               = new System.Windows.Media.MediaPlayer();
@@ -97,7 +81,7 @@ namespace Loopie2D
             TextWidth           = MessBox_1.Width / 11;
             SoundActive                  = false;
 
-            SpriteListPic = new Bitmap(ALeft.Size.Width, ALeft.Size.Height);
+            SpriteListPic = new Bitmap(this.Size.Width, this.Size.Height);
 
             try
             {
@@ -132,9 +116,6 @@ namespace Loopie2D
                 this.TopMost = false;
             }
 
-            this.ALeft.Size = new System.Drawing.Size(this.Width, ALeft.Size.Height);
-            this.ALeft.Location = new System.Drawing.Point(0, ALeft.Location.Y);
-
             TextWidth = MessBox_1.Width / 11;
         }
         private void LoadGameClickHandle(object sender, EventArgs e)
@@ -156,7 +137,7 @@ namespace Loopie2D
         private void NextClickHandle(object sender, EventArgs e)
         {
             MenuUpdate(false);
-            NextScene(true);
+            NextScene(true, ref LastSection);
             MessBox_1.Visible = true;
         }
         private void ExitClickHandle(object sender, EventArgs e)
@@ -177,10 +158,15 @@ namespace Loopie2D
 
 		void KeyDownHandle(object sender, KeyEventArgs e)
 		{
-			if (TryGame)
+            if (TryGame)
 			{
-				if (e.KeyData == Keys.Enter)
-					NextScene(false);
+                if (e.KeyData == Keys.Enter)
+                {
+                    if (isVisualNovel)
+                        NextScene(false, ref GlobalSection);
+                    else
+                        NextAction();
+                }
 				else if (e.KeyData == Keys.Escape)
 					MenuUpdate(!ExitButton.Visible);
 			}
@@ -188,12 +174,17 @@ namespace Loopie2D
 
         void MouseDownHandle(object sender, MouseEventArgs e)
         {
-			if (TryGame)
+			if (GameStarted && TryGame)
 			{
                 if (e.Clicks == 1 && GameStarted)
                 {
                     if (e.Button == MouseButtons.Left)
-                        NextScene(false);
+                    {
+                        if (isVisualNovel)
+                            NextScene(false, ref GlobalSection);
+                        else
+                            NextAction();
+                    }
                     else if (e.Button == MouseButtons.Right)
                         MessBox_1.Visible = !MessBox_1.Visible;
                 }
@@ -209,11 +200,18 @@ namespace Loopie2D
         {
             string path = LuaAPI.userdata + LoadList.SelectedItem.ToString();
 
-            GameScenarioFile = ifs.GetString            (path, "param", "game");
-            sect = Convert.ToInt32(ifs.GetString        (path, "param", "sect"));
-            sect_old    = ifs.GetString                 (path, "param", "sect_old");
-            sect_string = ifs.GetString                 (path, "param", "sect_string");
-            sect_label  = Convert.ToInt32(ifs.GetString (path, "param", "sect_label"));
+            isVisualNovel = ifs.GetString(path, "param", "mode") == "VisualNovel";
+            GameScenarioFile = ifs.GetString(path, "param", "game");
+            GlobalSection.Load(ref ifs, path, 0);
+
+
+            if (!isVisualNovel)
+            {
+                InitObjectsList();
+
+                for (int Iter = 0; Iter < UsSectList.Length; Iter++)
+                    UsSectList[Iter].Load(ref ifs, path, Iter);
+            }
 
             // Restored LuaTables 
             int LayerCount = Convert.ToInt32(ifs.GetString(path, "layer", "count"));
@@ -227,9 +225,13 @@ namespace Loopie2D
 
             LoadList.Visible = false;
             MenuUpdate(false);
-            NextScene(true);
+
+            if (isVisualNovel)
+                NextScene(true, ref GlobalSection);
+
             MessBox_1.Visible = true;
         }
+
         private void BackClickHandle(object sender, EventArgs e)
         {
             BackButton.Visible = FullscreenCheckBox.Visible = SoundFlagCheck.Visible = false;
@@ -247,11 +249,17 @@ namespace Loopie2D
             if (textBox1.Text != "")
             {
                 string path = LuaAPI.userdata + textBox1.Text + ".ini";
-                ifs.WritePrivateStringA("param", "sect", Convert.ToString(sect), path);
-                ifs.WritePrivateStringA("param", "sect_string", sect_string, path);
-                ifs.WritePrivateStringA("param", "sect_old", sect_old, path);
-                ifs.WritePrivateStringA("param", "sect_label", Convert.ToString(sect_label), path);
+
                 ifs.WritePrivateStringA("param", "game", GameScenarioFile, path);
+                ifs.WritePrivateStringA("param", "mode", isVisualNovel ? "VisualNovel" : "Action", path);
+
+                GlobalSection.Save(ref ifs, path);
+
+                if (!isVisualNovel)
+                {
+                    for (int Iter = 0; Iter < UsSectList.Length; Iter++)
+                        UsSectList[Iter].Save(ref ifs, path);
+                }
 
                 // Save Sprites
                 for (int Iter = 0; Iter < lua.GetImgNum(); Iter++)

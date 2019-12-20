@@ -36,7 +36,6 @@ namespace Loopie2D
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.ExitButton = new System.Windows.Forms.Label();
             this.Options = new System.Windows.Forms.Label();
             this.NewGame = new System.Windows.Forms.Label();
@@ -48,7 +47,6 @@ namespace Loopie2D
             this.HideWindowsButton = new System.Windows.Forms.Label();
             this.FullscreenCheckBox = new System.Windows.Forms.CheckBox();
             this.LoadList = new System.Windows.Forms.ListBox();
-            this.ALeft = new System.Windows.Forms.PictureBox();
             this.MessBox_1 = new System.Windows.Forms.PictureBox();
             this.СancelButton = new System.Windows.Forms.Label();
             this.SaveButton = new System.Windows.Forms.Label();
@@ -57,31 +55,18 @@ namespace Loopie2D
             this.UniversalPanel = new System.Windows.Forms.Panel();
             this.SpeakerName = new System.Windows.Forms.Label();
             this.SoundFlagCheck = new System.Windows.Forms.CheckBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ALeft)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MessBox_1)).BeginInit();
             this.UniversalPanel.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox1.Location = new System.Drawing.Point(0, -1);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(979, 529);
-            this.pictureBox1.TabIndex = 1;
-            this.pictureBox1.TabStop = false;
             // 
             // ExitButton
             // 
             this.ExitButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.ExitButton.AutoSize = true;
             this.ExitButton.BackColor = System.Drawing.Color.Transparent;
+            this.ExitButton.Location = new System.Drawing.Point(0, 0);
             this.ExitButton.Name = "ExitButton";
-            this.ExitButton.Size = new System.Drawing.Size(65, 22);
+            this.ExitButton.Size = new System.Drawing.Size(0, 13);
             this.ExitButton.TabIndex = 6;
             this.ExitButton.Click += new System.EventHandler(this.ExitClickHandle);
             // 
@@ -103,8 +88,9 @@ namespace Loopie2D
             this.NewGame.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.NewGame.AutoSize = true;
             this.NewGame.BackColor = System.Drawing.Color.Transparent;
+            this.NewGame.Location = new System.Drawing.Point(0, 0);
             this.NewGame.Name = "NewGame";
-            this.NewGame.Size = new System.Drawing.Size(108, 22);
+            this.NewGame.Size = new System.Drawing.Size(0, 13);
             this.NewGame.TabIndex = 8;
             this.NewGame.Click += new System.EventHandler(this.NewGame_Click);
             // 
@@ -127,8 +113,9 @@ namespace Loopie2D
             this.LoadGameButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.LoadGameButton.AutoSize = true;
             this.LoadGameButton.BackColor = System.Drawing.Color.Transparent;
+            this.LoadGameButton.Location = new System.Drawing.Point(0, 0);
             this.LoadGameButton.Name = "LoadGameButton";
-            this.LoadGameButton.Size = new System.Drawing.Size(134, 22);
+            this.LoadGameButton.Size = new System.Drawing.Size(0, 13);
             this.LoadGameButton.TabIndex = 10;
             this.LoadGameButton.Click += new System.EventHandler(this.LoadGameClickHandle);
             // 
@@ -137,8 +124,9 @@ namespace Loopie2D
             this.SaveGameButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.SaveGameButton.AutoSize = true;
             this.SaveGameButton.BackColor = System.Drawing.Color.Transparent;
+            this.SaveGameButton.Location = new System.Drawing.Point(0, 0);
             this.SaveGameButton.Name = "SaveGameButton";
-            this.SaveGameButton.Size = new System.Drawing.Size(143, 22);
+            this.SaveGameButton.Size = new System.Drawing.Size(0, 13);
             this.SaveGameButton.TabIndex = 11;
             this.SaveGameButton.Visible = false;
             this.SaveGameButton.Click += new System.EventHandler(this.SaveGameClickHandle);
@@ -203,20 +191,6 @@ namespace Loopie2D
             this.LoadList.TabIndex = 18;
             this.LoadList.Visible = false;
             this.LoadList.SelectedIndexChanged += new System.EventHandler(this.LoadList_SelectedIndexChanged);
-            // 
-            // ALeft
-            // 
-            this.ALeft.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.ALeft.BackColor = System.Drawing.Color.Transparent;
-            this.ALeft.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.ALeft.Location = new System.Drawing.Point(0, -1);
-            this.ALeft.Name = "ALeft";
-            this.ALeft.Size = new System.Drawing.Size(979, 529);
-            this.ALeft.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.ALeft.TabIndex = 20;
-            this.ALeft.TabStop = false;
             // 
             // MessBox_1
             // 
@@ -327,7 +301,6 @@ namespace Loopie2D
             this.Controls.Add(this.SpeakerName);
             this.Controls.Add(this.UniversalPanel);
             this.Controls.Add(this.MessBox_1);
-            this.Controls.Add(this.ALeft);
             this.Controls.Add(this.LoadList);
             this.Controls.Add(this.FullscreenCheckBox);
             this.Controls.Add(this.HideWindowsButton);
@@ -339,7 +312,6 @@ namespace Loopie2D
             this.Controls.Add(this.NewGame);
             this.Controls.Add(this.Options);
             this.Controls.Add(this.ExitButton);
-            this.Controls.Add(this.pictureBox1);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
@@ -348,8 +320,6 @@ namespace Loopie2D
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ALeft)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.MessBox_1)).EndInit();
             this.UniversalPanel.ResumeLayout(false);
             this.UniversalPanel.PerformLayout();
@@ -358,7 +328,7 @@ namespace Loopie2D
 
         }
         #endregion
-        public System.Windows.Forms.PictureBox pictureBox1;
+
         private System.Windows.Forms.Label ExitButton;
         private System.Windows.Forms.Label Options;
         private System.Windows.Forms.Label NewGame;
@@ -370,7 +340,6 @@ namespace Loopie2D
         private System.Windows.Forms.Label HideWindowsButton;
         private System.Windows.Forms.CheckBox FullscreenCheckBox;
         private ListBox LoadList;
-        private PictureBox ALeft;
         private Label СancelButton;
         private Label SaveButton;
         private TextBox textBox1;

@@ -12,7 +12,6 @@ namespace Loopie2D
     public partial class Form1 : Form
     {
         private System.Windows.Forms.Label[] label_text;
-        private Loopie.Code.Content.ClickableObj[] UsableObjects;
 
         Bitmap SpriteListPic;
         private int LablesCount;
@@ -20,7 +19,7 @@ namespace Loopie2D
         private void MainMenuInit()
         {
             lua.LuaFunc("MainMenu", GameStarted ? "Started" : "PreStart");
-            this.pictureBox1.BackgroundImage = new Bitmap(LuaAPI.images + lua.GetMenuTbl("Background"));
+            this.BackgroundImage = new Bitmap(LuaAPI.images + lua.GetMenuTbl("Background"));
 
             // Exit button
             this.ExitButton.Text = lua.GetMenuTbl("ExitText");
@@ -104,30 +103,34 @@ namespace Loopie2D
             var DefName = GameList[Convert.ToInt32(lab.Name) - 1].Split('\\');
 
             GameScenarioFile = DefName.Last();
-            Label_Helper(false, LablesCount);
+
+            MenuUpdate(false);
+            Label_Helper(false, LablesCount, ref GlobalSection);
 
             MessBox_1.Visible = true;
             LoadList.Visible = false;
-            
-            if (ifs.GetString(LuaAPI.cfg + GameScenarioFile, "header", "mode") == "VisualNovel")
-                NextScene(false);
-            else
-                ;// Soon
 
             GameStarted = true;
+
+            isVisualNovel = ifs.GetString(LuaAPI.cfg + GameScenarioFile, "header", "mode") == "VisualNovel";
+            if (!isVisualNovel)
+                InitObjectsList();
         }
 
         private void Question_Click(object sender, EventArgs e)
         {
+            // Warn! Global section only for Visual Novel type! 
             Label lab = (Label)sender;
-            sect_next = Convert.ToInt32(lab.Name);
-            Label_Helper(false, LablesCount);
+            GlobalSection.SectionNext = Convert.ToInt32(lab.Name);
+            Label_Helper(false, LablesCount, ref GlobalSection);
         }
 
         private void SpriteBoxesHolder(Image FreeMovePicture, int posX, int posY, float Scale = 2)
         {
             using (Graphics SpGr = Graphics.FromImage(SpriteListPic))
             {
+                SpGr.DrawImage(this.BackgroundImage, 0, 0, this.Size.Width, this.Size.Height);
+
                 float TryPosY = 0;
                 if(SpriteListPic.Size.Height < FreeMovePicture.Size.Height)
                 {
@@ -140,14 +143,14 @@ namespace Loopie2D
 
                 SpGr.DrawImage(FreeMovePicture, posX, TryPosY, FreeMovePicture.Size.Width * Scale, FreeMovePicture.Size.Height * Scale);
             }
-            ALeft.Image = SpriteListPic;
+            this.BackgroundImage = SpriteListPic;
         }
     
-        private void Label_Helper(bool q, int num)
+        private void Label_Helper(bool q, int num, ref SectionEditon CurrSection)
         {
             if (q)
 			{
-				this.ALeft.Image = null;
+				//this.BackgroundImage = null;
 				MessBox_1.Visible = false;
 
 				UniversalPanel.Location = new System.Drawing.Point((this.Width - UniversalPanel.Width) / 2, UniversalPanel.Location.Y);
@@ -166,7 +169,7 @@ namespace Loopie2D
                 UniversalPanel.Height = 10 + 15 * num;
                 UniversalPanel.Visible = true;
 
-                sect_label += 1;
+                CurrSection.SectionLabel++;
             }
             else
             {
@@ -175,7 +178,7 @@ namespace Loopie2D
 
 				MessBox_1.Visible = true;
 				UniversalPanel.Visible = false;
-                NextScene(false);
+                NextScene(false, ref CurrSection);
             }
         }
         void MenuUpdate(bool q)
@@ -201,12 +204,12 @@ namespace Loopie2D
                 LoadGameButton.Visible   = 
                 ExitButton.Visible    = true;
 
-                if (sect != 0)
+                if (LastSection.Section != 0)
                     Next.Visible = true;
 
 				TryGame = false;
                 MessBox_1.Visible = false;
-				this.ALeft.Image = null;
+                //this.BackgroundImage = null;
                 SaveGameButton.Visible = GameStarted;
             }
 
