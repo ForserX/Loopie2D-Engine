@@ -19,7 +19,8 @@ namespace Loopie2D
         private readonly System.Windows.Media.MediaPlayer player;
 
         //Vars
-        private SectionEditon GlobalSection, LastSection;
+        private uint SectionID;
+        private SectionEditon[] UsSectList;
         private int TextWidth;
         private string SpeakerTextString, SoundOldName, GameScenarioFile;
         private string[] GameList;
@@ -46,7 +47,8 @@ namespace Loopie2D
             Context.BackColor = Color.Transparent;
             this.Controls.Add(this.Context);
             Context.Visible = false;
-
+            SectionID = 0;
+            UsSectList = new SectionEditon[1];
             /////////////////////////////////////////////////////////////////////
             /// ETC setter
             ifs = new INIManager();
@@ -137,7 +139,7 @@ namespace Loopie2D
         private void NextClickHandle(object sender, EventArgs e)
         {
             MenuUpdate(false);
-            NextScene(true, ref LastSection);
+            NextScene(true, ref UsSectList[SectionID]);
             MessBox_1.Visible = true;
         }
         private void ExitClickHandle(object sender, EventArgs e)
@@ -163,7 +165,7 @@ namespace Loopie2D
                 if (e.KeyData == Keys.Enter)
                 {
                     if (isVisualNovel)
-                        NextScene(false, ref GlobalSection);
+                        NextScene(false, ref UsSectList[0]);
                     else
                         NextAction();
                 }
@@ -181,7 +183,7 @@ namespace Loopie2D
                     if (e.Button == MouseButtons.Left)
                     {
                         if (isVisualNovel)
-                            NextScene(false, ref GlobalSection);
+                            NextScene(false, ref UsSectList[0]);
                         else
                             NextAction();
                     }
@@ -202,7 +204,6 @@ namespace Loopie2D
 
             isVisualNovel = ifs.GetString(path, "param", "mode") == "VisualNovel";
             GameScenarioFile = ifs.GetString(path, "param", "game");
-            GlobalSection.Load(ref ifs, path, 0);
 
 
             if (!isVisualNovel)
@@ -212,6 +213,23 @@ namespace Loopie2D
                 for (int Iter = 0; Iter < UsSectList.Length; Iter++)
                     UsSectList[Iter].Load(ref ifs, path, Iter);
             }
+            else
+            {
+                UsSectList = new SectionEditon[1];
+            }
+
+            UsSectList[0] = new SectionEditon
+            {
+                Idx = 0,
+                Section = 0,
+                SectionNext = 0,
+                SectionLabel = 0,
+                SectionLabelOld = 0,
+
+                SectionString = "",
+                SectionStringOld = ""
+            };
+            UsSectList[0].Load(ref ifs, path, 0);
 
             // Restored LuaTables 
             int LayerCount = Convert.ToInt32(ifs.GetString(path, "layer", "count"));
@@ -227,7 +245,7 @@ namespace Loopie2D
             MenuUpdate(false);
 
             if (isVisualNovel)
-                NextScene(true, ref GlobalSection);
+                NextScene(true, ref UsSectList[0]);
 
             MessBox_1.Visible = true;
         }
@@ -253,11 +271,10 @@ namespace Loopie2D
                 ifs.WritePrivateStringA("param", "game", GameScenarioFile, path);
                 ifs.WritePrivateStringA("param", "mode", isVisualNovel ? "VisualNovel" : "Action", path);
 
-                GlobalSection.Save(ref ifs, path);
-
+                UsSectList[0].Save(ref ifs, path);
                 if (!isVisualNovel)
                 {
-                    for (int Iter = 0; Iter < UsSectList.Length; Iter++)
+                    for (int Iter = 1; Iter < UsSectList.Length; Iter++)
                         UsSectList[Iter].Save(ref ifs, path);
                 }
 

@@ -11,8 +11,8 @@ namespace Loopie2D
         private bool bActionState = false;
         private PictureBox[] UsableObjects;
         private string[] UsObjScen;
-        private SectionEditon[] UsSectList;
-        
+        private string OldScenario;
+
         private void ObjectClicked(object sender, EventArgs e)
         {
             PictureBox CurrentObj = (PictureBox)sender;
@@ -21,21 +21,22 @@ namespace Loopie2D
 
         private void InitObjectsList()
         {
-            int ObjCount = Convert.ToInt32(ifs.GetString(LuaAPI.cfg + GameScenarioFile, "objects", "count"));
+            int ObjCount = Convert.ToInt32(ifs.GetString(LuaAPI.cfg + GameScenarioFile, "objects", "count")) + 1;
             UsableObjects = new PictureBox[ObjCount];
             UsObjScen = new string[ObjCount];
             UsSectList = new SectionEditon[ObjCount];
 
-            for (int Iter = 0; Iter < ObjCount; Iter++)
+            for (int Iter = 1; Iter < ObjCount; Iter++)
             {
-                string CurrObject = ifs.GetString(LuaAPI.cfg + GameScenarioFile, "objects", Iter.ToString() + "_scene");
-                string CurrObjectImage = LuaAPI.images + ifs.GetString(LuaAPI.cfg + GameScenarioFile, "objects", Iter.ToString() + "_image");
+                string ValidIter = (Iter - 1).ToString();
+                string CurrObject = ifs.GetString(LuaAPI.cfg + GameScenarioFile, "objects", ValidIter + "_scene");
+                string CurrObjectImage = LuaAPI.images + ifs.GetString(LuaAPI.cfg + GameScenarioFile, "objects", ValidIter + "_image");
 
-                int SizeH = Convert.ToInt32(ifs.GetString(LuaAPI.cfg + GameScenarioFile, "objects", Iter.ToString() + "_image_h"));
-                int SizeW = Convert.ToInt32(ifs.GetString(LuaAPI.cfg + GameScenarioFile, "objects", Iter.ToString() + "_image_w"));
+                int SizeH = Convert.ToInt32(ifs.GetString(LuaAPI.cfg + GameScenarioFile, "objects", ValidIter + "_image_h"));
+                int SizeW = Convert.ToInt32(ifs.GetString(LuaAPI.cfg + GameScenarioFile, "objects", ValidIter + "_image_w"));
 
-                int PosX = Convert.ToInt32(ifs.GetString(LuaAPI.cfg + GameScenarioFile, "objects", Iter.ToString() + "_image_x"));
-                int PosY = Convert.ToInt32(ifs.GetString(LuaAPI.cfg + GameScenarioFile, "objects", Iter.ToString() + "_image_y"));
+                int PosX = Convert.ToInt32(ifs.GetString(LuaAPI.cfg + GameScenarioFile, "objects", ValidIter + "_image_x"));
+                int PosY = Convert.ToInt32(ifs.GetString(LuaAPI.cfg + GameScenarioFile, "objects", ValidIter + "_image_y"));
 
                 // Make object picture
                 UsableObjects[Iter] = new PictureBox
@@ -59,7 +60,7 @@ namespace Loopie2D
                 // Make object scenarion
                 UsSectList[Iter] = new SectionEditon
                 {
-                    Idx = Iter + 1, // 0 - Global
+                    Idx = Iter, // 0 - Global
                     Section = 0,
                     SectionNext = 0,
                     SectionLabel = 0,
@@ -69,13 +70,13 @@ namespace Loopie2D
                     SectionStringOld = ""
                 };
             }
+
+            OldScenario = GameScenarioFile;
         }
 
         private void NextAction()
         {
-            string OldScenario = GameScenarioFile;
-
-            for (int Iter = 0; Iter < UsableObjects.Length; Iter++)
+            for (uint Iter = 1; Iter < UsableObjects.Length; Iter++)
             {
                 if (UsableObjects[Iter].Focused)
                 {
@@ -83,11 +84,16 @@ namespace Loopie2D
                     GameScenarioFile = LuaAPI.cfg + UsObjScen[Iter];
                     NextScene(false, ref UsSectList[Iter]);
                     this.Focus();
-                    bActionState = false;
+                    SectionID = Iter;
                     break;
                 }
             }
-            GameScenarioFile = OldScenario;
+
+            if (!bActionState)
+            {
+                GameScenarioFile = OldScenario;
+                SectionID = 0;
+            }
         }
     }
 }

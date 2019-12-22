@@ -71,7 +71,6 @@ namespace Loopie2D
                 }
             }
 
-            LastSection = CurrSection;
             //Load vars
             string TypeCurrentScene = ifs.GetString(LuaAPI.cfg + GameScenarioFile, CurrSection.SectionString, "type");
             string ScriptFileName = ifs.GetString(LuaAPI.cfg + GameScenarioFile, CurrSection.SectionString, "name");
@@ -120,7 +119,11 @@ namespace Loopie2D
                     }
                 default:
                     {
-                        MessageBox.Show("Error: Unknown scene type!");
+                        if (isVisualNovel)
+                            MessageBox.Show("Error: Unknown scene type!");
+                        else
+                            bActionState = false;
+
                         return;
                     }
             }
@@ -193,24 +196,12 @@ namespace Loopie2D
         private void NewGame_Click(object sender, EventArgs e)
         {
             GameList = new string[50];
-            uint Iterator = 0;
-
-            GlobalSection = new SectionEditon
-            {
-                Idx = 0,
-                Section = 0,
-                SectionNext = 0,
-                SectionLabel = 0,
-                SectionLabelOld = 0,
-
-                SectionString = "",
-                SectionStringOld = ""
-            };
 
             // Mod supporter
             string[] GameFilesList = Directory.GetFiles(LuaAPI.cfg);
             if (GameFilesList.Length > 1)
             {
+                uint Iterator = 0;
                 foreach (string file_name in GameFilesList)
                 {
                     GameList[Iterator] = file_name;
@@ -232,7 +223,7 @@ namespace Loopie2D
                     };
                     label_text[it].Click += this.GameScenarioSelected;
                 }
-                Label_Helper(true, (int)Iterator, ref GlobalSection);
+                Label_Helper(true, (int)Iterator, ref UsSectList[SectionID]);
             }
             else
             {
@@ -246,7 +237,7 @@ namespace Loopie2D
                 if (!isVisualNovel)
                     InitObjectsList();
 
-                NextScene(false, ref GlobalSection);
+                NextScene(false, ref UsSectList[SectionID]);
                 GameStarted = true;
             }
         }

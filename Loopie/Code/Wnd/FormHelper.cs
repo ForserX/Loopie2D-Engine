@@ -105,7 +105,8 @@ namespace Loopie2D
             GameScenarioFile = DefName.Last();
 
             MenuUpdate(false);
-            Label_Helper(false, LablesCount, ref GlobalSection);
+            LablesCount = 0;
+            Label_Helper(false, LablesCount, ref UsSectList[SectionID]);
 
             MessBox_1.Visible = true;
             LoadList.Visible = false;
@@ -119,10 +120,9 @@ namespace Loopie2D
 
         private void Question_Click(object sender, EventArgs e)
         {
-            // Warn! Global section only for Visual Novel type! 
             Label lab = (Label)sender;
-            GlobalSection.SectionNext = Convert.ToInt32(lab.Name);
-            Label_Helper(false, LablesCount, ref GlobalSection);
+            UsSectList[SectionID].SectionNext = Convert.ToInt32(lab.Name);
+            Label_Helper(false, LablesCount, ref UsSectList[SectionID]);
         }
 
         private void SpriteBoxesHolder(Image FreeMovePicture, int posX, int posY, float Scale = 2)
@@ -204,7 +204,7 @@ namespace Loopie2D
                 LoadGameButton.Visible   = 
                 ExitButton.Visible    = true;
 
-                if (LastSection.Section != 0)
+                if (UsSectList[SectionID].Section != 0)
                     Next.Visible = true;
 
 				TryGame = false;
